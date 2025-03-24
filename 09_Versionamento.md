@@ -3,8 +3,9 @@
 # **GIT E GITHUB IN VISUAL STUDIO CODE**
 
 * loggati su GIT  
-  git config \--global user.email "you@example.com" git config \--global user.name "Your Name"  
-  * per verificare che effettivamente sia stato riconosciuto l'utente digitare il comando  
+- git config \--global user.email "you@example.com"
+- git config \--global user.name "Your Name"  
+* per verificare che effettivamente sia stato riconosciuto l'utente digitare il comando  
 * git config user.name o git config user.email  
 * genera il token con il pannello di controllo di GITHUB nella sezione Developer settings  
 * scegli tra gli scope disponibili cioè le funzionalità alle quali avrà accesso il nostro profilo GITHUB  
