@@ -1,11 +1,11 @@
 # CONDIZIONI
 # Le condizioni sono istruzioni che permettono di eseguire un blocco di codice solo se una determinata condizione è vera.
 
-"""  
-Le principali istruzioni di controllo in Python sono:  
-- if  
-- else  
-- elif (equivalente di else if in C#)  
+"""
+Le principali istruzioni di controllo in Python sono:
+- if
+- else
+- elif (equivalente di else if in C#)
 - Non esiste uno switch nativo, ma si può simulare con dizionari o blocchi if-elif-else  
 - pero c'è il match-case a partire da Python 3.10 che è simile pero lo usano in pochi
 """
@@ -34,13 +34,13 @@ else:
 # match-case
 # match-case è stato introdotto in Python 3.10
 # è simile allo switch-case di altri linguaggi
-y = 10  
-match y:  
-    case 5:  
+y = 10
+match y:
+    case 5:
         print("y è uguale a 5")  
-    case 10:  
+    case 10:
         print("y è uguale a 10")  
-    case _:  
+    case _:
         print("y non è né 5 né 10")
 # match-case con stringhe
 z = "ciao"
