@@ -33,7 +33,7 @@ for i in range(len(partecipanti)):
         squadra2.append(partecipanti[i]) # altrimenti aggiugo il partecipante alla squadra 2
 
 # stampa con il join e f-string (interpolazione di stringhe)
-print(f"\nSquadra 1: {', '.join(squadra1)}")
+print(f"Squadra 1: {', '.join(squadra1)}")
 print(f"Squadra 2: {', '.join(squadra2)}")
 ```
 
@@ -55,10 +55,24 @@ print(", ".join(squadra1))
 print("Squadra 2:")
 print(", ".join(squadra2))
 ```
-
 # SORTEGGIO (V 2.0)
 ## Obiettivo
-Scrivere un programma che permetta di sorteggiare un numero casuale di partecipanti a un evento e dividerli in squadre
+Implementare le seguenti funzionalità:
+- Visualizzare il numero di partecipanti per squadra
+- Sorteggi multipli in sequenza (Premi INVIO per fare un nuovo sorteggio...)
+- Permettere all’utente di aggiungere partecipanti prima del sorteggio
+- Mostrare chi è il capitano della squadra (es. primo della lista)
+
+## Suggerimenti
+- Posso accedere ad un elemento specifico di una lista cosi `partecipanti[0]` dove partecipanti è la lista dei partecipanti.
+
+```python
+
+```
+
+# SORTEGGIO (V 3.0)
+## Obiettivo
+Scrivere un programma che permetta di sorteggiare un numero casuale di partecipanti a un evento e dividerli in un numero di squadre scelto dall utente
 
 ## Implementazione
 - L'elenco dei partecipanti inizialmente è memorizzato su una lista.
@@ -75,5 +89,42 @@ Scrivere un programma che permetta di sorteggiare un numero casuale di partecipa
 - si puo usare il metodo `append` sulla lista per aggiungere un elemento cosi `squadra1.append(partecipante)` in modo da aggiungere un partecipante alla lista.
 
 ```python
+import random
+partecipanti = [
+    "Partecipante 1", "Partecipante 2", "Partecipante 3", "Partecipante 4", "Partecipante 5",
+    "Partecipante 6", "Partecipante 7", "Partecipante 8", "Partecipante 9"
+]
 
+# Input numero squadre e controllo validità
+num_squadre = 0  # Inizializzo a 0 per entrare nel ciclo
+while num_squadre <= 0:
+    valore = input("Inserisci il numero di squadre: ")
+    if valore.isdigit():
+        num_squadre = int(valore)
+    if num_squadre <= 0:
+        print("Per favore inserisci un numero intero positivo.")
+
+print("-" * 40)
+
+random.shuffle(partecipanti) # Mischio i partecipanti per rendere il sorteggio casuale
+
+# Creazione delle squadre
+squadre = [[] for _ in range(num_squadre)] # Creo una lista di liste vuote _ indica che non mi interessa il valore di iterazione (che sarebbe il numero di squadra)
+
+# Assegno i partecipanti in ordine ciclico
+i = 0  # Inizializzo il contatore
+for nome in partecipanti:
+    squadre[i % num_squadre].append(nome) # Assegno il nome alla squadra i % num_squadre cioè il resto della divisione tra i e num_squadre
+    i += 1
+
+print(f"Numero di partecipanti: {len(partecipanti)}")
+print(f"Numero di partecipanti per squadra: {len(partecipanti) // num_squadre}")
+print(f"Numero di partecipanti rimanenti: {len(partecipanti) % num_squadre}")
+print("-" * 40)
+
+# Stampo le squadre senza enumerate
+indice = 1
+for squadra in squadre:
+    print(f"Squadra {indice}: {', '.join(squadra)}")
+    indice += 1
 ```
