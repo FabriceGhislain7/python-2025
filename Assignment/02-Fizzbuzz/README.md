@@ -31,6 +31,7 @@ In questa versione l'utente inserisce un numero qualsiasi ed il programma stampa
 - Il programma deve chiedere all'utente di inserire un numero e stampare se il numero è fizz, buzz o fizzbuzz.
 
 ```python
+# effettuo la conversione in intero del valore inserito dall'utente in modo da poter effettuare i controlli successivi
 numero = int(input("Inserisci un numero: "))
 if numero % 3 == 0 and numero % 5 == 0:
     print("FizzBuzz")
@@ -40,4 +41,36 @@ elif numero % 5 == 0:
     print("Buzz")
 else:
     print(numero)
+```
+# FIZZBUZZ (V 3.0)
+## Obiettivo
+Permette al utente di inserire piu numeri
+
+## Implementazione
+L’utente può uscire scrivendo "esci" altrimenti il programma chiede di inserire un altro numero.
+
+> OPZIONALE: usare il metodo `isdigit()` per controllare se l'input è un numero.
+
+```python
+while True:
+    inserimento = input("Inserisci un numero valido oppure 'esci': ")
+    
+    if inserimento.lower() == "esci":
+        print("Ciao! Alla prossima.")
+        break  # uso break in modo da uscire dal ciclo while
+    
+    if not inserimento.isdigit():  # uso isdigit per controllare se la stringa è un numero
+        print("Per favore inserisci un numero valido oppure 'esci'.\n")
+        continue  # uso continue in modo da ripartire dal ciclo while
+
+    numero = int(inserimento) # converto la stringa inserimento in un intero
+
+    if numero % 3 == 0 and numero % 5 == 0:
+        print(f"{numero} -> fizzBuzz!\n")
+    elif numero % 3 == 0:
+        print(f"{numero} -> fizz\n")
+    elif numero % 5 == 0:
+        print(f"{numero} -> buzz\n")
+    else:
+        print("Nessuno\n")
 ```
