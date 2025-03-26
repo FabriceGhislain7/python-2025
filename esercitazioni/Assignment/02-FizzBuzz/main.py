@@ -1,17 +1,18 @@
 
-while True:
-    contatore_Fizz = 0
-    contatore_Buzz = 0
-    contatore_FizzBuzz = 0
-    contatore_nessuno = 0
+contatore_Fizz = 0
+contatore_Buzz = 0
+contatore_FizzBuzz = 0
+contatore_nessuno = 0
 
+while True:
+    
     inserimento = input("Inserisci un numero intero valido oppure inserici 'esci' per uscire dal programma: ")
     
     if inserimento.lower() == "esci":
         print("Ciao, alla prossima.")
         break
     
-    if not inserimento.isdigit:
+    if not inserimento.isdigit():
         print("Per favore inserire un numero intero valido oppure 'esci' per uscire dal programma: " )
         continue # Ricomincia il ciclo for while dall'inizio 
     
