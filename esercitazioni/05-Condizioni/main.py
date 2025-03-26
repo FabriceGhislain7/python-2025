@@ -13,7 +13,7 @@ numero_r = 10
 if numero_r > 5:
     print("Il numero è maggire di 5")
 
-# if else 
+# if else  - Se una condizione viene soddisfata, esegue il codice dentro 
 numero_s = 10
 if numero_s > 5:
     print("Il numero è maggiorne di 5.")
