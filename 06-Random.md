@@ -39,3 +39,9 @@ import random # importa il modulo random
 time.sleep(random.randint(3, 8))
 print("Ciao!")
 ```
+
+### Altri metodi di random
+
+- random.random() restituisce un numero casuale tra 0 e 1.
+- random.uniform(a, b) restituisce un numero casuale tra a e b.
+- random.gauss(mu, sigma) restituisce un numero casuale con distribuzione gaussiana.
