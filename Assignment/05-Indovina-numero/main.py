@@ -1,33 +1,36 @@
-import random
+import random  # Importa il modulo random
 
 # Il computer genera un numero casuale tra 1 e 10
 numero_casuale = random.randint(1, 10)
 
 indovinato = False  # Flag per indicare se l'utente ha indovinato
+tentativi = 0       # Contatore dei tentativi massimi
+tentativi_massimi = 3
 
-# Continua a chiedere finché l'utente non indovina
-while not indovinato:
-    # Input utente
+print("Benvenuto! Hai 3 tentativi per indovinare il numero tra 1 e 10.")
+
+# Continua a chiedere finché l'utente non indovina o finisce i tentativi
+while not indovinato and tentativi < tentativi_massimi:
     tentativo = input("Inserisci un numero: ")
-    
+
     # Verifica che l'input sia un numero
     if not tentativo.isdigit():
         print("Per favore, inserisci un numero valido.")
-        continue # Salta il resto del ciclo e ricomincia
+        continue
 
     tentativo = int(tentativo)
-    
-    # se il numero è piu alto del numero casuale
+    tentativi += 1  # Aumenta il contatore dei tentativi
+
     if tentativo > numero_casuale:
         print("Il numero è troppo alto.")
-        
-    # se il numero è piu basso del numero casuale
     elif tentativo < numero_casuale:
         print("Il numero è troppo basso.")
-
-    # Confronto
+    
     if tentativo == numero_casuale:
-        print("Complimenti! Hai indovinato il numero!")
+        print("Complimenti! Hai indovinato in", tentativi, "tentativo/i!")
         indovinato = True
+    elif tentativi < tentativi_massimi:
+        print("Sbagliato! Tentativi rimasti:", tentativi_massimi - tentativi)
     else:
-        print("Sbagliato! Riprova.")
+        print("Game Over! Hai esaurito i tentativi.")
+        print("Il numero corretto era:", numero_casuale)
