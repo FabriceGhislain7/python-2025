@@ -16,6 +16,14 @@ while not indovinato:
         continue # Salta il resto del ciclo e ricomincia
 
     tentativo = int(tentativo)
+    
+    # se il numero è piu alto del numero casuale
+    if tentativo > numero_casuale:
+        print("Il numero è troppo alto.")
+        
+    # se il numero è piu basso del numero casuale
+    elif tentativo < numero_casuale:
+        print("Il numero è troppo basso.")
 
     # Confronto
     if tentativo == numero_casuale:
