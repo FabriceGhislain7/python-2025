@@ -10,6 +10,10 @@ I metodi di input e print in Python permettono di gestire l'output e l'input
 # Stampa a video la stringa "Hello World!"
 print("Hello World!")
 
+# print senza andare a capo
+print("stringa non a capo", end="")
+print(" stringa che viene attaccata a quella sopra")
+
 # Il metodo input() legge un testo da tastiera
 # e la restituisce come stringa
 nome = input("Inserisci il tuo nome: ")
