@@ -28,7 +28,7 @@ caratteri_speciali = string.punctuation
 ## Implementazione 
 ```python 
 
-# Import 
+# Import dei moduli necessari 
 import string
 import random
 
