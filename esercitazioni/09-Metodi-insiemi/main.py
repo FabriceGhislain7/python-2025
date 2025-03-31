@@ -61,7 +61,7 @@ print("\nSet 3 originale aggiornato con set4:", set3_copy)  # Output: set()
 
 # Difference con Update
 # Utilizza il metodo difference_update() per aggiornare in-place set5 con gli elementi di set5 che non sono in set6.
-# Creiamo una copia di set5 per non modificare il set originale
+# Creiamo una copia di set5 per non modificare il set originale+
 set5_copy = set5.copy() # Copia di set5
 set5_copy.difference_update(set6) # Aggiorniamo set5_copy con gli elementi di set5 che non sono in set6         
 print("\nSet 5 originale aggiornato con set6:", set5_copy)  # Output: {1, 2, 3}
