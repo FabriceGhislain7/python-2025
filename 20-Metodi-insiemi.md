@@ -1,6 +1,6 @@
 # METODI DI INSIEMI
 
-Gli **insiemi** in Python (set) sono collezioni non ordinate di elementi unici. Offrono una varietà di metodi per la manipolazione e l'intersezione di dati. Ecco un elenco dettagliato dei metodi disponibili per i set in Python.
+Gli **insiemi** in Python (set) sono collezioni non ordinate di **elementi unici**. Offrono una varietà di metodi per la manipolazione e l'intersezione di dati. Ecco un elenco dettagliato dei metodi disponibili per i set in Python.
 
 ### **Metodi principali degli insiemi**
 
