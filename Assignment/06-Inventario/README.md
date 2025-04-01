@@ -94,6 +94,4 @@ print("-" * 50)
 for articolo, caratteristiche in prodotti.items():
     print(f"{articolo}: {caratteristiche[0]}, {caratteristiche[1]}")
 
-
-
 ```
