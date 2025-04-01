@@ -95,3 +95,23 @@ for articolo, caratteristiche in prodotti.items():
     print(f"{articolo}: {caratteristiche[0]}, {caratteristiche[1]}")
 
 ```
+# INVENTARIO MAZZINO (V 1.0)
+## Obiettivo
+
+
+Implemetazione del livello di dificoltà: Permette all'utente di scegliere tra livelli di difficoltà. che modifica il numero di punti sostratti o l'intervallo dei numeri o il numero dei tentativi disponibili.
+
+i livelli di difficoltà potrebberro essere.
+ - facile: 1-10, 3 tentativi, 2 punti di penalità.
+ - Medio: 1-20, 5 tentativi, 3 punti di meno
+ - Dificile: 1-50, 7 tentativi, 4 punti di penalità.
+
+## Implementazione.
+
+1. Aggiungere un menu per scegliere il livello di difficoltà
+2. Modificare il punteggio e i tentativi in base al livello scelta.
+2. Modificare l'intervallo dei nuneri in base al livello scelto.
+4. Modificare la penalità in base al livello scelto.
+5. mostrare il punteggio finale e il numero di tentativi effettuati.
+
+## Codice 
