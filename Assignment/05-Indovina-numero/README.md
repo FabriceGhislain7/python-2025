@@ -150,5 +150,148 @@ Più tentativi impiega, minore sarà il punteggio.
 3. Alla fine del gioco mostra il punteggio dell utente ed il numero di tentativi
 
 ```python
+import random
 
+# Il computer genera un numero casuale tra 1 e 10
+numero_casuale = random.randint(1, 10)
+
+indovinato = False      # Flag per indicare se l'utente ha indovinato
+tentativi = 0           # Contatore dei tentativi effettuati
+tentativi_massimi = 3   # 
+punteggio = 10          # Punteggio iniziale
+penalita = 2            # Punti persi ad ogni errore
+
+print("Benvenuto! Hai 3 tentativi per indovinare il numero tra 1 e 10.")
+print("Inizi con 10 punti. Ogni errore ti costa 2 punti.")
+
+while not indovinato and tentativi < tentativi_massimi:
+    tentativo = input("Inserisci un numero: ")
+
+    if not tentativo.isdigit():
+        print("Per favore, inserisci un numero valido.")
+        continue
+
+    tentativo = int(tentativo)
+    tentativi += 1
+
+    if tentativo == numero_casuale:
+        print("Complimenti! Hai indovinato il numero!")
+        indovinato = True
+    else:
+        punteggio -= penalita
+        if tentativo > numero_casuale:
+            print("Il numero è troppo alto.")
+        else:
+            print("Il numero è troppo basso.")
+
+        if tentativi < tentativi_massimi:
+            print("Sbagliato! Tentativi rimasti:", tentativi_massimi - tentativi)
+
+if indovinato:
+    print(f"Hai impiegato {tentativi} tentativo/i.")
+    print(f"Il tuo punteggio finale è: {punteggio} punti.")
+else:
+    print("Game Over! Hai esaurito i tentativi.")
+    print(f"Il numero corretto era: {numero_casuale}")
+    print(f"Il tuo punteggio finale è: {punteggio} punti.")
+```
+# INDOVINA NUMERO (V 5.0)
+## Obiettivo
+
+Implementare **Livelli di Difficoltà:** Permetti all'utente di scegliere tra diversi livelli di difficoltà che modificano il munero di punti sottratti o l'intervallo dei numeri o il numero di tentativi disponibili
+
+I livelli di difficoltà possono essere:
+   - Facile: 1-10, 3 tentativi, 2 punti di penalità
+   - Medio: 1-20, 5 tentativi, 3 punti di penalità
+   - Difficile: 1-50, 7 tentativi, 4 punti di penalità
+
+## Implementazione
+
+1. Aggiungere un menu per scegliere il livello di difficolta.
+2. Modificare il punteggio e i tentativi in base al livello scelto.
+3. Modificare l'intervallo dei numeri in base al livello scelto.
+4. Modificare la penalità in base al livello scelto.
+5. Mostrare il punteggio finale e il numero di tentativi effettuati.
+
+```python
+import random
+
+print("Scegli il livello di difficoltà:")
+print("1 - Facile   (1-10, 3 tentativi, -2 punti per errore)")
+print("2 - Medio    (1-20, 5 tentativi, -3 punti per errore)")
+print("3 - Difficile(1-50, 7 tentativi, -4 punti per errore)")
+
+# Selezione livello
+scelta = input("Inserisci il numero del livello (1/2/3): ")
+
+if scelta == "1":
+    livello = "Facile"
+    limite_superiore = 10
+    tentativi_massimi = 3
+    penalita = 2
+elif scelta == "2":
+    livello = "Medio"
+    limite_superiore = 20
+    tentativi_massimi = 5
+    penalita = 3
+elif scelta == "3":
+    livello = "Difficile"
+    limite_superiore = 50
+    tentativi_massimi = 7
+    penalita = 4
+else:
+    print("Scelta non valida. Verrà impostato il livello Facile.")
+    livello = "Facile"
+    limite_superiore = 10
+    tentativi_massimi = 3
+    penalita = 2
+
+# Imposta il numero da indovinare e punteggio iniziale
+numero_casuale = random.randint(1, limite_superiore)
+punteggio = 10
+tentativi = 0
+indovinato = False
+
+print(f"\nHai scelto il livello: {livello}")
+print(f"Indovina un numero tra 1 e {limite_superiore}")
+print(f"Hai a disposizione {tentativi_massimi} tentativi.")
+print(f"Ogni errore costa {penalita} punti. Parti da 10 punti!")
+
+# Inizio del gioco
+while not indovinato and tentativi < tentativi_massimi:
+    tentativo = input("\nInserisci un numero: ")
+
+    if not tentativo.isdigit():
+        print("Per favore, inserisci un numero valido.")
+        continue
+
+    tentativo = int(tentativo)
+    tentativi += 1
+
+    if tentativo == numero_casuale:
+        print("Complimenti! Hai indovinato il numero!")
+        indovinato = True
+    else:
+        punteggio -= penalita
+        if tentativo > numero_casuale:
+            print("Troppo alto.")
+        else:
+            print("Troppo basso.")
+
+        if tentativi < tentativi_massimi:
+            print(f"Tentativi rimasti: {tentativi_massimi - tentativi}")
+
+# Risultato finale
+print("\n=== RISULTATO ===")
+if indovinato:
+    print(f"Hai indovinato in {tentativi} tentativo/i.")
+else:
+    print("Game Over! Hai esaurito i tentativi.")
+    print(f"Il numero corretto era: {numero_casuale}")
+
+# Evita punteggio negativo
+if punteggio < 0:
+    punteggio = 0
+
+print(f"Punteggio finale: {punteggio} punti.")
 ```
