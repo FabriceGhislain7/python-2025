@@ -1,7 +1,4 @@
 import os
-import datetime
 
-
-file_name = "cartella_test"
-extensione = os.path.splitext(file_name)[1] # Ottiene solo l'estensione del file
-print(extensione) 
+dir_path = "C:\Users\python\Documents\tecnico_programmatore\cartella_test\new" # Percorso della directory creata
+os.makedirs(dir_path, exist_ok=True) 

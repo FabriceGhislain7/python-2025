@@ -100,6 +100,8 @@ print(extensione) # Stampa l'estensione del file
 # Fare riferimento solo al percorso del file senza il nome.
 file_path = os.path.dirname(path) # Ottiene solo il percorso del file senza il nome
 
+# Spostare un file 
+shutil.remove(path, "test2/test.txt") # 
 
 # DIRECTORIES
 # Creazione di una directory.

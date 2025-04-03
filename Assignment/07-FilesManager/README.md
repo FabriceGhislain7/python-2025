@@ -72,14 +72,76 @@ if scelta_operazione == "4":
     dim_cartelle = []
     for cartella in os.listdir(path_cartella):
         dim_cartelle.append(os.path.getsize(path_cartella))
-    
-
-
-
-
-
-
 
  ```
- # SIMPLE BACKUP ()
+# SIMPLE BACKUP (v 1.0)
 
+# Obiettivo 
+Copiare tutti i file da una directory sorgente a una di backup, aggiungendo timestamp ai nomi dei file o creando una cartella non timestamp.
+
+## Implementazione
+- shutil.copy(), os.makedirs(), datetime, os.path.join()
+
+### Codice 
+
+# FILE REPORT (V1.0) 
+# Obiettivo
+
+Scansiona una directory e genera un file .txt contenente:
+ - Nome file 
+ - Estensione 
+ - Dimensione 
+ - Data di creazione 
+ - Path assoluto
+
+ ## Implementazione
+ - open(), writeline(), os.path.splitext(), os.path.getsize(), os.path.getctime(), os.path.abspath() 
+```python
+import os
+from datetime import datetime
+
+# Gestisco la validità della Cartella scansionata
+while True:
+    cartella = input("Cartella scansionata: ")
+    if os.path.exists(cartella):
+        print("La cartella esiste.")
+        break
+    else: 
+        print("Cartella non valida.")
+        continue
+
+# Informazioni della cartella principale csansionata
+print("la cartella scansionata esiste.")
+nome_cartella = os.path.basename(cartella)
+data_cartella = datetime.fromtimestamp(os.path.getctime(cartella))
+estensione_cartella = os.path.splitext(cartella)[1]
+dim_cartella = os.path.getsize(cartella)
+path_assoluto = os.path.abspath(cartella)
+
+path_info = input("Cartella da scansionare") + ".txt"
+
+info_scansionata = []
+info_scansionata.append(f"Nome della cartella: {nome_cartella}")
+info_scansionata.append(f"Data di creazione: {data_cartella}")
+info_scansionata.append("estensione_cartella:" + estensione_cartella)
+info_scansionata.append("dim_cartella " + str(dim_cartella))
+info_scansionata.append("path_assoluto " + path_assoluto)
+
+with open(path_info, "w") as file:
+    print("")
+    file.writelines(f"{linea}\n" for linea in info_scansionata)
+
+```
+# FILE MANAGER
+
+## Obiettivo
+ - Separare i files all interno di un folder a seconda della tipogia
+ - La folder deve avere il nome dell'estensione dei files contenuti.  
+
+## Implementazione 
+Scansione una cartella e sposta ogni file nella sotto cartella corretta:
+Esempio:
+ - img.jpg -> immagini/
+ - song.mp3 -> musica/
+ - doc.pdf -> pdf/
+ - os.makedirs(), os.rename(), os.path.splitext()
