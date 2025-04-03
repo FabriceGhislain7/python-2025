@@ -173,5 +173,5 @@ for elemento in os.listdir(cartella_origine):
         os.makedirs(path_cartelle_estensione, exist_ok=True)
         shutil.move(path_elemento, path_cartelle_estensione)  
     else:
-        print(f"{elemento} non è un file, è una cartella_origine.")
+        print(f"{elemento} non è un file, è una cartella.")
 ```  
