@@ -89,6 +89,9 @@ print(file_name_no_ext)
 # Fare riferimento solo all'estensione del file  
 extension = os.path.splitext(path)[1]  
 print(extension)
+
+# Spostare un file
+shutil.move(path, "test2/test.txt")  # Sposta test.txt in test2/test.txt
     
 # DIRECTORIES
 
