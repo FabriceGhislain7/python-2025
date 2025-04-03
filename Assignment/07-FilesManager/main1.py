@@ -25,9 +25,3 @@ else:
             shutil.copy(source_file, backup_folder)  # Copia il file nella cartella di backup
 
     print(f"Backup completato in {backup_folder}") # Stampa il percorso della cartella di backup
-"""
-
-
-
-
-
