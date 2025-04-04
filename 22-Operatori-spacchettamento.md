@@ -43,8 +43,8 @@ Output:
 
 Simbolo | Cosa fa | Dove si usa
 --------|---------|----------------
-* |  Spacchetta liste o tuple | In chiamate o definizioni
-** | Spacchetta dizionari | In chiamate o definizioni
+`*` |  Spacchetta liste o tuple | In chiamate o definizioni
+`**` | Spacchetta dizionari | In chiamate o definizioni
 
 ## Spacchettamento in assegnazione
 
@@ -77,7 +77,7 @@ Niente cicli: lo spacchettamento le unisce in modo semplice!
 
 ## Unire dizionari con **
 
-Con ** puoi unire dizionari. Se ci sono chiavi duplicate, vince l’ultimo.
+Con ** puoi unire dizionari. Se ci sono chiavi duplicate, vince l’ultimo cioe quello che viene dopo.
 
 ```python
 d1 = {"a": 1, "b": 2}
@@ -105,7 +105,7 @@ print([*range(3, 6)])   # [3, 4, 5]
 
 Uso | Operatore | Risultato
 -----|-----------|----------------
-Spacchettamento in assegnazione | * | Raccoglie più valori in una lista
-Unione di liste/tuple | * | Aggiunge elementi singoli
-Unione di dizionari | ** | Aggiunge coppie chiave-valore
-Misto | *, ** | Valori fissi + variabili
+Spacchettamento in assegnazione | `*` | Raccoglie più valori in una lista
+Unione di liste/tuple | `*` | Aggiunge elementi singoli
+Unione di dizionari | `**` | Aggiunge coppie chiave-valore
+Misto | `*, **` | Valori fissi + variabili
