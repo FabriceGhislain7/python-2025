@@ -39,6 +39,17 @@ number7, number8 = 10, 20
 min_number = min(number7, number8)  
 print(f"Il numero più piccolo è {min_number}")  # Output: 10
 
+# media aritmetica
+numeri = [10, 20, 30]
+media = sum(numeri) / len(numeri)
+print(f"La media è: {media}")  # Output: 20.0
+# varianza (cioe la media dei quadrati delle differenze dalla media che serve in modo da capire quanto sono distanti i numeri dalla media)
+varianza = sum((x - media) ** 2 for x in numeri) / len(numeri)
+print(f"La varianza è: {varianza}")  # Output: 66.66666666666667
+# deviazione standard (cioe la radice quadrata della varianza che serve a capire quanto sono distanti i numeri dalla media)
+deviazione_standard = math.sqrt(varianza)
+print(f"La deviazione standard è: {deviazione_standard}")  # Output: 8.16496580927726
+
 # pow - Potenza  
 number9, number10 = 2.1, 3  
 pow_number = math.pow(number9, number10)  
@@ -66,9 +77,10 @@ print(f"Area: {area}, Circonferenza: {circonferenza}")
 
 # Arrotonda un array di numeri decimali alla seconda cifra decimale  
 numeri = [3.14159, 2.71828, 1.61803]  
-arrotondati = [round(num, 2) for num in numeri]  
-for num in arrotondati:  
-    print(f"Numero arrotondato: {num}")
+arrotondati = []
+for num in numeri:  
+   arrotondati.append(round(num, 2))  # Arrotonda a 2 cifre decimali
+print(*arrotondati)  # Stampa i numeri arrotondati")
 
 # Trova il valore max e min in un array  
 numeri2 = [5, 9, 1, 3, 4]  

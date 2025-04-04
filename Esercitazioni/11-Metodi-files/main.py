@@ -92,6 +92,10 @@ print(extension)
 
 # Spostare un file
 shutil.move(path, "test2/test.txt")  # Sposta test.txt in test2/test.txt
+
+src = "/home/user/documento.txt"
+dst = "/home/user/testi/documento.txt"
+shutil.move(src, dst)
     
 # DIRECTORIES
 

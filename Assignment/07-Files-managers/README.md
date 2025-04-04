@@ -339,6 +339,7 @@ else:
         file_path = os.path.join(percorso, file)
         if os.path.isfile(file_path):
             estensione = os.path.splitext(file)[1][1:]  # Questo è un slicing delle stringhe: significa prendi dal secondo carattere in poi
+            # oppure invece di usare i due punti si può usare il metodo replace
             # estensione = file.replace(".", "")
             if estensione == "":
                 estensione = "senza_estensione"
