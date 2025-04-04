@@ -1,0 +1,12 @@
+ Registro delle tentativi dell'utente
+tentativo 1: sono
+tentativo 1: carlo
+Punteggio finale: 10Numero di tentativi rimanenti: 2
+tentativo 1: &"C:/ProgramFiles/Python313/python.exe"c:/Users/python/Documents/tecnico_programmatore/Assignment/08-IndovinaParola/main.py
+tentativo 1: f
+tentativo 2: g
+tentativo 3: &"C:/ProgramFiles/Python313/python.exe"c:/Users/python/Documents/tecnico_programmatore/Assignment/08-IndovinaParola/main.py
+Punteggio finale: 4Numero di tentativi rimanenti: 0
+tentativo 1: h
+tentativo 1: scuola
+Punteggio finale: 10Numero di tentativi rimanenti: 2

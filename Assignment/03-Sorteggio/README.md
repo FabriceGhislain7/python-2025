@@ -123,6 +123,21 @@ while True:
 
 ## Obiettivo 
 
+Salvare le squadre in due file di testo 
+
+## Suggerimenti:
+- Posso aprire un file in scrittura con il metodo `open` così:
+- `open("file.txt", "w")` dove file.txt è um file e w è la modalità di apertura (w = scrittura, a = aggiunta)
+- Possso scrivere su un file con il metodo `write` così:
+- `file.write("testo")` dove il file aperto in scrittura e testo è il testo da scrivere. 
+
+## Implementazione
+
+
+# SORTEGGIO (V4.0)
+
+## Obiettivo 
+
 Scrive un programma che permette di sorteggiare un numero casuale di partecipanti a un evento e dividerli in due squadre 
 
 ## Implementazione

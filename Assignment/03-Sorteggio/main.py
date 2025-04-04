@@ -1,37 +1,52 @@
 import random
 
-partecipante = ""
-lista_partecipanti = []
-j = 1
+# Lista dei partecipanti
+partecipanti = [
+    "Partecipante 1", "Partecipante 2", "Partecipante 3", "Partecipante 4", "Partecipante 5",
+    "Partecipante 6", "Partecipante 7", "Partecipante 8", "Partecipante 9", "Partecipante 10",
+]
+
+# Aggiungi i partecipanti 
+while True: 
+    nuovo = input ("Aggiungi un altro parecipante oppure preni 'INVIO' per termibare ")
+    if nuovo == "":
+        break
+    partecipanti.append(nuovo)
+
 while True:
-    while True:
-        partecipante = input("Inserisci il nome del partecipante")
-        lista_partecipanti.append(partecipante)
-        if partecipante.lower != "ok": 
-            break
-    numero_squadre = int(input("Inserisci il numero di squadre desiderate: "))
+    random.shuffle(partecipanti)
 
-    if not numero_squadre.is_integer() or numero_squadre == 0:
-        print("Il numero deve essere un intero diverso da 0: ")
-        continue
+    # Generiamo le nostre squadre di partecipanti
+    squadra1 = []
+    squadra2 = []
 
-# generare n liste di dei partecipanti
-squadre_numeri_pari = len(lista_partecipanti) // numero_squadre
-
-# Diczionario delle squadre
-squadre = {}
-for i in range (1, numero_squadre):
-    squadre["{i}"] = []
-
+    # 
+    for i in range(len(partecipanti)):
+        if i % 2 == 0:
+            squadra1.append(partecipanti[i])
+        else:
+            squadra2.append(partecipanti[i])
     
+    
+    # stampa con il join
+    print(f"\nSquadra 1: {len(squadra1)}: {",".join(squadra1)}")
+    print(f"Capitano della Squadra 1: {squadra1[0]}") # Stampa il capitano della squadra 1
 
-"""
+    print(f"\nSquadra 2: {len(squadra2)}: {",".join(squadra2)}")
+    print(f"Capitano della Squadra 1: {squadra2[0]}") # Stampa il capitano della squadra 2
 
- - l'enlenco dei partecipanti è inizialmente memorizzata su una lista.
- - il programma chiede all'utente il numero di squadra in cui dividerli.
- - Successivamente, genera un numero casuale di partecipanti e li assegna alle squadre in modo casuale.
- - il programma genera le liste delle squadre e le stampa a video.
+    risposta = input(f"\nVuoi sorteggiare di nuovo? (si/no): ").lower()
+    if risposta != "s":
+        break
 
-Se i partecipanti sono 10 , il programma farà due squadre di 3 poi una squadra di 4
+path_squadra1 = "03-Sorteggio/squadra1.txt" # Percorso del file creato
+path_squadra2 = "03-Sorteggio/squadra2.txt" # Percorso del file creato
 
-"""
+# Scrivere le squadre in un file di testo
+with open(path_squadra1, "w") as file: # w per scrivere (write)
+    for partecipante in squadra1:
+        file.write(partecipante + "\n") # Aggiunge una nuova riga al file
+    
+with open(path_squadra2, "w") as file: # w per scrivere (write)
+    for partecipante in squadra2:
+        file.write(partecipante + "\n") # Aggiunge una nuova riga al file

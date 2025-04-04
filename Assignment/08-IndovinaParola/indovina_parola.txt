@@ -1,0 +1,15 @@
+amore 
+casa 
+gatto 
+libro 
+scuola 
+sole 
+mare 
+montagna 
+città 
+giardino 
+fiore 
+albero 
+strada 
+macchina 
+bicicletta
