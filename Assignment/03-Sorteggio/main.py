@@ -32,7 +32,18 @@ while True:
     
     print(f"\nSquadra 2 ({len(squadra2)}): {', '.join(squadra2)}")
     print(f"Capitano Squadra 2: {squadra2[0]}") # stampo il capitano della squadra 2
+    
+    # salva le squadre in due files di testo
+    with open("squadra1.txt", "w") as file1:
+        file1.write(f"Squadra 1 ({len(squadra1)}): {', '.join(squadra1)}\n")
+        file1.write(f"Capitano Squadra 1: {squadra1[0]}\n")
+    with open("squadra2.txt", "w") as file2:
+        file2.write(f"Squadra 2 ({len(squadra2)}): {', '.join(squadra2)}\n")
+        file2.write(f"Capitano Squadra 2: {squadra2[0]}\n")
+    # Stampa il risultato
+    print("\nSquadre salvate nei file 'squadra1.txt' e 'squadra2.txt'.")
 
+    # Chiedi se si vuole sorteggiare di nuovo
     risposta = input("\nVuoi sorteggiare di nuovo? (s/n): ").lower()
     if risposta != "s":
         break
