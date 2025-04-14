@@ -300,3 +300,429 @@ classDiagram
 
     Rubrica --> Contatto : contiene
 ```
+# RUBRICA TELEFONICA (V 2.0)
+
+Versione semplificata
+
+```python
+import os
+from datetime import datetime
+
+rubrica = []
+FILE_RUBRICA = "rubrica.txt"
+CARTELLA_BACKUP = "backup"
+
+if not os.path.exists(CARTELLA_BACKUP):
+    os.mkdir(CARTELLA_BACKUP)
+
+if os.path.exists(FILE_RUBRICA):
+    with open(FILE_RUBRICA, "r", encoding="utf-8") as f:
+        for riga in f:
+            p = riga.strip().split("|")
+            if len(p) == 6:
+                rubrica.append({
+                    "codice": p[0], "nome": p[1], "cognome": p[2],
+                    "telefono": p[3], "email": p[4], "data": p[5]
+                })
+
+print("RUBRICA TELEFONICA v2.0")
+
+while True:
+    print("\n1. Rubrica  2. Backup  3. Esci")
+    scelta = input("Scelta: ").strip()
+    
+    if scelta == "1":
+        while True:
+            print("\n1. Aggiungi  2. Modifica  3. Elimina  4. Cerca  5. Indietro")
+            sub = input("Scelta: ").strip()
+
+            if sub == "1":
+                dati = input("Inserisci nome,cognome,telefono,email: ").strip().split(",")
+                if len(dati) != 4:
+                    print("Errore: servono tutti e 4 i dati separati da virgole.")
+                    continue
+                nome, cognome, telefono, email = [x.strip().capitalize() for x in dati]
+                if len(nome) < 3 or len(cognome) < 3 or not telefono.isdigit() or len(telefono) != 10 or "@" not in email:
+                    print("Dati non validi.")
+                    continue
+                codice = (nome[:2] + cognome[:2] + telefono[-2:]).upper()
+                data = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                esiste = False
+                for c in rubrica:
+                    if c["codice"] == codice:
+                        conferma = input(f"Contatto {codice} esiste, sovrascrivere? (s/n): ").lower()
+                        if conferma == "s":
+                            c.update({"nome": nome, "cognome": cognome, "telefono": telefono, "email": email, "data": data})
+                            esiste = True
+                        break
+                if not esiste:
+                    rubrica.append({"codice": codice, "nome": nome, "cognome": cognome, "telefono": telefono, "email": email, "data": data})
+                    print("Contatto aggiunto.")
+            
+            elif sub == "2":
+                codice = input("Codice contatto da modificare: ").strip().upper()
+                for c in rubrica:
+                    if c["codice"] == codice:
+                        campo = input("Campo da modificare (nome,cognome,telefono,email): ").lower().strip()
+                        if campo not in ["nome", "cognome", "telefono", "email"]:
+                            print("Campo non valido.")
+                            break
+                        valore = input(f"Nuovo valore per {campo}: ").strip()
+                        if campo == "telefono" and (not valore.isdigit() or len(valore) != 10):
+                            print("Telefono non valido.")
+                            break
+                        if campo == "email" and "@" not in valore:
+                            print("Email non valida.")
+                            break
+                        c[campo] = valore.capitalize() if campo in ["nome", "cognome"] else valore
+                        c["data"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                        print("Contatto aggiornato.")
+                        break
+                else:
+                    print("Contatto non trovato.")
+                    
+            elif sub == "3":
+                codice = input("Codice da eliminare: ").strip().upper()
+                prima = len(rubrica)
+                rubrica = [c for c in rubrica if c["codice"] != codice]
+                print("Contatto eliminato." if len(rubrica) < prima else "Contatto non trovato.")
+
+            elif sub == "4":
+                criterio = input("Cerca per (nome/email/numero): ").strip().lower()
+                testo = input("Testo da cercare: ").strip().lower()
+                risultati = []
+                for c in rubrica:
+                    if criterio == "nome" and testo in c["nome"].lower():
+                        risultati.append(c)
+                    elif criterio == "email" and testo in c["email"].lower():
+                        risultati.append(c)
+                    elif criterio == "numero" and c["telefono"].startswith(testo):
+                        risultati.append(c)
+                print(f"\nTrovati: {len(risultati)}")
+                for c in risultati:
+                    print(f"{c['codice']} - {c['nome']} {c['cognome']} - {c['telefono']} - {c['email']}")
+
+            elif sub == "5":
+                break
+
+            with open(FILE_RUBRICA, "w", encoding="utf-8") as f:
+                for c in rubrica:
+                    f.write(f"{c['codice']}|{c['nome']}|{c['cognome']}|{c['telefono']}|{c['email']}|{c['data']}\n")
+            print(f"\nTotale contatti: {len(rubrica)}")
+            for c in rubrica[-3:]:
+                print(f"  - {c['nome']} {c['cognome']} ({c['telefono']})")
+
+    elif scelta == "2":
+        nome_backup = f"{CARTELLA_BACKUP}/rubrica_BACKUP_{datetime.now().strftime('%Y%m%d_%H%M%S')}.txt"
+        with open(nome_backup, "w", encoding="utf-8") as f:
+            for c in rubrica:
+                f.write(f"{c['codice']}|{c['nome']}|{c['cognome']}|{c['telefono']}|{c['email']}|{c['data']}\n")
+        print(f"Backup creato: {nome_backup}")
+
+    elif scelta == "3":
+        break
+
+    else:
+        print("Scelta non valida.")
+
+with open(FILE_RUBRICA, "w", encoding="utf-8") as f:
+    for c in rubrica:
+        f.write(f"{c['codice']}|{c['nome']}|{c['cognome']}|{c['telefono']}|{c['email']}|{c['data']}\n")
+
+print("Rubrica salvata. Uscita.")
+```
+# RUBRICA TELEFONICA (V 3.0)
+
+Versione ulteriormente semplificata
+
+```python
+import os
+from datetime import datetime
+
+rubrica = []  # Lista per memorizzare i contatti
+FILE = "rubrica.txt"
+BACKUP_DIR = "backup"
+
+if not os.path.exists(BACKUP_DIR):
+    os.mkdir(BACKUP_DIR)
+
+if os.path.exists(FILE):
+    with open(FILE, "r", encoding="utf-8") as f:
+        for r in f:
+            p = r.strip().split("|")
+            if len(p) == 6:  # Assicurati che ci siano 6 campi
+                rubrica.append({"codice": p[0], "nome": p[1], "cognome": p[2], "telefono": p[3], "email": p[4], "data": p[5]})
+
+print("RUBRICA v3.0")
+
+while True:
+    print("\n1. Visualizza 2. Aggiungi  3. Modifica  4. Elimina  5. Cerca  6. Backup  7. Esci")
+    scelta = input("Scelta: ").strip()
+    
+    if scelta == "1":
+        if rubrica:
+            print("Contatti:")
+            for c in rubrica:
+                print(f"{c['codice']} - {c['nome']} {c['cognome']} - {c['telefono']} - {c['email']}")
+            print(f"Totale: {len(rubrica)} contatti.")
+        else:
+            print("Nessun contatto presente.")
+        continue
+
+    elif scelta == "2":
+        dati = input("Inserisci: nome,cognome,telefono,email > ").strip().split(",")
+        if len(dati) != 4:
+            print("Dati insufficienti.")
+            continue
+        nome, cognome, telefono, email = [x.strip().capitalize() for x in dati]
+        # oppure fatto su piu passaggi
+        """
+        nome, cognome, telefono, email = []
+        for i in dati:
+            i = i.strip().capitalize()
+            if i == telefono:
+                telefono = i
+            elif i == email:
+                email = i
+            else:
+                nome, cognome = nome, cognome
+        nome = nome.capitalize()
+        cognome = cognome.capitalize()
+        telefono = telefono.strip()
+        email = email.strip()
+        """
+        if len(nome) < 3 or len(cognome) < 3 or not telefono.isdigit() or len(telefono) != 10 or "@" not in email:
+            print("Errore nei dati.")
+            continue
+        codice = (nome[:2] + cognome[:2] + telefono[-2:]).upper()
+        data = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        trovato = False
+        for c in rubrica:
+            if c["codice"] == codice:
+                conferma = input("Contatto esistente. Sovrascrivere? (s/n): ").lower()
+                if conferma == "s":
+                    c.update({"nome": nome, "cognome": cognome, "telefono": telefono, "email": email, "data": data})
+                    trovato = True
+                break
+        if not trovato:
+            rubrica.append({"codice": codice, "nome": nome, "cognome": cognome, "telefono": telefono, "email": email, "data": data})
+            print("Contatto aggiunto.")
+
+    elif scelta == "3":
+        codice = input("Codice contatto: ").strip().upper()
+        for c in rubrica:
+            if c["codice"] == codice:
+                campo = input("Campo da cambiare (nome, cognome, telefono, email): ").lower().strip()
+                nuovo = input("Nuovo valore: ").strip()
+                if campo in c:
+                    if campo == "telefono" and (not nuovo.isdigit() or len(nuovo) != 10):
+                        print("Numero non valido.")
+                        break
+                    if campo == "email" and "@" not in nuovo:
+                        print("Email non valida.")
+                        break
+                    c[campo] = nuovo.capitalize() if campo in ["nome", "cognome"] else nuovo
+                    # oppure su piu passaggi
+                    """
+                    if campo == "nome":
+                        c["nome"] = nuovo.capitalize()
+                    elif campo == "cognome":
+                        c["cognome"] = nuovo.capitalize()
+                    elif campo == "telefono":
+                        c["telefono"] = nuovo
+                    elif campo == "email":
+                        c["email"] = nuovo
+                    else:
+                        print("Campo non valido.")
+                        break
+                    """
+                    # Aggiorna la data di modifica
+                    c["data"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                    print("Contatto aggiornato.")
+                break
+        else:
+            print("Contatto non trovato.")
+
+    elif scelta == "4":
+        codice = input("Codice da eliminare: ").strip().upper()
+        prima = len(rubrica)  # Salva la lunghezza prima dell'operazione
+        rubrica = [c for c in rubrica if c["codice"] != codice]
+        print("Contatto eliminato." if len(rubrica) < prima else "Non trovato.") # se la lunghezza è cambiata, il contatto è stato eliminato altrimenti non trovato
+        # oppure su piu passaggi
+        """
+        if len(rubrica) < prima:
+            print("Contatto eliminato.")
+        else:
+            print("Contatto non trovato.")
+        """
+
+    elif scelta == "5":
+        testo = input("Testo da cercare: ").strip().lower()
+        risultati = []
+        for c in rubrica:
+            if (testo in c["nome"].lower() or testo in c["cognome"].lower() or
+                testo in c["telefono"] or testo in c["email"].lower()):
+                risultati.append(c)
+        print(f"Trovati: {len(risultati)}")
+        for c in risultati:
+            print(f"{c['codice']} - {c['nome']} {c['cognome']} - {c['telefono']} - {c['email']}")
+
+    elif scelta == "6":
+        nome_file = f"{BACKUP_DIR}/rubrica_{datetime.now().strftime('%Y%m%d_%H%M%S')}.txt"
+        with open(nome_file, "w", encoding="utf-8") as f:
+            for c in rubrica:
+                f.write(f"{c['codice']}|{c['nome']}|{c['cognome']}|{c['telefono']}|{c['email']}|{c['data']}\n")
+        print(f"Backup creato in: {nome_file}")
+
+    elif scelta == "7":
+        break
+
+    else:
+        print("Scelta non valida.")
+
+    # Salvataggio automatico dopo ogni operazione
+    with open(FILE, "w", encoding="utf-8") as f:
+        for c in rubrica:
+            f.write(f"{c['codice']}|{c['nome']}|{c['cognome']}|{c['telefono']}|{c['email']}|{c['data']}\n")
+```
+# RUBRICA TELEFONICA (V 4.0)
+
+Gestione delle eccezioni
+
+```python
+import os
+from datetime import datetime
+
+rubrica = []
+FILE = "rubrica.txt"
+BACKUP_DIR = "backup"
+
+# Creazione cartella backup
+try:
+    if not os.path.exists(BACKUP_DIR):
+        os.mkdir(BACKUP_DIR)
+except OSError as e:
+    print("Errore nella creazione della cartella di backup:", e)
+
+# Caricamento da file
+try:
+    if os.path.exists(FILE):
+        with open(FILE, "r", encoding="utf-8") as f:
+            for r in f:
+                p = r.strip().split("|")
+                if len(p) == 6:
+                    rubrica.append({"codice": p[0], "nome": p[1], "cognome": p[2], "telefono": p[3], "email": p[4], "data": p[5]})
+except OSError as e:
+    print("Errore nella lettura del file:", e)
+
+print("RUBRICA v3.0")
+
+while True:
+    try:
+        print("\n1. Visualizza 2. Aggiungi  3. Modifica  4. Elimina  5. Cerca  6. Backup  7. Esci")
+        scelta = input("Scelta: ").strip()
+
+        if scelta == "1":
+            if rubrica:
+                print("Contatti:")
+                for c in rubrica:
+                    print(f"{c['codice']} - {c['nome']} {c['cognome']} - {c['telefono']} - {c['email']}")
+                print(f"Totale: {len(rubrica)} contatti.")
+            else:
+                print("Nessun contatto presente.")
+            continue
+
+        elif scelta == "2":
+            try:
+                dati = input("Inserisci: nome,cognome,telefono,email > ").strip().split(",")
+                if len(dati) != 4:
+                    print("Dati insufficienti.")
+                    continue
+                nome, cognome, telefono, email = [x.strip().capitalize() for x in dati]
+                if len(nome) < 3 or len(cognome) < 3 or not telefono.isdigit() or len(telefono) != 10 or "@" not in email:
+                    print("Errore nei dati.")
+                    continue
+                codice = (nome[:2] + cognome[:2] + telefono[-2:]).upper()
+                data = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                trovato = False
+                for c in rubrica:
+                    if c["codice"] == codice:
+                        conferma = input("Contatto esistente. Sovrascrivere? (s/n): ").lower()
+                        if conferma == "s":
+                            c.update({"nome": nome, "cognome": cognome, "telefono": telefono, "email": email, "data": data})
+                            trovato = True
+                        break
+                if not trovato:
+                    rubrica.append({"codice": codice, "nome": nome, "cognome": cognome,
+                                    "telefono": telefono, "email": email, "data": data})
+                    print("Contatto aggiunto.")
+            except Exception as e:
+                print("Errore durante l'aggiunta:", e)
+
+        elif scelta == "3":
+            codice = input("Codice contatto: ").strip().upper()
+            trovato = False
+            for c in rubrica:
+                if c["codice"] == codice:
+                    campo = input("Campo da cambiare (nome, cognome, telefono, email): ").lower().strip()
+                    nuovo = input("Nuovo valore: ").strip()
+                    if campo in c:
+                        if campo == "telefono" and (not nuovo.isdigit() or len(nuovo) != 10):
+                            print("Numero non valido.")
+                            break
+                        if campo == "email" and "@" not in nuovo:
+                            print("Email non valida.")
+                            break
+                        c[campo] = nuovo.capitalize() if campo in ["nome", "cognome"] else nuovo
+                        c["data"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                        print("Contatto aggiornato.")
+                        trovato = True
+                    break
+            if not trovato:
+                print("Contatto non trovato.")
+
+        elif scelta == "4":
+            codice = input("Codice da eliminare: ").strip().upper()
+            prima = len(rubrica)
+            rubrica = [c for c in rubrica if c["codice"] != codice]
+            print("Contatto eliminato." if len(rubrica) < prima else "Non trovato.")
+
+        elif scelta == "5":
+            testo = input("Testo da cercare: ").strip().lower()
+            risultati = []
+            for c in rubrica:
+                if (testo in c["nome"].lower() or testo in c["cognome"].lower() or
+                    testo in c["telefono"] or testo in c["email"].lower()):
+                    risultati.append(c)
+            print(f"Trovati: {len(risultati)}")
+            for c in risultati:
+                print(f"{c['codice']} - {c['nome']} {c['cognome']} - {c['telefono']} - {c['email']}")
+
+        elif scelta == "6":
+            try:
+                nome_file = f"{BACKUP_DIR}/rubrica_{datetime.now().strftime('%Y%m%d_%H%M%S')}.txt"
+                with open(nome_file, "w", encoding="utf-8") as f:
+                    for c in rubrica:
+                        f.write(f"{c['codice']}|{c['nome']}|{c['cognome']}|{c['telefono']}|{c['email']}|{c['data']}\n")
+                print(f"Backup creato in: {nome_file}")
+            except Exception as e:
+                print("Errore nel salvataggio del backup:", e)
+
+        elif scelta == "7":
+            print("Chiusura programma.")
+            break
+
+        else:
+            print("Scelta non valida.")
+
+        # Salvataggio automatico dopo ogni operazione
+        try:
+            with open(FILE, "w", encoding="utf-8") as f:
+                for c in rubrica:
+                    f.write(f"{c['codice']}|{c['nome']}|{c['cognome']}|{c['telefono']}|{c['email']}|{c['data']}\n")
+        except Exception as e:
+            print("Errore durante il salvataggio automatico:", e)
+
+    except Exception as err_generico:
+        print("Errore inatteso:", err_generico)
+```

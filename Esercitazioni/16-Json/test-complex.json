@@ -1,0 +1,30 @@
+{
+    "nome": "Nome1 Cognome1",
+    "eta": 30,
+    "impiegato": true,
+    "indirizzo": {
+        "via": "Via Roma",
+        "citta": "Roma",
+        "CAP": "00100"
+    },
+    "numeriditelefono": [
+        {
+            "tipo": "casa",
+            "numero": "0987654321"
+        },
+        {
+            "tipo": "ufficio",
+            "numero": "8765-4321"
+        },
+        {
+            "tipo": "cellulare",
+            "numero": "1234567890"
+        }
+    ],
+    "lingueparlate": [
+        "italiano",
+        "spagnolo"
+    ],
+    "sposato": false,
+    "patente": null
+}

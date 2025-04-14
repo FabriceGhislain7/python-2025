@@ -137,8 +137,8 @@ d = {"a": 1, "b": 2}
 d.update({"c": 3, "d": 4})  
 print(d)  # Output: {'a': 1, 'b': 2, 'c': 3, 'd': 4}
 ```
-
 ### **Esempi pratici**
+campi contatto[0] da che is not subscriptable quindi non è un dizionario
 
 #### **Creazione e modifica:**
 
