@@ -1,0 +1,32 @@
+{
+    "nome": "nome1",
+    "cognome": "cognome1",
+    "eta": 100,
+    "impiegato": true,
+    "indirizzo": {
+        "via": "lagaccio",
+        "citta": "Roma",
+        "CAP": "00100"
+    },
+    "numero di telefono": [
+        {
+            "tipo": "casa",
+            "numero": "1234-5678"
+        },
+        {
+            "tipo": "ufficio",
+            "numero": "9050-5678"
+        },
+        {
+            "tipo": "cellulare",
+            "numero": "9050-0000"
+        }
+    ],
+    "lingua parlata": [
+        "Francese",
+        "italiano",
+        "inglese"
+    ],
+    "sposato": false,
+    "patente": null
+}
