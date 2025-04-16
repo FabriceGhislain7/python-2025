@@ -63,6 +63,7 @@ while True:
                 console.print("Rubrica telefonica vuota.", style="bold red")
                 continue
 
+            rubrica_attiva = []
             contatti_trovati = False
             for contatto_file in contatti_files:
                 try:
@@ -71,6 +72,8 @@ while True:
                         try:
                             obj = json.load(file)
                             if obj["attivo"]:
+                                
+
 
                                 print(f"\nNome: {obj['nome']} {obj['cognome']}")
                                 for tel in obj['telefono']:

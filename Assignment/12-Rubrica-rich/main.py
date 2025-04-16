@@ -38,7 +38,7 @@ while True:
     ))
     try:
         scelta_utente = Prompt.ask("[bold cyan]Inserisci il numero dell'opzione: [/bold cyan]").strip().capitalize()
-        if scelta_utente not in menu:
+        if scelta_utente not in menu.keys():
             raise ValueError("Scelta non valida. Premi 0, 1, 2 oppure 3[bold red/]")
     except ValueError as e:
         console.print(f"[bold red]Errore: {e}[/]")
@@ -63,6 +63,8 @@ while True:
                 console.print("Rubrica telefonica vuota.", style="bold red")
                 continue
 
+            # Generiamo una lista vuota per stampare i contatti attivi
+            rubrica_attiva = []
             contatti_trovati = False
             for contatto_file in contatti_files:
                 try:
@@ -70,14 +72,22 @@ while True:
                     with open(path_contatto, "r", encoding='utf-8') as file:
                         try:
                             obj = json.load(file)
-                            if obj["attivo"]:
 
-                                print(f"\nNome: {obj['nome']} {obj['cognome']}")
+                            if obj["attivo"]:
+                                rubrica_attiva.append(f"\nNome: {obj['nome']} {obj['cognome']}")
+
+                                # Stampa dei numeri di telefono formattata con Rich
                                 for tel in obj['telefono']:
-                                    print(f"  {tel['tipo'].capitalize()}: {tel['numero']}")
-                                print(f"  Attività: {', '.join(obj['attivita'])}")
-                                print(f"  Note: {obj['note']}")
+                                    tipo = tel.get('tipo', 'N/D').capitalize()
+                                    numero = tel.get('numero', 'N/D')
+                                    console.print(f"[bold cyan]  {tipo}[/]: {numero}", highlight=False)
+
+                                console.print(f"[green]  Attività:[/] {', '.join(obj['attivita'])}")
+                                console.print(f"[yellow]  Note:[/] {obj['note']}")
                                 contatti_trovati = True
+                            else:
+                                raise ValueError("Il Contatto non è attivo")
+
                         except json.JSONDecodeError:
                             console.print(f"Errore: File {contatto_file} non è un JSON valido", style="bold red")
                             continue
@@ -94,7 +104,8 @@ while True:
             if not contatti_trovati:
                 console.print("Nessun contatto attivo trovato", style="bold red")
 
-        case "2":  # Aggiungi un contatto
+        # Aggiunge un contatto
+        case "2":
             nuovo_nome = Prompt.ask("Nome: ").strip().capitalize()
             nuovo_cognome = Prompt.ask("Cognome: ").strip().capitalize()
 
