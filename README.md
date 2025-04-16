@@ -14,3 +14,6 @@
 ##  
 ## Scorciatoie da tastiera per VS Code (Windows)
 [Scorciatoie da tastiera per VS Code (Windows)](https://code.visualstudio.com/shortcuts/keyboard-shortcuts-windows.pdf)
+
+## Sito internet di rich
+[Sito internet di rich](http://rich.readthedocs.io/en/stable/)
