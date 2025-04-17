@@ -13,10 +13,6 @@ from rich import spinner
 from rich.align import Align
 
 console = Console()
-# contenuto = Align.center("La mia Rubrica telefonica")
-
-# panel = Panel(contenuto)
-# console.print(panel)
 
 # Creare la directory contatti se non esiste
 path_contatti = "contatti"
@@ -30,13 +26,14 @@ menu = {
 }
 
 while True:
-    # console.clear()
+    # console.clear()   # # oppure il clear di console
+    # os.system('cls' if os.name == 'nt' else 'clear')      # pulisci lo schermo
 
     # Crea e stampa il testo del menu.
     menu_text = ""
     for number, option in menu.items():
         menu_text += f"[cyan]{number}.[/] {option}\n"
-    console.print(Panel(
+    console.print(Panel.fit(        # Panel.fit ci perrmette di visualizare il contenuto limitandocci alla larghezza del contenuto.
         Align.center(f"[bold yellow]RUBRICA TELEFONICA[/bold yellow]\n\n{menu_text}"),
         title="Menu",
         border_style="green"
