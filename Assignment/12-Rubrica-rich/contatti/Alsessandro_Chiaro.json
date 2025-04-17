@@ -1,0 +1,26 @@
+{
+    "nome": "Alsessandro",
+    "cognome": "Chiaro",
+    "telefono": [
+        {
+            "tipo": "cellulare",
+            "numero": "1234567890"
+        },
+        {
+            "tipo": "casa",
+            "numero": "1234567834"
+        },
+        {
+            "tipo": "lavoro",
+            "numero": "8905672341"
+        }
+    ],
+    "attivita": [
+        "Programmatore",
+        "Ingegnere",
+        "Tecnico"
+    ],
+    "note": "Libero professionista",
+    "attivo": true,
+    "data_creazione": "2025-04-17 09:40:55"
+}
