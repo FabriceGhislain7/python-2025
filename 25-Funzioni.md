@@ -194,7 +194,7 @@ def calcola_sconto(prezzo, percentuale):
 def cs(p, x):
 ```
 
-2. Una funzione = una responsabilità
+- 2. Una funzione = una responsabilità
 
 ```python
 # giusto
