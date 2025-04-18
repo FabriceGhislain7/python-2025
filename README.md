@@ -13,3 +13,5 @@
 
 [Alt-Codes for specials characters on the keybord](https://www.alt-codes.net/)
 
+[TpointTech](https://www.tpointtech.com/python-tutorial)
+
