@@ -1,26 +1,50 @@
-# calcolatore basico
-while True:
-    # definisco quali sono gli input che l'utente deve inserire
-    primo_numero = float(input("Inserisci il primo numero: "))
-    secondo_numero = float(input("Inserisci il secondo numero: "))
-    operazione = input("Inserisci l'operazione da eseguire (+, -, *, /): ")
+# versione con try except in ogni funzione
+def somma(a, b):
+    try:
+        return a + b
+    except TypeError:
+        return "Errore: i valori devono essere numeri"
+    
+def sottrazione(a, b):
+    try:
+        return a - b
+    except TypeError:
+        return "Errore: i valori devono essere numeri"
+    
+def moltiplicazione(a, b):
+    try:
+        return a * b
+    except TypeError:
+        return "Errore: i valori devono essere numeri"
+    
+def divisione(a, b):
+    try:
+        return a / b
+    except ZeroDivisionError as e:
+        return (f"Errore: divisione per zero: {e}")
 
-    # definisco le operazioni che il calcolatore deve eseguire
-    if operazione == "+":
-        print(primo_numero + secondo_numero)
-    elif operazione == "-":
-        print(primo_numero - secondo_numero)
-    elif operazione == "*":
-        print(primo_numero * secondo_numero)
-    elif operazione == "/":
-        if secondo_numero == 0:
-            print("Non puoi dividere per 0")
-        else:
-            print(primo_numero / secondo_numero)
-    else:
-        print("Operazione non valida")
+def calcolatore():
+    while True:
+        try:
+            primo_numero = float(input("Inserisci il primo numero: "))
+            secondo_numero = float(input("Inserisci il secondo numero: "))
+            operazione = input("Inserisci l'operazione da eseguire (+, -, *, /): ")
 
-    # chiedo all'utente se vuole continuare
-    continua = input("Vuoi continuare? (s/n): ")
-    if continua.lower() != "s":
-        break
+            if operazione == "+":
+                print(somma(primo_numero, secondo_numero))
+            elif operazione == "-":
+                print(sottrazione(primo_numero, secondo_numero))
+            elif operazione == "*":
+                print(moltiplicazione(primo_numero, secondo_numero))
+            elif operazione == "/":
+                print(divisione(primo_numero, secondo_numero))
+            else:
+                print("Operazione non valida")
+        except ValueError:
+            print("Errore: inserisci un numero valido")
+
+        continua = input("Vuoi continuare? (s/n): ")
+        if continua.lower() != "s":
+            break
+# Chiamo la funzione calcolatore
+calcolatore()
