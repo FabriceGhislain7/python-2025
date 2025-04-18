@@ -210,13 +210,13 @@ def saluta(nome="amico"):
 
 > Se una funzione è troppo lunga, probabilmente fa troppe cose
 
-- 7 Evita che la funzione usi o modifichi variabili definite fuori di essa (evita variabili globali)
+- 7. Evita che la funzione usi o modifichi variabili definite fuori di essa (evita variabili globali)
 
 ```python
 def calcola_iva(prezzo, iva=22):
     return prezzo * (iva / 100)
 ```
 
-- 8 Rendi il codice piu modulare possibile
+- 8. Rendi il codice piu modulare possibile
 
 > se ti accorgi che stai riscrivendo la stessa cosa, crea una funzione
