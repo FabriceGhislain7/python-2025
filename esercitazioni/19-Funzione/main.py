@@ -57,3 +57,37 @@ def numeri_pari(n):
     return lista_pari
 numeri = numeri_pari(5)
 print(numeri)
+
+# Una funzione che restituisce una lista di strighe con lunghezza pari
+print("-" * 40)
+def parole_pari(parole):
+    parole_pari = []
+    for parola in parole:
+        if len(parola) % 2 == 0:
+            parole_pari.append(parola)
+    return parole_pari
+
+parole = ["cane", "elefante", "agnello", "topo", "gatto"]
+print(parole_pari(parole))
+
+# Funzione che restituisce una lista dei nomi abbreviati
+print("-" * 40)
+def nomi_abbreviatti(nomi):
+    nomi_abbreviatti = []
+    for nome in nomi:
+        nomi_abbreviatti.append(f"{nome.split()[0]} {nome.split()[1][0::2]}")
+    return nomi_abbreviatti
+
+nomi_completi = ["Nome1 Cognome1", "Nome2 Cognome2", "Nome3 Cognome3"]
+nomi_abbrev = nomi_abbreviatti(nomi_completi)
+print(nomi_abbrev)
+
+codici = ["01234 56789", "4309 8567", "4357lk ds457"]
+codici_abb = nomi_abbreviatti(codici)
+print(codici_abb)
+
+# Una funzione che mi resituisce un dizionario filtrato
+def valori_specifici(dizionario, chiavi):
+    dizionario_filtrato = {}
+    for chiave in chiavi:
+        
