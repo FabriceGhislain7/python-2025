@@ -106,19 +106,15 @@ print(quadruplo(5))  # 20
 # Funzione che viene usata da un 'altra funzione
 def somma(a, b):  
     return a + b
-
 def sottrazione(a, b):  
     return a - b
-
 def moltiplicazione(a, b):
     return a * b
-
 def divisione(a, b):
     if b == 0:
         return "Non puoi dividere per 0"
     else:
         return a / b
-        
 def calcola(a, b, operazione):
     if operazione == "somma":
         return somma(a, b)
@@ -130,7 +126,6 @@ def calcola(a, b, operazione):
         return divisione(a, b)    
     else:
         return "Operazione non valida"
-    # Esempio di utilizzo
 risultato = calcola(10, 5, "somma")
 print(risultato)  # 15
 
