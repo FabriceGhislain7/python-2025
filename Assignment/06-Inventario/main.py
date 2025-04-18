@@ -3,11 +3,7 @@ def vedi_inventario(inventario):
         quantita, prezzo = dati
         print(f"{prodotto}: {quantita} pezzi - €{prezzo:.2f} ciascuno")
 
-def aggiorna_inventario(inventario):
-    prodotto = input("Nome prodotto: ").lower()
-    quantita = int(input("Quantità da aggiungere: "))
-    prezzo_unitario = float(input("Prezzo unitario (€): "))
-
+def aggiorna_inventario(inventario, prodotto, quantita, prezzo_unitario):
     if prodotto in inventario:
         inventario[prodotto][0] += quantita
         inventario[prodotto][1] = prezzo_unitario
@@ -31,7 +27,12 @@ if azione == "V":
     vedi_inventario(inventario)
 
 elif azione == "A":
-    aggiorna_inventario(inventario)
+    prodotto = input("Nome prodotto: ").lower()
+    quantita = int(input("Quantità da aggiungere: "))
+    prezzo_unitario = float(input("Prezzo unitario (€): "))
+    
+    aggiorna_inventario(inventario, prodotto, quantita, prezzo_unitario)
+    
     print("\nInventario aggiornato:")
     vedi_inventario(inventario)
 
