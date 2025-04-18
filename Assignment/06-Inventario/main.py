@@ -1,3 +1,20 @@
+def vedi_inventario(inventario):
+    for prodotto, dati in inventario.items():
+        quantita, prezzo = dati
+        print(f"{prodotto}: {quantita} pezzi - €{prezzo:.2f} ciascuno")
+
+def aggiorna_inventario(inventario):
+    prodotto = input("Nome prodotto: ").lower()
+    quantita = int(input("Quantità da aggiungere: "))
+    prezzo_unitario = float(input("Prezzo unitario (€): "))
+
+    if prodotto in inventario:
+        inventario[prodotto][0] += quantita
+        inventario[prodotto][1] = prezzo_unitario
+    else:
+        inventario[prodotto] = [quantita, prezzo_unitario]
+
+# Inventario iniziale
 inventario = {
     "mele": [10, 0.20],
     "banane": [5, 0.15],
@@ -6,28 +23,17 @@ inventario = {
     "fragole": [20, 0.22]
 }
 
+# Menù principale
 azione = input("Vuoi [V]edere o [A]ggiornare l'inventario? ").upper()
 
 if azione == "V":
-    for prodotto, dati in inventario.items():
-        quantita, prezzo = dati  # dati è una lista con [quantità, prezzo]
-        print(f"{prodotto}: {quantita} pezzi - €{prezzo:.2f} ciascuno")
+    print("\n--- Inventario Attuale ---")
+    vedi_inventario(inventario)
 
 elif azione == "A":
-    prodotto = input("Nome prodotto: ").lower()
-    quantita = int(input("Quantità da aggiungere: "))
-    prezzo_unitario = float(input("Prezzo unitario (€): "))
-
-    if prodotto in inventario:
-        inventario[prodotto][0] += quantita  # aggiorna la quantità con [prodotto][0] dove 0 è la quantità
-        inventario[prodotto][1] = prezzo_unitario  # sovrascrive il prezzo
-    else:
-        inventario[prodotto] = [quantita, prezzo_unitario]
-
-    print("Inventario aggiornato:")
-    for prodotto, dati in inventario.items():
-        quantita, prezzo = dati
-        print(f"{prodotto}: {quantita} pezzi - €{prezzo:.2f} ciascuno")
+    aggiorna_inventario(inventario)
+    print("\nInventario aggiornato:")
+    vedi_inventario(inventario)
 
 else:
     print("Azione non valida.")

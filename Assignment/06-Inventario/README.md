@@ -79,3 +79,114 @@ elif azione == "A":
 else:
     print("Azione non valida.")
 ```
+# INVENTARIO MAGAZZINO (V 3.0)
+## Obiettivo
+Implementare una struttura a funzioni
+## Implementazione
+Creare un dizionario con articoli e quantità e prezzo unitario dove i valori sono raggruppati in una lista o un dizionario
+
+Usare il dizionario come variabile globale
+
+```python
+inventario = {
+    "mele": [10, 0.20],
+    "banane": [5, 0.15],
+    "pere": [8, 0.18],
+    "ciliegie": [15, 0.25],
+    "fragole": [20, 0.22]
+}
+
+def vedi_inventario():
+    print("\n--- Inventario Attuale ---")
+    for prodotto, dati in inventario.items():
+        quantita, prezzo = dati
+        print(f"{prodotto}: {quantita} pezzi - €{prezzo:.2f} ciascuno")
+
+def aggiorna_inventario():
+    prodotto = input("Nome prodotto: ").lower()
+    quantita = int(input("Quantità da aggiungere: "))
+    prezzo_unitario = float(input("Prezzo unitario (€): "))
+
+    if prodotto in inventario:
+        inventario[prodotto][0] += quantita
+        inventario[prodotto][1] = prezzo_unitario
+    else:
+        inventario[prodotto] = [quantita, prezzo_unitario]
+
+    print("\nInventario aggiornato:")
+    vedi_inventario()
+
+# Menù principale
+azione = input("Vuoi [V]edere o [A]ggiornare l'inventario? ").upper()
+
+if azione == "V":
+    vedi_inventario()
+elif azione == "A":
+    aggiorna_inventario()
+else:
+    print("Azione non valida.")
+```
+# INVENTARIO MAGAZZINO (V 4.0)
+
+## Obiettivo
+versione con funzioni che ricevono l’inventario come argomento, in modo da evitare variabili globali e rendere il codice più ordinato e riutilizzabile
+
+## Implementazione
+- Creare un dizionario con articoli e quantità e prezzo unitario dove i valori sono raggruppati in un dizionario
+- Passare l'inventario come argomento alle funzioni
+- Se possibile usare il print fuori dalle funzioni
+
+```python
+def vedi_inventario(inventario):
+    for prodotto, dati in inventario.items():
+        quantita, prezzo = dati
+        print(f"{prodotto}: {quantita} pezzi - €{prezzo:.2f} ciascuno")
+
+def aggiorna_inventario(inventario):
+    prodotto = input("Nome prodotto: ").lower()
+    quantita = int(input("Quantità da aggiungere: "))
+    prezzo_unitario = float(input("Prezzo unitario (€): "))
+
+    if prodotto in inventario:
+        inventario[prodotto][0] += quantita
+        inventario[prodotto][1] = prezzo_unitario
+    else:
+        inventario[prodotto] = [quantita, prezzo_unitario]
+
+# Inventario iniziale
+inventario = {
+    "mele": [10, 0.20],
+    "banane": [5, 0.15],
+    "pere": [8, 0.18],
+    "ciliegie": [15, 0.25],
+    "fragole": [20, 0.22]
+}
+
+# Menù principale
+azione = input("Vuoi [V]edere o [A]ggiornare l'inventario? ").upper()
+
+if azione == "V":
+    print("\n--- Inventario Attuale ---")
+    vedi_inventario(inventario)
+
+elif azione == "A":
+    aggiorna_inventario(inventario)
+    print("\nInventario aggiornato:")
+    vedi_inventario(inventario)
+
+else:
+    print("Azione non valida.")
+```
+# INVENTARIO MAGAZZINO (V 5.0)
+## Obiettivo
+la funzione aggiorna_inventario() riceve tutti i dati come argomenti: prodotto, quantita, prezzo_unitario — invece di chiederli con input() al suo interno
+
+## Implementazione
+- Creare un dizionario con articoli e quantità e prezzo unitario dove i valori sono raggruppati in un dizionario
+- Passare l'inventario come argomento alle funzioni
+- Passare i dati come argomenti alla funzione aggiorna_inventario()
+- Se possibile usare il print fuori dalle funzioni
+
+```python
+
+```

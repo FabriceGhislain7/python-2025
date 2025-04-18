@@ -138,6 +138,30 @@ risultato = calcola(10, 5, "somma")
 print(risultato)  # Output: 15
 ```
 
+# Dati mutabili ed immutabili
+I dizionari e le altre strutture in Python sono oggetti `mutabili`:
+ - Quando passi un dizionario (o una lista) a una funzione, non viene copiato, ma viene passato per riferimento
+ - Le modifiche fatte dentro la funzione agiscono sullo stesso oggetto in memoria, cioè sull'inventario originale
+ - Quindi non serve return perché il dizionario inventario viene modificato all'interno della funzione stessa
+ 
+> se il dizionario fosse immutabile (come un int, float, str, tuple), allora sarebbe diverso
+
+```python
+def incrementa(x):
+    x += 1  # crea una nuova variabile x
+numero = 5
+incrementa(numero)
+print(numero)  # Rimane 5, perché x è una copia
+```
+> in modo da incrementarlo si deve fare
+```python
+def incrementa(x):
+    return x + 1  # restituisce il nuovo valore
+numero = 5
+numero = incrementa(numero)
+print(numero)  # Ora è 6
+```
+
 ### Differenza tra parametri e argomenti
 
 Spesso vengono confusi, ma sono due cose diverse.
