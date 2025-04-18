@@ -15,7 +15,6 @@ inventario = {
     "mele": [10, 0.20],
     "banane": [5, 0.15],
     "pere": [8, 0.18],
-    "ciliegie": [15, 0.25],
     "fragole": [20, 0.22]
 }
 

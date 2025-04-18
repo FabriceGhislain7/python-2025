@@ -16,7 +16,6 @@ inventario = {
     "mele": 10,
     "banane": 5,
     "pere": 8,
-    "ciliegie": 15,
     "fragole": 20
 }
 azione = input("Vuoi [V]edere o [A]ggiornare l'inventario? ")
@@ -49,7 +48,6 @@ inventario = {
     "mele": [10, 0.20],
     "banane": [5, 0.15],
     "pere": [8, 0.18],
-    "ciliegie": [15, 0.25],
     "fragole": [20, 0.22]
 }
 
@@ -91,8 +89,7 @@ Usare il dizionario come variabile globale
 inventario = {
     "mele": [10, 0.20],
     "banane": [5, 0.15],
-    "pere": [8, 0.18],
-    "ciliegie": [15, 0.25],
+    "pere": [8, 0.18]
     "fragole": [20, 0.22]
 }
 
@@ -158,7 +155,6 @@ inventario = {
     "mele": [10, 0.20],
     "banane": [5, 0.15],
     "pere": [8, 0.18],
-    "ciliegie": [15, 0.25],
     "fragole": [20, 0.22]
 }
 
@@ -205,7 +201,6 @@ inventario = {
     "mele": [10, 0.20],
     "banane": [5, 0.15],
     "pere": [8, 0.18],
-    "ciliegie": [15, 0.25],
     "fragole": [20, 0.22]
 }
 
