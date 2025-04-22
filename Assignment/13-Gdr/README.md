@@ -1,28 +1,214 @@
-# GDR (V 1.0)
+# GDR Obiettivi didattici
+- Usare funzioni con parametri e valori di ritorno
+- Simulare cicli di gioco
+- Gestire l'input dell'utente
+- Gestire errori
+- Gestire la letture e scrittura su file json
 
+|FASE|Argomento Python| Implementazione nel gioco|
+|----|--------------------------|--------------------------------------------------|
+|1   |Funzioni                  | Strutura modulare con def                        |
+|2   |Prametri e riturni(return)| crea_personaggio(nome) restituisce un personaggio|
+|3   | Dizionari                | Geszione di salute, attacco, nome                |
+|4   |Condizioni(if else)       | Controllo della salute per capire se qualcuno a perso|
+|5   | Cicli(while)| Turni di combattimento|
+|6   |Import di librerie(import random)|Generare danni casuali|
+|7   | List comprehensione| inventario o log dei danni subiti|
+|8   |Classi e oggetti(class)| Trasformare personaggio da dict a oggetti|
+|9   | File (open, read, write)| Salvare le partite attraverso una classe|
+|10  |Gestione degli errori (try, except)|Input dell'utente attraverso una classe|
+
+# V 1.0
 ## Obiettivi del programma
-- Creare un giocco a turni dove due personaggii si scontrano
-- Usare funzione in modo da gestire:
+- Creare un gioco a turni dove due personaggi si scontrano
+- Usare funzioni in modo da gestire:
 - attacco
-- turni 
+- turni
 - salute
 
-## Obiettivi didattici 
-- Usare funzioni e parametri
+## Funzioni principali
+- Funzione: stampa un messaggio di benvenuto
+- Funzione: crea un personaggio con le seguenti caratteristiche:
+```python
+{
+    "nome": "Nome del personaggio",
+    "salute": 100,
+    "attacco_min": 10,
+    "attacco_max": 20
+}
+```
+- Funzione: esegue un attacco
+- Funzione: controlla se qualcuno è sconfitto
+- Funziome principale: gestisce il ciclo di gioco
+
 ```python
 import random
-def mostra_benvenuto():
-    print("Benvenuto ne gioco di combattimento!") 
 
-def crea_personaggio(nome):
+# Funzione senza parametri: stampa un messaggio di benvenuto
+def mostra_benvenuto():
+    print("Benvenuto nel gioco di combattimento!")  # Non prende input, non restituisce nulla. Serve solo a stampare testo
+
+# Funzione con parametri: crea un personaggio
+def crea_personaggio(nome):  # restituisce un dizionario
     personaggio = {
         "nome": nome,
-        "salute": 100, 
+        "salute": 100,
         "attacco_min": 10,
         "attacco_max": 20
     }
     return personaggio
 
-# Stamapa il messaggio di benvenuto
-nome = input  
+# Funzione con parametri: esegue un attacco
+def esegui_attacco(attaccante, difensore):  # prende due personaggi
+    danno = random.randint(attaccante["attacco_min"],attaccante["attacco_max"])  # sceglie un numero casuale tra attacco_min ed attacco_max
+    difensore["salute"] -= danno  # sottrae il danno alla salute dell altro personaggio
+    # stampo il messaggio di attacco
+    print(f"{attaccante['nome']} attacca {difensore['nome']} e infligge {danno} danni!")  # stampa il messaggio di attacco
+    # Se la salute scende sotto 0, la riportiamo a zero
+    if difensore["salute"] < 0:
+        difensore["salute"] = 0
+    # stampo la salute del difensore
+    print(f"{difensore['nome']} ha {difensore['salute']} punti salute rimasti.")  # stampa la salute del difensore
+
+# Funzione con parametri: controlla se qualcuno è sconfitto
+def personaggio_sconfitto(personaggio):  # prende il personaggio
+    # ritorna un valore booleano
+    return personaggio["salute"] <= 0  # controlla se la salute è zero
+
+# stampo il messaggio di benvenuto
+mostra_benvenuto()
+
+# provo la funzione di creazione del personaggio
+nome = input("Inserisci il nome del tuo personaggio: ")
+personaggio = crea_personaggio(nome)
+# stampo il personaggio
+print(f"Personaggio creato: {personaggio['nome']}, Salute: {personaggio['salute']}, Attacco min: {personaggio['attacco_min']}, Attacco max: {personaggio['attacco_max']}")
+
+# creo due personaggi dummy
+giocatore = crea_personaggio("Personaggio amico")
+nemico = crea_personaggio("Nemico")
+
+#stampo i personaggi
+print(giocatore)
+print(nemico)
+# oppure lo stampo formattato
+print(f"Personaggio amico: {giocatore['nome']}, Salute: {giocatore['salute']}, Attacco min: {giocatore['attacco_min']}, Attacco max: {giocatore['attacco_max']}")
+print(f"Nemico: {nemico['nome']}, Salute: {nemico['salute']}, Attacco min: {nemico['attacco_min']}, Attacco max: {nemico['attacco_max']}")
+
+# stampo il messaggio di inizio combattimento
+print("Inizia il combattimento!")
+
+# provo la funzione attacco
+esegui_attacco(giocatore, nemico)
+esegui_attacco(nemico, giocatore)
+
+# provo personaggio sconfitto
+if personaggio_sconfitto(nemico):
+    print(f"{nemico['nome']} è sconfitto!")
+else:
+    print(f"{nemico['nome']} è ancora in piedi!")
+
+if personaggio_sconfitto(giocatore):
+    print(f"{giocatore['nome']} è sconfitto!")
+else:
+    print(f"{giocatore['nome']} è ancora in piedi!")
 ```
+# V 2.0
+
+- Inserire la logica di gioco principale (il loop nel quale avviene il duelle) all'interno di una funzione specifica
+- Creare il bloco main per eseguire la logica del gioco principale.
+
+## Descrizione della logica del gioco
+- Il giocatore attacca(Incomincia il turno)
+- Il secondo personagio attacca 
+- Si controlla se il nemico è stato sconfitto
+- Si ripete finché uno dei due ha salute = 0
+```python 
+def gioca_duello():
+    # stampo il messaggio di benvenuto
+    mostra_benvenuto()
+
+    # Creiamo i personaggi
+    giocatore = crea_personaggio("Personaggio Principale")
+    nemico = crea_personaggio("Nemico")
+
+    # definiamo un contatore per i turni
+    turno = 1
+
+     # Ciclo finché qualcuno perde (quando la salute è zero)
+    while True:
+        print(f"Turno {turno}:")
+
+        # Attacco del giocatore
+        esegui_attacco(giocatore, nemico)
+
+        # controlla se il nemico è sconfitto
+        if personaggio_sconfitto(nemico):
+            print("Hai vinto il duello!")
+            break  # esci dal ciclo nel caso di vittoria
+
+        # Attacco del nemico
+        esegui_attacco(nemico, giocatore)
+
+        # controlla se il giocatore è sconfitto
+        if personaggio_sconfitto(giocatore):
+            print("Sei stato sconfitto!") 
+            break # esci dal ciclo nel caso di sconfitta
+
+        # incremento il contatore dei turni
+        turno += 1
+
+# punto di ingresso
+def main():
+    gioca_duello()
+
+# Esegui il gioco
+if __name__ == "__main__":
+    main()
+``` 
+# V 3. 0
+## Obiettivi del programma
+Implementare una lista che memorizza quanti danni ogni personaggio subisce turno dopo turno 
+Modifica la funzione crea_personaggio cosi:
+```python 
+def crea_personaggio(nome):  # restituisce un dizionario
+     personaggio = {
+        "nome": nome,
+        "salute": 100,
+        "attacco_min": 10,
+        "attacco_max": 20,
+        "Storico_danni_subiti": [] 
+    }
+    return personaggio
+
+```
+# V 4. 0
+## Obiettivi del programma
+- Usare le comprehensions (list comprehension) in modo da usare più di personaggi in un modo compatto
+- Senza list comprension: 
+```python 
+giocatore = crea_personaggio("Alberto")
+nomi_nemici = ["nemico1", "Nemico2", "Nemico3"]
+nemici = [crea_personaggio(nome) for nome in nomi_nemici]
+nemico = random.choice(nemici)
+```
+
+# V 5. 0
+## Obiettivi del programma
+- modificare il valore di attacco tra 5 e 10.
+- implementare il passaggio al prossimo nemico se il primo viene sconfitto
+- Se perde, il gioco si finisce 
+
+## Funzionalità del programma
+- Il giocatore inizia con 100 di salute come il nemico
+- Se il giocatore vince, affronta il prossimo nemico
+- Se perde, finisce il gioco
+- Alla fine, viene mostrato un riepilogo del l'elenco dei nemici sconfitti dal giocatore(sia i numero che i nomi)
+```python
+
+```
+## V 5.0 
+- implementare funzionalità di recupero salute tra un nemico e l'altro
+- Dopo ogni vittoria, il giocatore recupera una percentuale fissa di salute (30%)
+- Se la salute è maggiore di 100, la riporto a 100
+- Dopo ogni nemico sconfitto, il giocatore recupera salute e stampiamo il recupero della salute attuale

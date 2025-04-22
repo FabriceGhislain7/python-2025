@@ -1,7 +1,7 @@
 # TECNICO PROGRAMMATORE
 
 ## Materiale utile. 
-[Dispense dell'insegnante](https://github.com/delectablerec/python-2025/blob/main/Esercitazioni/01-Markdown/README.md?plain=1)
+[Dispense dell'insegnante](https://github.com/delectablerec/python-2025/tree/main)
 
 [Link del mio GitHub](https://github.com/FabriceGhislain7)
 
