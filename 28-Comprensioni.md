@@ -27,23 +27,23 @@ pari = [x for x in range(10) if x % 2 == 0]
 ```
 Esempio 3: trasformare stringhe
 ```python
-nomi = ["alice", "BOB", "ClAra"]
+nomi = ["Nome1", "nome2", "Nome3"]
 puliti = [n.lower() for n in nomi]
-# ['alice', 'bob', 'clara']
+# ['nome1', 'nome2', 'nome3']
 ```
 ## 2. Dict Comprehension
 Utile per creare o trasformare dizionari in una sola riga.
 
 ```python
-nomi = ["alice", "bob", "carla"]
+nomi = ["nome1", "nome2", "nome3"]
 lunghezze = {nome: len(nome) for nome in nomi}
-# {'alice': 5, 'bob': 3, 'carla': 5}
+# {'nome1': 5, 'nome2': 5, 'nome3': 5}
 ```
 ## 3. Set Comprehension
 Come la list comprehension, ma con {} e senza duplicati.
 
 ```python
-caratteri = {c for c in "banana"}
+caratteri = {c for c in "frutta"}
 # {'b', 'a', 'n'}
 ```
 ## 4. Con if...else dentro
