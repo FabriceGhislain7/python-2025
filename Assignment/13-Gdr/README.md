@@ -100,3 +100,57 @@ if personaggio_sconfitto(giocatore):
 else:
     print(f"{giocatore['nome']} è ancora in piedi!")
 ```
+# V 2.0
+## Obiettivi del programma
+- Inserire la logica di gioco proncipale (il loop nel quale avviene il duello) all interno di una funzione specifica
+- Creare il blocco main() per eseguire la logica di gioco principale
+
+## Descrizione della logica di gioco
+- Il giocatore attacca (incomincia il turno)
+- Si controlla se il nemico è sconfitto
+- Il secondo personaggio attacca
+- Si controlla se il giocatore è sconfitto
+- Si ripete finché uno dei due ha salute = 0
+```python
+def gioca_duello():
+    # stampo il messaggio di benvenuto
+    mostra_benvenuto()
+
+    # Creiamo i personaggi
+    giocatore = crea_personaggio("Personaggio Principale")
+    nemico = crea_personaggio("Nemico")
+
+    # definiamo un contatore per i turni
+    turno = 1
+
+     # Ciclo finché qualcuno perde (quando la salute è zero)
+    while True:
+        print(f"Turno {turno}:")
+
+        # Attacco del giocatore
+        esegui_attacco(giocatore, nemico)
+
+        # controlla se il nemico è sconfitto
+        if personaggio_sconfitto(nemico):
+            print("Hai vinto il duello!")
+            break  # esci dal ciclo nel caso di vittoria
+
+        # Attacco del nemico
+        esegui_attacco(nemico, giocatore)
+
+        # controlla se il giocatore è sconfitto
+        if personaggio_sconfitto(giocatore):
+            print("Sei stato sconfitto!") 
+            break # esci dal ciclo nel caso di sconfitta
+
+        # incremento il contatore dei turni
+        turno += 1
+
+# punto di ingresso
+def main():
+    gioca_duello()
+
+# Esegui il gioco
+if __name__ == "__main__":
+    main()
+```

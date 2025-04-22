@@ -8,12 +8,13 @@ def mostra_benvenuto():
 def crea_personaggio(nome):  # restituisce un dizionario
     personaggio = {
         "nome": nome,
-        "salute": 10,
+        "salute": 100,
         "attacco_min": 10,
         "attacco_max": 20
     }
     return personaggio
 
+# Funzione con parametri: esegue un attacco
 def esegui_attacco(attaccante, difensore):  # prende due personaggi
     danno = random.randint(attaccante["attacco_min"],attaccante["attacco_max"])  # sceglie un numero casuale tra attacco_min ed attacco_max
     difensore["salute"] -= danno  # sottrae il danno alla salute dell altro personaggio
@@ -30,41 +31,45 @@ def personaggio_sconfitto(personaggio):  # prende il personaggio
     # ritorna un valore booleano
     return personaggio["salute"] <= 0  # controlla se la salute è zero
 
-# stampo il messaggio di benvenuto
-mostra_benvenuto()
-# provo la funzione di creazione del personaggio
-nome = input("Inserisci il nome del tuo personaggio: ")
-personaggio = crea_personaggio(nome)
-# stampo il personaggio
-print(f"Personaggio creato: {personaggio['nome']}, Salute: {personaggio['salute']}, Attacco min: {personaggio['attacco_min']}, Attacco max: {personaggio['attacco_max']}")
+# loop principale di gioco
+def gioca_duello():
+    # stampo il messaggio di benvenuto
+    mostra_benvenuto()
 
+    # Creiamo i personaggi
+    giocatore = crea_personaggio("Personaggio Principale")
+    nemico = crea_personaggio("Nemico")
 
-# creo due personaggi dummy
-giocatore = crea_personaggio("Personaggio amico")
-nemico = crea_personaggio("Nemico")
+    # definiamo un contatore per i turni
+    turno = 1
 
-#stampo i personaggi
-print(giocatore)
-print(nemico)
+     # Ciclo finché qualcuno perde (quando la salute è zero)
+    while True:
+        print(f"Turno {turno}:")
 
-# oppure lo stampo formattato
-print(f"Personaggio amico: {giocatore['nome']}, Salute: {giocatore['salute']}, Attacco min: {giocatore['attacco_min']}, Attacco max: {giocatore['attacco_max']}")
-print(f"Nemico: {nemico['nome']}, Salute: {nemico['salute']}, Attacco min: {nemico['attacco_min']}, Attacco max: {nemico['attacco_max']}")
+        # Attacco del giocatore
+        esegui_attacco(giocatore, nemico)
 
-# stampo il messaggio di inizio combattimento
-print("Inizia il combattimento!")
+        # controlla se il nemico è sconfitto
+        if personaggio_sconfitto(nemico):
+            print("Hai vinto il duello!")
+            break  # esci dal ciclo nel caso di vittoria
 
-# provo la funzione attacco
-esegui_attacco(giocatore, nemico)
-esegui_attacco(nemico, giocatore)
+        # Attacco del nemico
+        esegui_attacco(nemico, giocatore)
 
-# provo personaggio sconfitto
-if personaggio_sconfitto(nemico):
-    print(f"{nemico['nome']} è sconfitto!")
-else:
-    print(f"{nemico['nome']} è ancora in piedi!")
+        # controlla se il giocatore è sconfitto
+        if personaggio_sconfitto(giocatore):
+            print("Sei stato sconfitto!") 
+            break # esci dal ciclo nel caso di sconfitta
 
-if personaggio_sconfitto(giocatore):
-    print(f"{giocatore['nome']} è sconfitto!")
-else:
-    print(f"{giocatore['nome']} è ancora in piedi!")
+        # incremento il contatore dei turni
+        turno += 1
+        
+# punto di ingresso
+def main():
+    gioca_duello()
+
+# Esegui il gioco
+if __name__ == "__main__":
+    main()
