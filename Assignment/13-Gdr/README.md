@@ -1,25 +1,28 @@
 # GDR Obiettivi didattici
+
 - Usare funzioni con parametri e valori di ritorno
 - Simulare cicli di gioco
 - Gestire l'input dell'utente
 - Gestire errori
 - Gestire la letture e scrittura su file json
 
-FASE | Argomento Python | Implementazione nel gioco
----|---|---
-1 | Funzioni | Struttura modulare con def
-2 | Parametri e ritorni (return) | crea_personaggio(nome) restituisce un dizionario
-3 | Dizionari | Gestione di salute, attacco, nome
-4 | Condizioni (if, else) | Controllo della salute per capire se qualcuno ha perso
-5 | Cicli (while) | Turni di combattimento
-6 | Import di librerie (import random) | Generare danni casuali
-7 | List comprehension | Inventario o log dei danni subiti
-8 | Classi e oggetti (class) | Trasformare personaggio da dict a oggetto
-9 | File (open, read, write) | Salvare e caricare le partite attraverso una classe 
-10 | Gestione errori (try, except) | Input dell'utente attraverso una classe
+| FASE | Argomento Python                   | Implementazione nel gioco                              |
+| ---- | ---------------------------------- | ------------------------------------------------------ |
+| 1    | Funzioni                           | Struttura modulare con def                             |
+| 2    | Parametri e ritorni (return)       | crea_personaggio(nome) restituisce un dizionario       |
+| 3    | Dizionari                          | Gestione di salute, attacco, nome                      |
+| 4    | Condizioni (if, else)              | Controllo della salute per capire se qualcuno ha perso |
+| 5    | Cicli (while)                      | Turni di combattimento                                 |
+| 6    | Import di librerie (import random) | Generare danni casuali                                 |
+| 7    | List comprehension                 | Inventario o log dei danni subiti                      |
+| 8    | Classi e oggetti (class)           | Trasformare personaggio da dict a oggetto              |
+| 9    | File (open, read, write)           | Salvare e caricare le partite attraverso una classe    |
+| 10   | Gestione errori (try, except)      | Input dell'utente attraverso una classe                |
 
 # V 1.0
+
 ## Obiettivi del programma
+
 - Creare un gioco a turni dove due personaggi si scontrano
 - Usare funzioni in modo da gestire:
 - attacco
@@ -27,16 +30,19 @@ FASE | Argomento Python | Implementazione nel gioco
 - salute
 
 ## Funzioni principali
+
 - Funzione: stampa un messaggio di benvenuto
 - Funzione: crea un personaggio con le seguenti caratteristiche:
+
 ```json
 {
-    "nome": "Nome del personaggio",
-    "salute": 100,
-    "attacco_min": 10,
-    "attacco_max": 20
+  "nome": "Nome del personaggio",
+  "salute": 100,
+  "attacco_min": 10,
+  "attacco_max": 20
 }
 ```
+
 - Funzione: esegue un attacco
 - Funzione: controlla se qualcuno è sconfitto
 - Funziome principale: gestisce il ciclo di gioco
@@ -113,17 +119,22 @@ if personaggio_sconfitto(giocatore):
 else:
     print(f"{giocatore['nome']} è ancora in piedi!")
 ```
+
 # V 2.0
+
 ## Obiettivi del programma
+
 - Inserire la logica di gioco proncipale (il loop nel quale avviene il duello) all interno di una funzione specifica
 - Creare il blocco main() per eseguire la logica di gioco principale
 
 ## Descrizione della logica di gioco
+
 - Il giocatore attacca (incomincia il turno)
 - Si controlla se il nemico è sconfitto
 - Il secondo personaggio attacca
 - Si controlla se il giocatore è sconfitto
 - Si ripete finché uno dei due ha salute = 0
+
 ```python
 def gioca_duello():
     # stampo il messaggio di benvenuto
@@ -153,7 +164,7 @@ def gioca_duello():
 
         # controlla se il giocatore è sconfitto
         if personaggio_sconfitto(giocatore):
-            print("Sei stato sconfitto!") 
+            print("Sei stato sconfitto!")
             break # esci dal ciclo nel caso di sconfitta
 
         # incremento il contatore dei turni
@@ -167,8 +178,11 @@ def main():
 if __name__ == "__main__":
     main()
 ```
+
 # V 3.0
+
 ## Obiettivi del programma
+
 - Implementare una lista che memorizza quanti danni ogni personaggio subisce turno dopo turno
 
 Modifica la funzione crea_personaggio così:
@@ -178,12 +192,14 @@ def crea_personaggio(nome):
     return {
         "nome": nome,
         "salute": 100,
-        "attacco_min": 10,
-        "attacco_max": 20,
+        "attacco_min": 5,
+        "attacco_max": 80,
         "storico_danni_subiti": []  # <--- nuova lista
          }
 ```
+
 - Aggiorna la funzione esegui_attacco da così:
+
 ```python
 # Funzione con parametri: esegue un attacco
 def esegui_attacco(attaccante, difensore):  # prende due personaggi
@@ -197,7 +213,9 @@ def esegui_attacco(attaccante, difensore):  # prende due personaggi
     # stampo la salute del difensore
     print(f"{difensore['nome']} ha {difensore['salute']} punti salute rimasti.")  # stampa la salute del difensore
 ```
+
 A così:
+
 ```python
 def esegui_attacco(attaccante, difensore):  # prende due personaggi
     danno = random.randint(attaccante["attacco_min"],attaccante["attacco_max"])
@@ -208,16 +226,22 @@ def esegui_attacco(attaccante, difensore):  # prende due personaggi
         difensore["salute"] = 0
     print(f"{difensore['nome']} ha {difensore['salute']} punti salute rimasti.")
 ```
+
 - stampare lo storico dei danni subiti da ogni personaggio:
+
 ```python
 print("Storico danni subiti dal nemico:", nemico["storico_danni_subiti"])
 print("Storico danni subiti dal giocatore:", giocatore["storico_danni_subiti"])
 ```
+
 # V 4.0
+
 ## Obiettivi del programma
+
 - usare le comprehensions (list comprehensions) in modo da creare più personaggi in un modo compatto
 
 Senza list comprehension:
+
 ```python
 nomi_nemici = ["Nemico1", "Nemico2", "Nemico3"]
 nemici = []
@@ -225,19 +249,25 @@ for nome in nomi_nemici:
     nemici.append(crea_personaggio(nome))
 print(nemici)
 ```
+
 Con list comprehension:
+
 ```python
 nomi_nemici = ["Nemico1", "Nemico2", "Nemico3"]
 nemici = [crea_personaggio(nome) for nome in nomi_nemici]
 print(nemici)
 ```
+
 Aggiorna la funzione gioca_duello da così:
+
 ```python
 # Creiamo i personaggi
 giocatore = crea_personaggio("Personaggio Principale")
 nemico = crea_personaggio("Nemico")
 ```
+
 A così:
+
 ```python
 # Creazione del giocatore
 giocatore = crea_personaggio("Personaggio Principale")
@@ -252,17 +282,22 @@ nemico = nemici[0]
 # Oppure scelgo casualmente un nemico
 nemico = random.choice(nemici)
 ```
-# V 4.0
+
+# V 5.0
+
 ## Obiettivi del programma
+
 - Modificare il valore di attacco tra 5 e 35
 - Implementare il passaggio al prossimo nemico se il primo viene sconfitto
 - Se perde, il gioco finisce
 
 ## Funzionalita del torneo
+
 - Il giocatore inizia con 100 di salute come il nemico
 - Se il giocatore vince, affronta il prossimo nemico
 - Se perde, finisce il gioco
 - Alla fine viene mostrato un riepilogo del torneo con l elenco dei nemici sconfitti dal giocatore (sia il numero che i nomi)
+
 ```python
 def gioca_duello():
     # stampo il messaggio di benvenuto
@@ -277,14 +312,14 @@ def gioca_duello():
 
     # Faccio lo shuffle dei nemici
     random.shuffle(nemici)
-    
+
     # Statistiche torneo
     nemici_sconfitti = 0
-    
+
     # Loop sul torneo: un nemico alla volta
     for nemico in nemici:
         print(f"\nNuovo avversario: {nemico['nome']}")
-        
+
         # definiamo un contatore per i turni
         turno = 1
 
@@ -294,68 +329,420 @@ def gioca_duello():
 
             # Attacco del giocatore
             esegui_attacco(giocatore, nemico)
-            
+
             # stampo lo storico dei danni subiti dal nemico
             print("Storico danni subiti dal nemico:", nemico["storico_danni_subiti"])
 
             # controlla se il nemico è sconfitto
             if personaggio_sconfitto(nemico):
                 print(f"Hai vinto il duello contro {nemico['nome']}!")
-                
+
                 # incrementa il contatore dei nemici sconfitti
                 nemici_sconfitti += 1
-                
+
                 break  # Passa al prossimo nemico
 
             # Attacco del nemico
             esegui_attacco(nemico, giocatore)
-            
+
             # stampo lo storico dei danni subiti dal giocatore
             print("Storico danni subiti dal giocatore:", giocatore["storico_danni_subiti"])
 
             # controlla se il giocatore è sconfitto
             if personaggio_sconfitto(giocatore):
-                print("Sei stato sconfitto!") 
-                
+                print("Sei stato sconfitto!")
+
                 # stampa quanti nemici hai sconfitto
                 print(f"Hai sconfitto {nemici_sconfitti} nemico/i.")
-                
+
                 # break → il ciclo continua dopo la sconfitta
                 return # esci dalla funzione nel caso di sconfitta
 
             # incremento il contatore dei turni
             turno += 1
-            
+
     # Se il giocatore ha sconfitto tutti
     print("\nHai vinto il torneo! Tutti i nemici sono stati sconfitti!")
     print(f"Nemici sconfitti: {nemici_sconfitti}")
 ```
-# V 5.0
+
+# V 6.0
+
+## Obiettivi del programma
+
+- Implementare funzionalità di recupero salute tra un nemico e l'altro
+- Dopo ogni vittoria il giocatore recupera una percentuale fissa di salute che gli è rimasta (30%)
+- Se la salute è maggiore di 100, la riporto a 100
+- Dopo ogni nemico sconfitto, il giocatore recupera salute e stampiamo un riepilogo della salute attuale
+
+```python
+if personaggio_sconfitto(nemico):
+    print(f"Hai vinto il duello contro {nemico['nome']}!")
+
+    # Recupero salute tra scontri (30)
+    percentuale_recupero = 0.3
+    salute_recuperata = int(giocatore["salute"] * percentuale_recupero)
+
+    # Limitiamo il recupero della salute a 100
+    if giocatore["salute"] + salute_recuperata > 100:
+        salute_recuperata = 100
+
+    # recupero salute
+    giocatore["salute"] += salute_recuperata
+
+    # stampo la salute del giocatore
+    print(f"\nHai recuperato {salute_recuperata} punti salute! Salute attuale: {giocatore['salute']}")
+
+    # incrementa il contatore dei nemici sconfitti
+    nemici_sconfitti += 1
+
+    break  # Passa al prossimo nemico
+```
+
+# V 7.0
+
+## Obiettivi del programma
+
+> Creare una versione dimostrativa che spiega i concetti base della programmazione ad oggetti
+Trasformare il personaggio in una classe (trasformare il dizionario in una classe)
+Implementare le basi della programmazione orientata agli oggetti (OOP) in modo da:
+
+- Creare una classe Personaggio che rappresenta un personaggio del gioco
+
+## Obiettivi didattici
+
+Capire cosa sono:
+
+- Le classi
+- I metodi
+- Il costruttore `__init__()`
+- L’uso di self
+
+- `__init__()` il costruttore della classe. Viene eseguito automaticamente quando crei un oggetto da una classe
+- `self` È il riferimento all'istanza attuale dell'oggetto. Ogni volta che chiami un metodo su un oggetto, self rappresenta quell’oggetto
+
+Creazione della classe Personaggio
+
+```python
+import random
+
+class Personaggio:
+    def __init__(self, nome):
+        self.nome = nome
+        self.salute = 100
+        self.attacco_min = 10
+        self.attacco_max = 20
+        self.storico_danni_subiti = []
+
+    def attacca(self, bersaglio):
+        danno = random.randint(self.attacco_min, self.attacco_max)
+        bersaglio.subisci_danno(danno)
+        print(f"{self.nome} attacca {bersaglio.nome} per {danno} punti!")
+        # questo metodo esegue un azione o stampa quindi non deve dare un risultato da usare in un if quindi non serve il return
+
+    def subisci_danno(self, danno):
+        self.salute -= danno
+        if self.salute < 0:
+            self.salute = 0
+        self.storico_danni_subiti.append(danno)
+        print(f"Salute di {self.nome}: {self.salute}\n")
+        # questo metodo modifica lo stato di un oggetto quindi non deve dare un risultato da usare in un if quindi non serve il return
+
+    def sconfitto(self):
+        return self.salute <= 0
+        # in questo caso abbiamo il return perchè chiediamo una risposta e deve darci True o False
+```
+## REGOLA
+- Se il metodo risponde a una domanda, usa return
+- Se il metodo fa un’azione, modifica o stampa, non serve return
+
+Uso della classe Personaggio
+
+da cosi (versione con funzioni)
+```python
+# creo due personaggi dummy
+giocatore = crea_personaggio("Personaggio Principale")
+nemico = crea_personaggio("Nemico")
+```
+
+A cosi (versione ad oggetti)
+```python
+# creo due personaggi dummy
+giocatore = Personaggio("Personaggio Principale")
+nemico = Personaggio("Nemico")
+# uso un metodo della classe
+giocatore.attacca(nemico)  # uso l oggetto giocatore non la classe Personaggio
+```
+## REGOLA
+Quando scriviamo:
+- giocatore = Personaggio("Personaggio Principale")
+Il programma intende:
+- Personaggio.__init___(giocatore, "Personaggio Principale") cioe (self, nome)
+
+# Vantaggi pratici delle classi
+Vantaggio | Descrizione
+---|---
+Organizzazione | Raggruppa dati e comportamenti nello stesso posto
+Riutilizzabilità | Puoi creare più oggetti dalla stessa classe
+Espandibilità | Puoi aggiungere metodi senza riscrivere tutto
+Leggibilità | Il codice è più chiaro
+Modularità | Ogni classe è un modulo a sé stante
+Non ripetitività | Non ripeti codice, ma lo riutilizzi
+Incapsulamento | Protegge i dati interni e maschera la complessità
+
+# V 8.0
+
+## Obiettivi del programma
+- Usare a classe Personaggio in modo da gestire il duello singolo
+```python
+import random
+
+class Personaggio:
+    def __init__(self, nome):
+        self.nome = nome
+        self.salute = 100
+        self.attacco_min = 10
+        self.attacco_max = 20
+        self.storico_danni_subiti = []
+
+    def attacca(self, bersaglio):
+        danno = random.randint(self.attacco_min, self.attacco_max)
+        bersaglio.subisci_danno(danno)
+        print(f"{self.nome} attacca {bersaglio.nome} per {danno} punti!")
+        # questo metodo esegue un azione o stampa quindi non deve dare un risultato da usare in un if quindi non serve il return
+
+    def subisci_danno(self, danno):
+        self.salute -= danno
+        if self.salute < 0:
+            self.salute = 0
+        self.storico_danni_subiti.append(danno)
+        print(f"Salute di {self.nome}: {self.salute}\n")
+        # questo metodo modifica lo stato di un oggetto quindi non deve dare un risultato da usare in un if quindi non serve il return
+
+    def sconfitto(self):
+        return self.salute <= 0
+        # in questo caso abbiamo il return perchè chiediamo una risposta e deve darci True o False
+        
+def mostra_benvenuto():
+    print("Benvenuto nel gioco di combattimento!")
+        
+def gioca_duello():
+    mostra_benvenuto()
+    
+    giocatore = Personaggio("Personaggio Principale")
+    nemico = Personaggio("Nemico")
+    
+    turno = 1
+    
+    while True:
+        print(f"Turno {turno}")
+        
+        giocatore.attacca(nemico)
+        if nemico.sconfitto():
+            print("Hai vinto il duello!")
+            break
+        
+        nemico.attacca(giocatore)
+        if giocatore.sconfitto():
+            print("Sei stato sconfitto... Riprova!")
+            break
+
+        turno += 1
+
+    print("Storico danni subiti dal nemico:", nemico.storico_danni_subiti)
+    print("Storico danni subiti dal giocatore:", giocatore.storico_danni_subiti)
+    
+def main():
+    gioca_duello()
+    
+if __name__ == "__main__":
+    main()
+```
+
+# V 9.0
+
+## Obiettivi del programma
+- Implementare la logica del torneo
+```python
+import random
+
+class Personaggio:
+    def __init__(self, nome):
+        self.nome = nome
+        self.salute = 100
+        self.attacco_min = 5
+        self.attacco_max = 80
+        self.storico_danni_subiti = []
+
+    def attacca(self, bersaglio):
+        danno = random.randint(self.attacco_min, self.attacco_max)
+        bersaglio.subisci_danno(danno)
+        print(f"{self.nome} attacca {bersaglio.nome} per {danno} punti!")
+        # questo metodo esegue un azione o stampa quindi non deve dare un risultato da usare in un if quindi non serve il return
+
+    def subisci_danno(self, danno):
+        self.salute -= danno
+        if self.salute < 0:
+            self.salute = 0
+        self.storico_danni_subiti.append(danno)
+        print(f"Salute di {self.nome}: {self.salute}\n")
+        # questo metodo modifica lo stato di un oggetto quindi non deve dare un risultato da usare in un if quindi non serve il return
+
+    def sconfitto(self):
+        return self.salute <= 0
+        # in questo caso abbiamo il return perchè chiediamo una risposta e deve darci True o False
+        
+def mostra_benvenuto():
+    print("Benvenuto nel gioco di combattimento!")
+        
+def gioca_torneo():
+    mostra_benvenuto()
+
+    # Creazione del giocatore
+    giocatore = Personaggio("Personaggio Principale")
+
+    # Creazione dei nemici
+    nomi_nemici = ["Nemico1", "Nemico2", "Nemico3"]
+    nemici = [Personaggio(nome) for nome in nomi_nemici]
+    random.shuffle(nemici)
+
+    nemici_sconfitti = 0
+
+    for nemico in nemici:
+        print(f"\nNuovo avversario: {nemico.nome}")
+        turno = 1
+
+        while True:
+            print(f"Turno {turno}:")
+
+            giocatore.attacca(nemico)
+            print("Storico danni subiti dal nemico:", nemico.storico_danni_subiti)
+
+            if nemico.sconfitto():  # uso di funzione con return
+                print(f"Hai vinto il duello contro {nemico.nome}!")
+                nemici_sconfitti += 1
+                
+                break
+
+            nemico.attacca(giocatore)
+            print("Storico danni subiti dal giocatore:", giocatore.storico_danni_subiti)
+
+            if giocatore.sconfitto():  # uso di funzione applicata a due oggetti diversi (nemico e giocatore)
+                print("Sei stato sconfitto!")
+                print(f"Hai sconfitto {nemici_sconfitti} nemico/i.")
+                
+                return
+
+            turno += 1
+
+    print("\nHai vinto il torneo! Tutti i nemici sono stati sconfitti!")
+    print(f"Nemici sconfitti: {nemici_sconfitti}")
+
+def main():
+    gioca_torneo()
+
+if __name__ == "__main__":
+    main()
+```
+# V 10.0
+
 ## Obiettivi del programma
 - Implementare funzionalità di recupero salute tra un nemico e l'altro
 - Dopo ogni vittoria il giocatore recupera una percentuale fissa di salute che gli è rimasta (30%)
 - Se la salute è maggiore di 100, la riporto a 100
 - Dopo ogni nemico sconfitto, il giocatore recupera salute e stampiamo un riepilogo della salute attuale
 ```python
-if personaggio_sconfitto(nemico):
-    print(f"Hai vinto il duello contro {nemico['nome']}!")
-    
-    # Recupero salute tra scontri (30)
-    percentuale_recupero = 0.3
-    salute_recuperata = int(giocatore["salute"] * percentuale_recupero)
-    
-    # Limitiamo il recupero della salute a 100
-    if giocatore["salute"] + salute_recuperata > 100:
-        salute_recuperata = 100
-        
-    # recupero salute
-    giocatore["salute"] += salute_recuperata
+import random
 
-    # stampo la salute del giocatore
-    print(f"\nHai recuperato {salute_recuperata} punti salute! Salute attuale: {giocatore['salute']}")
-    
-    # incrementa il contatore dei nemici sconfitti
-    nemici_sconfitti += 1
-    
-    break  # Passa al prossimo nemico
+class Personaggio:
+    def __init__(self, nome):
+        self.nome = nome
+        self.salute = 100
+        self.attacco_min = 5
+        self.attacco_max = 80
+        self.storico_danni_subiti = []
+
+    def attacca(self, bersaglio):
+        danno = random.randint(self.attacco_min, self.attacco_max)
+        bersaglio.subisci_danno(danno)
+        print(f"{self.nome} attacca {bersaglio.nome} per {danno} punti!")
+        # questo metodo esegue un azione o stampa quindi non deve dare un risultato da usare in un if quindi non serve il return
+
+    def subisci_danno(self, danno):
+        self.salute -= danno
+        if self.salute < 0:
+            self.salute = 0
+        self.storico_danni_subiti.append(danno)
+        print(f"Salute di {self.nome}: {self.salute}\n")
+        # questo metodo modifica lo stato di un oggetto quindi non deve dare un risultato da usare in un if quindi non serve il return
+
+    def sconfitto(self):
+        return self.salute <= 0
+        # in questo caso abbiamo il return perchè chiediamo una risposta e deve darci True o False
+        
+    def recupera_hp(self, percentuale):
+        if self.salute == 100:
+            print(f"{self.nome} ha già la salute piena.")
+            return
+        recupero = int(self.salute * percentuale)
+        nuova_salute = min(self.salute + recupero, 100)
+        effettivo = nuova_salute - self.salute
+        self.salute = nuova_salute
+        print(f"\n{self.nome} recupera {effettivo} HP. Salute attuale: {self.salute}")
+        
+def mostra_benvenuto():
+    print("Benvenuto nel gioco di combattimento!")
+        
+def gioca_torneo():
+    mostra_benvenuto()
+
+    # Creazione del giocatore
+    giocatore = Personaggio("Personaggio Principale")
+
+    # Creazione dei nemici
+    nomi_nemici = ["Nemico1", "Nemico2", "Nemico3"]
+    nemici = [Personaggio(nome) for nome in nomi_nemici]
+    random.shuffle(nemici)
+
+    nemici_sconfitti = 0
+
+    for nemico in nemici:
+        print(f"\nNuovo avversario: {nemico.nome}")
+        turno = 1
+
+        while True:
+            print(f"Turno {turno}:")
+
+            giocatore.attacca(nemico)
+            print("Storico danni subiti dal nemico:", nemico.storico_danni_subiti)
+
+            if nemico.sconfitto():
+                print(f"Hai vinto il duello contro {nemico.nome}!")
+                
+                # Recupero salute del 30%
+                giocatore.recupera_hp(0.3)
+                
+                nemici_sconfitti += 1
+                
+                break
+
+            nemico.attacca(giocatore)
+            print("Storico danni subiti dal giocatore:", giocatore.storico_danni_subiti)
+
+            if giocatore.sconfitto():
+                print("Sei stato sconfitto!")
+                print(f"Hai sconfitto {nemici_sconfitti} nemico/i.")
+                
+                return
+
+            turno += 1
+
+    print("\nHai vinto il torneo! Tutti i nemici sono stati sconfitti!")
+    print(f"Nemici sconfitti: {nemici_sconfitti}")
+
+def main():
+    gioca_torneo()
+
+if __name__ == "__main__":
+    main()
 ```
