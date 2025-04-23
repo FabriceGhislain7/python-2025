@@ -685,7 +685,7 @@ class Personaggio:
             print(f"{self.nome} ha già la salute piena.")
             return
         recupero = int(self.salute * percentuale)
-        nuova_salute = min(self.salute + recupero, 100)
+        nuova_salute = min(self.salute + recupero, 100)  # uso min per non superare 100 selezionando il valore piu basso
         effettivo = nuova_salute - self.salute
         self.salute = nuova_salute
         print(f"\n{self.nome} recupera {effettivo} HP. Salute attuale: {self.salute}")
