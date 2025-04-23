@@ -1,33 +1,76 @@
-# Titolo 
-## sottotitolo
+# Titolo
+## Sottotitolo
 ### Titolo paragrafo
-#### Sotto titolo paragrafo
+#### Sottotitolo paragrafo
+---
+**testo in grassetto**
 
-**Test in grassetto** 
 _italic_
-> esempio di quote 
 
-### Elemento puntato
- - elemento 1
- - elemento 2
- - elemento 3
-# Elemento numerico
- 1. primo elemento 
- 2. secondo elemento
- 3. terzo eelmento 
+> esempio di quote (citazione)
 
-# tabelline 
+### elenco puntato
 
-# Check box 
-  -[x] elemento 1
-  -[x] elemento 2
+- elemento 1
+- elemento 2
+- elemento 3
 
+### elenco numerato
 
- ### link
- [testo del link] (https://www.bing.com/search?q=fiore&qs=n&form=QBRE&sp=-1&ghc=1&lq=0&pq=fiore&sc=12-5&sk=&cvid=023B0725C3454C199B2A76C6FA3D8B25&ghsh=0&ghacc=0&ghpl=)
+1. elemento 1
+2. elemento 2
+3. elemento 3
+    - elemento 3.1
+    - elemento 3.2
+
+### tabella
+
+| colonna1 | colonna2 | colonna3 |
+| --- | --- | --- |
+| valore1 | valore2 | valore3 |
+| valore4 | valore5 | valore6 |
+
+### codice
+
+```python
+# esempio di codice python
+print("Hello, World!")
+```
+
+```html
+<!-- esempio di codice HTML -->
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Titolo</title>
+  </head>
+  <body>
+    <h1>Titolo</h1>
+    <p>Testo</p>
+  </body>
+</html>
+```
+
+```mermaid
+graph TD;
+  A-->B;
+  A-->C;
+  B-->D;
+  C-->D;
+```
+
+### checkbox
+
+- [x] elemento 1
+- [ ] elemento 2
+
+### link
+[testo del link](https://www.google.com)
+
+### sezioni espandibili
 
 <details>
-
-
-
-
+  <summary>Mostra dettagli</summary>
+  
+  Testo dettagli da espandere
+</details>

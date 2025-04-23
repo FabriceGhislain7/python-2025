@@ -1,48 +1,45 @@
 # RANDOM
 
-import random  # Importo la libreria random
+import random  # importo la libreria random
 
 # i metodi di random
 
-val_int = random.randint(1,100)  # restiuisce un numero casuale tra 1 e 100 
-print(val_int)
-# oppure scriverlo in una riga
 print(random.randint(1, 100))
 
-# Assegno ad una variabile un numero casuale compreso tra 1 e 100
+# assegno ad una variabile un numero casuale tra 1 e 100
 numero_casuale = random.randint(1, 100)
 print(numero_casuale)
 
-# scegliere uma striga casuale tra quelle fornite si può usare il metodo choice
-print(random.choice(["Ciao", "Hello", "hola"])) # Questo metodo può includere duplicate
-# oppure 
-elemento_casuale = random.choice(["Ciao", "Hello", "hola"])
+# scegliere una stringa casuale tra quelle fornite si può usare il metodo choice
+# questo metodo puo includere duplicati
+print(random.choice(["ciao", "hello", "hola"]))
+# oppure
+elemento_casuale = random.choice(["ciao", "hello", "hola"])
+print(elemento_casuale)
 
-# per mescolare una lista si può utilizzare il metodo shuffle
+# mescolare una lista si può usare il metodo shuffle
 print(random.shuffle([1, 2, 3, 4, 5]))
-# oppure 
+# oppure
 lista = [1, 2, 3, 4, 5]
 random.shuffle(lista)
 print(lista)
 
-# Per estrare un numero casuale da una lista si può usare il metodo sample
-# Il numero 1 li fuori rappresenta il numero 
-# Questo metodo include elementi unici
-print(random.sample([1, 2, 3, 4, 5], 1)) 
-# oppure 
+# estrarre un elemento casuale da una lista si può usare il metodo sample
+# il numero 1 fuori dalla lista indica il numero di elementi che voglio estrarre
+# questo metodo include elementi random unici
+print(random.sample([1, 2, 3, 4, 5], 1))
+# oppure
 elemento = random.sample([1, 2, 3, 4, 5], 1)
 print(elemento)
 
-# Per estrare n numero casuale da una lista si può usare il metodo sample
-# Il numero n li fuori rappresenta il numero 
-# Questo metodo include elementi unici
-print(random.sample([1, 2, 3, 4, 5], 3)) 
-# oppure 
+# scegliere n elementi casuali da una lista si può usare il metodo sample
+print(random.sample([1, 2, 3, 4, 5], 3))
+# oppure
 elementi = random.sample([1, 2, 3, 4, 5], 3)
 print(elementi)
 
-# è possibile inizializzare il generatore di numeri casuali con un 'seed'
-# Ad un esempio, se si fissa a 42, le sequenza casuali generata sarà sempre la stessa.
+# e possibile inizializzare il generatore di numeri casuali con un seed
+# Ad esempio, se si fissa il seed a 42, la sequenza di numeri casuali generata sarà sempre la stessa
 random.seed(1)
 print(random.randint(1, 100))
 print(random.randint(1, 100))
@@ -52,11 +49,11 @@ print(random.randint(1, 100))
 print(random.randint(1, 100))
 print(random.randint(1, 100))
 
-import time # importo il modulo time
-
-# Fisso il numero random tra 3 e 8 
-time.sleep(random.randint(3, 8))
+import time  # importa il modulo time
+# fisso il numero random tra 3 ed 8
+# time.sleep(random.randint(3, 8))
 print("Ciao")
 
-print(random.random()) # restituisce un numero casuale tra 0 e 1
-print(random.uniform(1, 10)) # restituisce un numero casuale tra 1 e 10
+print(random.random())  # restituisce un numero float casuale tra 0 e 1
+
+print(random.uniform(1, 10))  # restituisce un numero float casuale tra 1 e 10

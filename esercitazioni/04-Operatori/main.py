@@ -1,61 +1,58 @@
-# OPERATORI 
+# OPERATORI
 
-"""
-I tipi principali di operatori in pyton sono:
-- Aritmetici
-- Di confronto 
-- Logici 
-- Di assegnazione
-- Di incremento e di decremento (simulati)
-- Di concatenazione 
+"""  
+I tipi principali di operatori in Python sono:  
+- Aritmetici  
+- Di confronto  
+- Logici  
+- Di assegnazione  
+- Di incremento e decremento (simulati)  
+- Di concatenazione  
 """
 
-# Operatori aritmetici
-numero_a = 10
-numero_b = 20 
+# Operatori aritmetici ( +, -, *, /, %)
+numero_a = 10  
+numero_b = 20
 somma_c = numero_a + numero_b
-print(somma_c) # 30
+print(somma_c)  # 30
+# modulo
+modulo_d = 10 % 3  # Resto della divisione
+print(modulo_d)  # 1
 
-# Modulo 
-modulo_d = 10 % 3 # Resto della divisione 
-print(modulo_d)
-
-# operatori di confronto
-numero_e = 10
-numero_f = 20
+# Operatori di confronto ( ==, !=, >, <, >=, <=)
+numero_e = 10  
+numero_f = 20 
 confronto_g = numero_e == numero_f
-print(confronto_g)
+print(confronto_g)  # False
 
-# Operatori logici (and, or, not)
+# Operatori logici ( and, or, not)
 condizione_h = True
-condizione_i = False 
-# and (Entrambe condizioni devono essere vere),
+condizione_i = False
+# and (entrambe le condizioni devono essere vere)
 risultato_j = condizione_h and condizione_i
-print(risultato_j) # False
-# or (Almeno una delle condizioni deve essere vera)
+print(risultato_j)  # False
+# or (almeno una delle condizioni deve essere vera)
 risultato_k = condizione_h or condizione_i
-print(risultato_k)
-# not (negazione, quindi se la condizione è vera allora diventa falsa e viceversa)
+print(risultato_k)  # True
+# not (negazione cioe' se la condizione e' vera diventa falsa e viceversa)
 risultato_l = not condizione_h
-print(risultato_l)
+print(risultato_l)  # False
 
-# Operatori di assegnazioni (0, +=, -=, *=, /=, %=)
-numero_m = 10
-numero_m += 5 
-print (numero_m)
+# Operatori di assegnazione ( =, +=, -=, *=, /=, %=)
+numero_m = 10 # assegno il valore 10 alla variabile numero_m
+numero_m += 5  # Equivale a numero_m = numero_m + 5
+print(numero_m)  # 15
 
-# Operatori di incremento e di decremento (simulati)
+# Operatori di incremento e decremento (simulati)
 numero_n = 10
-numero_n += 1
-print(numero_n)
+numero_n += 1  # Incremento di 1
+print(numero_n)  # 11
 
-# Operatori di concatenazione 
-striga_o = "Ciao"
-striga_p = "mondo"
-striga_q = striga_o + " " + striga_p
-print(striga_q)
-
-print(f"{striga_o} {striga_p}")
-
-
-
+# Operatori di concatenazione ( + )
+stringa_o = "Ciao"
+stringa_p = "Mondo"
+stringa_q = stringa_o + " " + stringa_p
+print(stringa_q)  # Ciao Mondo
+# abbiamo deciso di usare solo f-string per la stampa invece di concatenare le stringhe (interpolazione di stringhe)
+# esempio con interpolazione
+print(f"{stringa_o} {stringa_p}")

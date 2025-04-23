@@ -1,46 +1,42 @@
 # CICLI
+
 """
 I principali tipi di cicli in Python sono:
-- for 
+- for
 - while
 - Non esiste do-while, ma può essere simulato con while
 - foreach è incluso nel for
 """
 
-# for - Esegue un blocco di codice un numero defito di volte (ciclo con cntattore)1
+# for - segue un blocco di codice un numero definito di volte (ciclo con contatore)
 # for <variabile> in <sequenza>:
-for i in range(11): # Questo commando genera i numeri da 0 a 10
-    print(i) # stampa i valori corenti di i
-print()
-
-# while - Esegue un blocco di codice finché uma condizione è 
-# Il ciclo while ha una variabile di controllo
+for i in range(11): # range(11) genera i numeri da 0 a 10
+    print(i) # Stampa il valore corrente di i
+    
+# while - Esegue un blocco di codice finché una condizione è
+# il ciclo while ha una variabile di controllo
 j = 0  # j è una variabile di controllo
-while j <= 10: # Finché j è minore oppure uguale a 10
+while j <= 10:  # Finché j è minore o uguale a 10
     print(j)
-    j += 1  # incrementa j di 1 unità. 
-print()
+    j += 1  # Incrementa j di 1 unita
 
-# while con la condizione "True"
-k = 0 # k è una variabile di controllo
-while True:
-    print(k)  # stampa k
-    k += 1    # incrementa k di 1 unità
-    if k > 10: # se k è ,aggiore di 10
-        break  # Esce dal ciclo
-print() 
-
-# do whlie (simulato)
-l = 0 # Variabile i controllo 
-while True: # while con un ciclo infinito
+# while con condizione true
+k = 0  # k è una variabile di controllo
+while True:  # Ciclo infinito
+    print(k)  # Stampa k
+    k += 1  # Incrementa k di 1 unita
+    if k > 10: # Se k è maggiore di 10
+        break # Esce dal ciclo
+    
+# do while (simulato)
+l = 0  # l è una variabile di controllo  
+while True:  # Inizia con un ciclo infinito
     print(l) # Stampa l
-    if not (l > 10): # Se la condizione non è soddisfata, esce dal ciclo
+    l += 1 # Incrementa l di 1 unita
+    if not (l > 10): # Se la xcondizione non e soddisfatta, esce dal ciclo
         break
-print()
-
-# for each (simulato) - Esegue un blocco di codice per ogni elementi di una sequenza o una collezione
-nomi = ["nome1", "nome2", "nome3"] # Array(o lista di strighe)
-for nome in nomi: # itera su ogni elementi della lista 
-    print(nome)  # Stampa il nome  
-
-
+    
+# for each (simulato) - Esegue un blocco di codice per ogni elemento di una sequenza o di una colezione
+nomi = ["nome1", "nome2", "nome3"]  # Array (o lista) di stringhe
+for nome in nomi: # Itera su ogni elemento della lista
+    print(nome)  # Stampa il nome
