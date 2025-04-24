@@ -4,9 +4,12 @@ class Personaggio:
     def __init__(self, nome):
         self.nome = nome
         self.salute = 100
+        self.salute_max = 200
         self.attacco_min = 5
         self.attacco_max = 80
         self.storico_danni_subiti = []
+        # aggiungo la proprieta inventario al costruttore
+        self.inventario = []  # Lista di oggetti
 
     def attacca(self, bersaglio):
         danno = random.randint(self.attacco_min, self.attacco_max)
@@ -33,6 +36,14 @@ class Personaggio:
         effettivo = nuova_salute - self.salute
         self.salute = nuova_salute
         print(f"\n{self.nome} recupera {effettivo} HP. Salute attuale: {self.salute}")
+        
+    def usa_oggetto(self, nome_oggetto):
+        for oggetto in self.inventario:
+            if oggetto.nome == nome_oggetto:
+                oggetto.usa(self)  # applico l'effetto dell oggetto al personaggio
+                self.inventario.remove(oggetto)
+                return  # uso return per uscire dal ciclo for
+        print(f"{self.nome} non ha un oggetto chiamato {nome_oggetto}.")
 
 class Mago(Personaggio):
     def __init__(self, nome):
@@ -82,6 +93,24 @@ class Ladro(Personaggio):
         self.salute = min(self.salute + recupero, 140)
         print(f"\n{self.nome} si cura rapidamente e recupera {recupero} HP. Salute attuale: {self.salute}")
         
+class Oggetto:
+    def __init__(self, nome, effetto, valore):
+        self.nome = nome  # Es: "Pozione"
+        self.effetto = effetto  # Es: "cura"
+        self.valore = valore  # Es: 20
+        self.usato = False  # Es: torcia consumata
+
+    def usa(self, personaggio):
+        if self.effetto == "cura":
+            personaggio.salute += self.valore
+            print(f"{personaggio.nome} usa {self.nome} e recupera {self.valore} salute!")
+            personaggio.salute = min(personaggio.salute, personaggio.salute_max)  # Limita la salute al max del personaggio
+            self.usato = True  # Indica che l'oggetto è stato usato
+            print("-" * 80)
+            print(f"Salute attuale: {personaggio.salute}\n")
+
+            # ricordarsi di implementare gli hp mx diversi a seconda del personaggio
+        
 def mostra_benvenuto():
     print("Benvenuto nel gioco di combattimento!")
         
@@ -96,6 +125,9 @@ def gioca_torneo():
     # Nemici: uno per classe
     nemici = [Mago("Nemico Mago"), Guerriero("Nemico Guerriero"), Ladro("Nemico Ladro")]
     random.shuffle(nemici)
+    
+    # creazione di un oggetto
+    pozione = Oggetto("Pozione gialla", "cura", 20)
 
     nemici_sconfitti = 0
 
@@ -112,6 +144,13 @@ def gioca_torneo():
                 print(f"Hai vinto il duello contro {nemico.nome}!")
                 giocatore.recupera_hp()
                 nemici_sconfitti += 1
+                
+                # aggiunta all inventario
+                giocatore.inventario.append(pozione)
+                
+                # in gioca_duello il giocatore si cura usando la pozione
+                giocatore.usa_oggetto("Pozione gialla")
+                
                 break
 
             nemico.attacca(giocatore)
@@ -120,6 +159,7 @@ def gioca_torneo():
             if giocatore.sconfitto():
                 print("Sei stato sconfitto!")
                 print(f"Hai sconfitto {nemici_sconfitti} nemico/i.")
+                
                 return
 
             turno += 1

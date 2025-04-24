@@ -1172,3 +1172,60 @@ class Ladro(Personaggio):
         self.salute = min(self.salute + recupero, 140)
         print(f"\n{self.nome} si cura rapidamente e recupera {recupero} HP. Salute attuale: {self.salute}")
 ```
+# V 12.0
+
+## Obiettivi del programma
+- implementazione di oggetti curativi usando le classi
+- usare oggetti all’interno di altri oggetti, un concetto chiave della programmazione a oggetti (OOP)
+
+## Obiettivi didattici
+- Classi che rappresentano oggetti diversi
+- Come usare una lista di oggetti (inventario)
+- Come un oggetto (pozione) può interagire con un altro oggetto (personaggio)
+
+Implementare nella Classe personaggio
+```python
+self.salute_max = 200
+```
+```python
+class Oggetto:
+    def __init__(self, nome, effetto, valore):
+        self.nome = nome  # Es: "Pozione"
+        self.effetto = effetto  # Es: "cura"
+        self.valore = valore  # Es: 20
+        self.usato = False  # Es: torcia consumata
+
+    def usa(self, personaggio):
+        if self.effetto == "cura":
+            personaggio.salute += self.valore
+            print(f"{personaggio.nome} usa {self.nome} e recupera {self.valore} salute!")
+            # personaggio.salute = min(personaggio.salute, 100)  # Limita la salute a 100
+            personaggio.salute = min(personaggio.salute, personaggio.salute_max)  # Limita la salute al max del personaggio
+            self.usato = True  # Indica che l'oggetto è stato usato
+            print(f"Salute attuale: {personaggio.salute}\n")
+
+            # ricordarsi di implementare gli hp mx diversi a seconda del personaggio
+
+class Personaggio:
+    # aggiungo la proprieta inventario al costruttore
+    self.inventario = []  # Lista di oggetti
+
+    def usa_oggetto(self, nome_oggetto):
+        for oggetto in self.inventario:
+            if oggetto.nome == nome_oggetto:
+                oggetto.usa(self)  # applico l'effetto dell oggetto al personaggio
+                self.inventario.remove(oggetto)
+                return  # uso return per uscire dal ciclo for
+        print(f"{self.nome} non ha un oggetto chiamato {nome_oggetto}.")
+```
+Uso dell oggetto
+```python
+# creazione del personaggio
+giocatore = Personaggio("Personaggio Principale")
+# creazione di un oggetto
+pozione = Oggetto("Pozione gialla", "cura", 20)
+# aggiunta all inventario
+giocatore.inventario.append(pozione)
+# in gioca_duello il giocatore si cura usando la pozione
+giocatore.usa_oggetto("Pozione gialla")
+```
