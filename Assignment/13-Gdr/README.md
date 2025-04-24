@@ -746,3 +746,429 @@ def main():
 if __name__ == "__main__":
     main()
 ```
+# V 11.0
+
+## Obiettivi del programma
+- Usare l override aggiungendo abilità speciali a personaggi specifici
+- L override è un comportamento specifico di una classe in una determinata situazione
+
+
+## Obiettivi didattici
+
+Capire:
+- Le classi figlie (ereditarietà)
+- Come modificare il comportamento (override dei metodi)
+- Come scrivere codice riusabile, espandibile, leggibile
+```python
+class Personaggio:
+    def __init__(self, nome):
+        self.nome = nome
+        self.salute = 100
+        self.attacco_min = 10
+        self.attacco_max = 20
+
+    def attacca(self, bersaglio):
+        danno = random.randint(self.attacco_min, self.attacco_max)
+        # bersaglio.salute -= danno
+        bersaglio.subisci_danno(danno)
+        print(f"{self.nome} attacca {bersaglio.nome} per {danno} danni.")
+
+class Mago(Personaggio):  # sto creando una classe derivata cioè che estende quella originale
+    def attacca(self, bersaglio):
+        # danno = random.randint(15, 30)
+        danno = random.randint(self.attacco_min - 5, self.attacco_max + 10)
+        # bersaglio.salute -= danno
+        bersaglio.subisci_danno(danno)
+        print(f"{self.nome} lancia un incantesimo su {bersaglio.nome} per {danno} danni!")
+
+class Guerriero(Personaggio):
+    def attacca(self, bersaglio):
+        # danno = random.randint(20, 45)
+        danno = random.randint(self.attacco_min + 15, self.attacco_max + 20)
+        # bersaglio.salute -= danno
+        bersaglio.subisci_danno(danno)
+        print(f"{self.nome} colpisce con la spada {bersaglio.nome} per {danno} danni!")
+
+# Creazione del giocatore
+giocatore = Personaggio("Personaggio Principale")
+
+# uso
+# Creazione del giocatore
+giocatore = Mago("Nome del Mago")
+nemico = Guerriero("Nemico")
+
+giocatore.attacca(nemico)
+nemico.attacca(giocatore)
+```
+
+## Implementazione
+- Creare un terzo personaggio specifico
+- Inserire i personaggi all interno della logica di gioco
+```python
+import random
+
+class Personaggio:
+    def __init__(self, nome):
+        self.nome = nome
+        self.salute = 100
+        self.attacco_min = 5
+        self.attacco_max = 80
+        self.storico_danni_subiti = []
+
+    def attacca(self, bersaglio):
+        danno = random.randint(self.attacco_min, self.attacco_max)
+        bersaglio.subisci_danno(danno)
+        print(f"{self.nome} attacca {bersaglio.nome} per {danno} punti!")
+        # questo metodo esegue un azione o stampa quindi non deve dare un risultato da usare in un if quindi non serve il return
+
+    def subisci_danno(self, danno):
+        self.salute -= danno
+        if self.salute < 0:
+            self.salute = 0
+        self.storico_danni_subiti.append(danno)
+        print(f"Salute di {self.nome}: {self.salute}\n")
+        # questo metodo modifica lo stato di un oggetto quindi non deve dare un risultato da usare in un if quindi non serve il return
+
+    def sconfitto(self):
+        return self.salute <= 0
+        # in questo caso abbiamo il return perchè chiediamo una risposta e deve darci True o False
+        
+    def recupera_hp(self, percentuale):
+        if self.salute == 100:
+            print(f"{self.nome} ha già la salute piena.")
+            return
+        recupero = int(self.salute * percentuale)
+        nuova_salute = min(self.salute + recupero, 100)
+        effettivo = nuova_salute - self.salute
+        self.salute = nuova_salute
+        print(f"\n{self.nome} recupera {effettivo} HP. Salute attuale: {self.salute}")
+
+class Mago(Personaggio):
+    def attacca(self, bersaglio):
+        danno = random.randint(self.attacco_min - 5, self.attacco_max + 10)
+        # bersaglio.salute -= danno
+        bersaglio.subisci_danno(danno)
+        print(f"{self.nome} lancia un incantesimo su {bersaglio.nome} per {danno} danni!")
+
+class Guerriero(Personaggio):
+    def attacca(self, bersaglio):
+        danno = random.randint(self.attacco_min + 15, self.attacco_max + 20)
+        # bersaglio.salute -= danno
+        bersaglio.subisci_danno(danno)
+        print(f"{self.nome} colpisce con la spada {bersaglio.nome} per {danno} danni!")
+        
+class Ladro(Personaggio):
+    def attacca(self, bersaglio):
+        danno = random.randint(self.attacco_min + 5, self.attacco_max + 5)
+        # bersaglio.salute -= danno
+        bersaglio.subisci_danno(danno)
+        print(f"{self.nome} colpisce furtivamente {bersaglio.nome} per {danno} danni!")
+        
+def mostra_benvenuto():
+    print("Benvenuto nel gioco di combattimento!")
+        
+def gioca_torneo():
+    mostra_benvenuto()
+
+    # Scelta casuale del giocatore tra le 3 classi
+    classi_giocatore = [Mago("Tu (Mago)"), Guerriero("Tu (Guerriero)"), Ladro("Tu (Ladro)")]
+    giocatore = random.choice(classi_giocatore)
+    print(f"Hai ottenuto il personaggio: {giocatore.nome}\n")
+
+    # Nemici: uno per classe
+    nemici = [Mago("Nemico Mago"), Guerriero("Nemico Guerriero"), Ladro("Nemico Ladro")]
+    random.shuffle(nemici)
+
+    nemici_sconfitti = 0
+
+    for nemico in nemici:
+        print(f"\nNuovo avversario: {nemico.nome}")
+        turno = 1
+
+        while True:
+            print(f"Turno {turno}:")
+            giocatore.attacca(nemico)
+            print("Storico danni subiti dal nemico:", nemico.storico_danni_subiti)
+
+            if nemico.sconfitto():
+                print(f"Hai vinto il duello contro {nemico.nome}!")
+                giocatore.recupera_hp(0.3)
+                nemici_sconfitti += 1
+                break
+
+            nemico.attacca(giocatore)
+            print("Storico danni subiti dal giocatore:", giocatore.storico_danni_subiti)
+
+            if giocatore.sconfitto():
+                print("Sei stato sconfitto!")
+                print(f"Hai sconfitto {nemici_sconfitti} nemico/i.")
+                return
+
+            turno += 1
+
+    print("\nHai vinto il torneo! Tutti i nemici sono stati sconfitti!")
+    print(f"Nemici sconfitti: {nemici_sconfitti}")
+
+def main():
+    gioca_torneo()
+
+if __name__ == "__main__":
+    main()
+```
+# V 12.0
+
+## Obiettivi del programma
+- personalizzare la salute iniziale in base alla classe
+- cioè ridefinire __init__() in ogni sottoclasse
+
+## Suggerimenti
+- usare `super` che è una funzione che ti permette di accedere ai metodi della superclasse (cioè la classe madre), direttamente da una classe figlia
+- Serve per non riscrivere codice già esistente nella classe base, ma estenderlo o modificarlo in modo chiaro
+
+## Esempio
+```python
+# Hai questa classe base:
+class Personaggio:
+    def __init__(self, nome):
+        self.nome = nome
+        self.salute = 100
+# questa e una classe figlia che usa super in modo da sovrascrivere il valore della salute
+class Guerriero(Personaggio):
+    def __init__(self, nome):
+        super().__init__(nome)  # Chiama l'__init__ di Personaggio
+        self.salute = 120       # Sovrascrive il valore della salute
+```
+__super().__init__(nome)__
+- Chiama il costruttore della superclasse Personaggio
+- Passa nome come parametro, perché Personaggio.__init__() si aspetta nome
+- Inizializza self.nome come nella classe base
+## Implementazione
+```python
+import random
+
+class Personaggio:
+    def __init__(self, nome):
+        self.nome = nome
+        self.salute = 100
+        self.attacco_min = 5
+        self.attacco_max = 80
+        self.storico_danni_subiti = []
+
+    def attacca(self, bersaglio):
+        danno = random.randint(self.attacco_min, self.attacco_max)
+        bersaglio.subisci_danno(danno)
+        print(f"{self.nome} attacca {bersaglio.nome} per {danno} punti!")
+        # questo metodo esegue un azione o stampa quindi non deve dare un risultato da usare in un if quindi non serve il return
+
+    def subisci_danno(self, danno):
+        self.salute -= danno
+        if self.salute < 0:
+            self.salute = 0
+        self.storico_danni_subiti.append(danno)
+        print(f"Salute di {self.nome}: {self.salute}\n")
+        # questo metodo modifica lo stato di un oggetto quindi non deve dare un risultato da usare in un if quindi non serve il return
+
+    def sconfitto(self):
+        return self.salute <= 0
+        # in questo caso abbiamo il return perchè chiediamo una risposta e deve darci True o False
+        
+    def recupera_hp(self, percentuale):
+        if self.salute == 100:
+            print(f"{self.nome} ha già la salute piena.")
+            return
+        recupero = int(self.salute * percentuale)
+        nuova_salute = min(self.salute + recupero, 100)
+        effettivo = nuova_salute - self.salute
+        self.salute = nuova_salute
+        print(f"\n{self.nome} recupera {effettivo} HP. Salute attuale: {self.salute}")
+
+class Mago(Personaggio):
+    def __init__(self, nome):
+        super().__init__(nome)
+        self.salute = 80  # Salute base più bassa per il Mago
+
+    def attacca(self, bersaglio):
+        danno = random.randint(self.attacco_min - 5, self.attacco_max + 10)
+        bersaglio.subisci_danno(danno)
+        print(f"{self.nome} lancia un incantesimo su {bersaglio.nome} per {danno} danni!")
+
+class Guerriero(Personaggio):
+    def __init__(self, nome):
+        super().__init__(nome)
+        self.salute = 120  # Salute base più alta per il Guerriero
+
+    def attacca(self, bersaglio):
+        danno = random.randint(self.attacco_min + 15, self.attacco_max + 20)
+        bersaglio.subisci_danno(danno)
+        print(f"{self.nome} colpisce con la spada {bersaglio.nome} per {danno} danni!")
+
+class Ladro(Personaggio):
+    def __init__(self, nome):
+        super().__init__(nome)
+        self.salute = 140  # Salute base molto alta per il Ladro
+
+    def attacca(self, bersaglio):
+        danno = random.randint(self.attacco_min + 5, self.attacco_max + 5)
+        bersaglio.subisci_danno(danno)
+        print(f"{self.nome} colpisce furtivamente {bersaglio.nome} per {danno} danni!")
+        
+def mostra_benvenuto():
+    print("Benvenuto nel gioco di combattimento!")
+        
+def gioca_torneo():
+    mostra_benvenuto()
+
+    # Scelta casuale del giocatore tra le 3 classi
+    classi_giocatore = [Mago("Tu (Mago)"), Guerriero("Tu (Guerriero)"), Ladro("Tu (Ladro)")]
+    giocatore = random.choice(classi_giocatore)
+    print(f"Hai ottenuto il personaggio: {giocatore.nome}\n")
+
+    # Nemici: uno per classe
+    nemici = [Mago("Nemico Mago"), Guerriero("Nemico Guerriero"), Ladro("Nemico Ladro")]
+    random.shuffle(nemici)
+
+    nemici_sconfitti = 0
+
+    for nemico in nemici:
+        print(f"\nNuovo avversario: {nemico.nome}")
+        turno = 1
+
+        while True:
+            print(f"Turno {turno}:")
+            giocatore.attacca(nemico)
+            print("Storico danni subiti dal nemico:", nemico.storico_danni_subiti)
+
+            if nemico.sconfitto():
+                print(f"Hai vinto il duello contro {nemico.nome}!")
+                giocatore.recupera_hp(0.3)
+                nemici_sconfitti += 1
+                break
+
+            nemico.attacca(giocatore)
+            print("Storico danni subiti dal giocatore:", giocatore.storico_danni_subiti)
+
+            if giocatore.sconfitto():
+                print("Sei stato sconfitto!")
+                print(f"Hai sconfitto {nemici_sconfitti} nemico/i.")
+                return
+
+            turno += 1
+
+    print("\nHai vinto il torneo! Tutti i nemici sono stati sconfitti!")
+    print(f"Nemici sconfitti: {nemici_sconfitti}")
+
+def main():
+    gioca_torneo()
+
+if __name__ == "__main__":
+    main()
+```
+# V 12.0
+
+## Obiettivi del programma
+__override__
+
+aggiorniamo recupera_hp() per essere diverso per ogni classe
+- Mago -> Recupero più lento (solo 20% della salute attuale)
+- Guerriero -> Recupero costante (30 HP fissi)
+- Ladro -> Recupero veloce ma casuale (tra 10 e 40 HP)
+## Problema
+- metodo nella classe base che accetta un parametro (recupera_hp(percentuale)), ma nelle classi derivate (Mago, Guerriero, Ladro) hai fatto override senza quel parametro:
+```python
+# CLASSE BASE
+def recupera_hp(self, percentuale):  # <-- accetta un argomento
+
+# CLASSI DERIVATE
+def recupera_hp(self):  # <-- non accetta niente → ERRORE!
+
+# In gioca_torneo
+giocatore.recupera_hp(0.3)
+
+# Deve diventare
+giocatore.recupera_hp()
+```
+## Implementazione
+```python
+class Personaggio:
+    def __init__(self, nome):
+        self.nome = nome
+        self.salute = 100
+        self.attacco_min = 5
+        self.attacco_max = 80
+        self.storico_danni_subiti = []
+
+    def attacca(self, bersaglio):
+        danno = random.randint(self.attacco_min, self.attacco_max)
+        bersaglio.subisci_danno(danno)
+        print(f"{self.nome} attacca {bersaglio.nome} per {danno} punti!")
+        # questo metodo esegue un azione o stampa quindi non deve dare un risultato da usare in un if quindi non serve il return
+
+    def subisci_danno(self, danno):
+        # self.salute -= danno
+        self.salute = max(0, self.salute - danno)
+        self.storico_danni_subiti.append(danno)
+        print(f"Salute di {self.nome}: {self.salute}\n")
+        # questo metodo modifica lo stato di un oggetto quindi non deve dare un risultato da usare in un if quindi non serve il return
+
+    def sconfitto(self):
+        return self.salute <= 0
+        # in questo caso abbiamo il return perchè chiediamo una risposta e deve darci True o False
+        
+    def recupera_hp(self):
+        if self.salute == 100:
+            print(f"{self.nome} ha già la salute piena.")
+            return
+        recupero = int(self.salute * 0.3)
+        nuova_salute = min(self.salute + recupero, 100)
+        effettivo = nuova_salute - self.salute
+        self.salute = nuova_salute
+        print(f"\n{self.nome} recupera {effettivo} HP. Salute attuale: {self.salute}")
+
+class Mago(Personaggio):
+    def __init__(self, nome):
+        super().__init__(nome)
+        self.salute = 80
+
+    def attacca(self, bersaglio):
+        danno = random.randint(self.attacco_min - 5, self.attacco_max + 10)
+        bersaglio.subisci_danno(danno)
+        print(f"{self.nome} lancia un incantesimo su {bersaglio.nome} per {danno} danni!")
+
+    def recupera_hp(self):
+        # Recupero più lento (solo 20% della salute attuale)
+        recupero = int(self.salute * 0.2)
+        self.salute = min(self.salute + recupero, 80)
+        print(f"\n{self.nome} medita e recupera {recupero} HP. Salute attuale: {self.salute}")
+
+class Guerriero(Personaggio):
+    def __init__(self, nome):
+        super().__init__(nome)
+        self.salute = 120
+
+    def attacca(self, bersaglio):
+        danno = random.randint(self.attacco_min + 15, self.attacco_max + 20)
+        bersaglio.subisci_danno(danno)
+        print(f"{self.nome} colpisce con la spada {bersaglio.nome} per {danno} danni!")
+
+    def recupera_hp(self):
+        # Recupero costante (30 HP fissi)
+        recupero = 30
+        self.salute = min(self.salute + recupero, 120)
+        print(f"\n{self.nome} si fascia le ferite e recupera {recupero} HP. Salute attuale: {self.salute}")
+
+class Ladro(Personaggio):
+    def __init__(self, nome):
+        super().__init__(nome)
+        self.salute = 140
+
+    def attacca(self, bersaglio):
+        danno = random.randint(self.attacco_min + 5, self.attacco_max + 5)
+        bersaglio.subisci_danno(danno)
+        print(f"{self.nome} colpisce furtivamente {bersaglio.nome} per {danno} danni!")
+
+    def recupera_hp(self):
+        # Recupero veloce ma casuale (tra 10 e 40 HP)
+        recupero = random.randint(10, 40)
+        self.salute = min(self.salute + recupero, 140)
+        print(f"\n{self.nome} si cura rapidamente e recupera {recupero} HP. Salute attuale: {self.salute}")
+```

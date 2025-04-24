@@ -15,9 +15,7 @@ class Personaggio:
         # questo metodo esegue un azione o stampa quindi non deve dare un risultato da usare in un if quindi non serve il return
 
     def subisci_danno(self, danno):
-        self.salute -= danno
-        if self.salute < 0:
-            self.salute = 0
+        self.salute = max(0, self.salute - danno)
         self.storico_danni_subiti.append(danno)
         print(f"Salute di {self.nome}: {self.salute}\n")
         # questo metodo modifica lo stato di un oggetto quindi non deve dare un risultato da usare in un if quindi non serve il return
@@ -26,15 +24,63 @@ class Personaggio:
         return self.salute <= 0
         # in questo caso abbiamo il return perchè chiediamo una risposta e deve darci True o False
         
-    def recupera_hp(self, percentuale):
+    def recupera_hp(self):
         if self.salute == 100:
             print(f"{self.nome} ha già la salute piena.")
             return
-        recupero = int(self.salute * percentuale)
+        recupero = int(self.salute * 0.3)
         nuova_salute = min(self.salute + recupero, 100)
         effettivo = nuova_salute - self.salute
         self.salute = nuova_salute
         print(f"\n{self.nome} recupera {effettivo} HP. Salute attuale: {self.salute}")
+
+class Mago(Personaggio):
+    def __init__(self, nome):
+        super().__init__(nome)
+        self.salute = 80
+
+    def attacca(self, bersaglio):
+        danno = random.randint(self.attacco_min - 5, self.attacco_max + 10)
+        bersaglio.subisci_danno(danno)
+        print(f"{self.nome} lancia un incantesimo su {bersaglio.nome} per {danno} danni!")
+
+    def recupera_hp(self):
+        # Recupero più lento (solo 20% della salute attuale)
+        recupero = int(self.salute * 0.2)
+        self.salute = min(self.salute + recupero, 80)
+        print(f"\n{self.nome} medita e recupera {recupero} HP. Salute attuale: {self.salute}")
+
+class Guerriero(Personaggio):
+    def __init__(self, nome):
+        super().__init__(nome)
+        self.salute = 120
+
+    def attacca(self, bersaglio):
+        danno = random.randint(self.attacco_min + 15, self.attacco_max + 20)
+        bersaglio.subisci_danno(danno)
+        print(f"{self.nome} colpisce con la spada {bersaglio.nome} per {danno} danni!")
+
+    def recupera_hp(self):
+        # Recupero costante (30 HP fissi)
+        recupero = 30
+        self.salute = min(self.salute + recupero, 120)
+        print(f"\n{self.nome} si fascia le ferite e recupera {recupero} HP. Salute attuale: {self.salute}")
+
+class Ladro(Personaggio):
+    def __init__(self, nome):
+        super().__init__(nome)
+        self.salute = 140
+
+    def attacca(self, bersaglio):
+        danno = random.randint(self.attacco_min + 5, self.attacco_max + 5)
+        bersaglio.subisci_danno(danno)
+        print(f"{self.nome} colpisce furtivamente {bersaglio.nome} per {danno} danni!")
+
+    def recupera_hp(self):
+        # Recupero veloce ma casuale (tra 10 e 40 HP)
+        recupero = random.randint(10, 40)
+        self.salute = min(self.salute + recupero, 140)
+        print(f"\n{self.nome} si cura rapidamente e recupera {recupero} HP. Salute attuale: {self.salute}")
         
 def mostra_benvenuto():
     print("Benvenuto nel gioco di combattimento!")
@@ -42,12 +88,13 @@ def mostra_benvenuto():
 def gioca_torneo():
     mostra_benvenuto()
 
-    # Creazione del giocatore
-    giocatore = Personaggio("Personaggio Principale")
+    # Scelta casuale del giocatore tra le 3 classi
+    classi_giocatore = [Mago("Tu (Mago)"), Guerriero("Tu (Guerriero)"), Ladro("Tu (Ladro)")]
+    giocatore = random.choice(classi_giocatore)
+    print(f"Hai ottenuto il personaggio: {giocatore.nome}\n")
 
-    # Creazione dei nemici
-    nomi_nemici = ["Nemico1", "Nemico2", "Nemico3"]
-    nemici = [Personaggio(nome) for nome in nomi_nemici]
+    # Nemici: uno per classe
+    nemici = [Mago("Nemico Mago"), Guerriero("Nemico Guerriero"), Ladro("Nemico Ladro")]
     random.shuffle(nemici)
 
     nemici_sconfitti = 0
@@ -58,18 +105,13 @@ def gioca_torneo():
 
         while True:
             print(f"Turno {turno}:")
-
             giocatore.attacca(nemico)
             print("Storico danni subiti dal nemico:", nemico.storico_danni_subiti)
 
             if nemico.sconfitto():
                 print(f"Hai vinto il duello contro {nemico.nome}!")
-                
-                # Recupero salute del 30%
-                giocatore.recupera_hp(0.3)
-                
+                giocatore.recupera_hp()
                 nemici_sconfitti += 1
-                
                 break
 
             nemico.attacca(giocatore)
@@ -78,7 +120,6 @@ def gioca_torneo():
             if giocatore.sconfitto():
                 print("Sei stato sconfitto!")
                 print(f"Hai sconfitto {nemici_sconfitti} nemico/i.")
-                
                 return
 
             turno += 1
