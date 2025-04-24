@@ -383,4 +383,277 @@ class Personaggio:
 
 # V 8.0
 Utilizzate i metodi delle classi per gestire un torneo in questo progetto.
- 
+ ```python 
+import random
+
+class Personaggio:
+    def __init__(self, nome):  # Costruttore
+        self.nome = nome  # Attributo
+        self.salute = 100
+        self.attacco_min = 5
+        self.attacco_max = 20
+        self.MAX_SALUTE = 100
+        self.storico_dani_subiti = []
+
+    def attacca(self, bersaglio): # Metodo
+        danno = random.randint(self.attacco_min, self.attacco_max)
+        bersaglio.subisci_danno(danno)
+        print(f"{self.nome} attacca {bersaglio.nome} per {danno} punti.")
+
+    def subisci_danno(self, danno):
+        self.salute -= danno
+        if self.salute < 0:
+            self.salute = 0
+        self.storico_dani_subiti.append(danno)
+        print(f"Salute di {self.nome}: {self.salute}")
+
+    def sconfitto(self):
+        return self.salute <= 0
+    
+def gioca_torneo(): 
+
+    # Definiamo i personaggi del torneo
+    giocatore = Personaggio("Personaggio Pincipale")
+    num_nemici = 5 
+    nemici = [Personaggio(f"nemico{n}") for n in range(1, num_nemici + 1)]
+    random.shuffle(nemici)
+
+    for nemico in nemici:  # Solo per verificare la presenza 
+        print(nemico.nome)
+
+    for nemico in nemici:
+        while True:
+            print("--------------------")
+            giocatore.attacca(nemico)
+            if nemico.sconfitto:
+                print(f"{nemico.nome} sconfitto. Next step.")
+                break
+            nemico.attacca(giocatore)
+            if giocatore.sconfitto:
+                print("Sei stato sconfitto. Fine della partita.")
+                return
+
+    print(f"Hai sconfitto tutti i nemici.")
+
+def main():
+    gioca_torneo()
+
+if __name__ == "__main__":
+    main()
+```
+
+# V 9. 0
+# Implementazione 
+- Creare un terzo personaggio specifico
+- inserire personaggi all'interno della logica del gioco
+```python
+import random
+
+class Personaggio:
+    def __init__(self, nome):  # Costruttore
+        self.nome = nome  # Attributo
+        self.salute = 100
+        self.attacco_min = 5
+        self.attacco_max = 20
+        self.MAX_SALUTE = 100
+        self.storico_dani_subiti = []
+        self.storico_aiuto_ricevuto = []
+
+    def attacca(self, bersaglio): # Metodo
+        danno = random.randint(self.attacco_min, self.attacco_max)
+        bersaglio.subisci_danno(danno)
+        print(f"{self.nome} attacca {bersaglio.nome} per {danno} punti.")
+
+    def subisci_danno(self, danno):
+        self.salute -= danno
+        if self.salute < 0:
+            self.salute = 0
+        self.storico_dani_subiti.append(danno)
+        print(f"Salute di {self.nome}: {self.salute}")
+    
+    def sconfitto(self):
+        return self.salute <= 0
+    
+
+class Mago(Personaggio):
+    def attacca(self, bersaglio):
+        danno = random.randint(self.attacco_min + 15, self.attacco_max + 20)
+        bersaglio.salute -= danno
+        print(f"{self.nome} lancia un incatesimo su {bersaglio.nome} per {danno} danni.")
+
+class Guerriero(Personaggio):
+    def attacca(self, bersaglio):
+        danno = random.randint(self.attacco_min + 15, self.attacco_max + 20)
+        bersaglio.salute -= danno
+        print(f"{self.nome} colpisce con una spada {bersaglio.nome} per {danno} danni.")
+
+class Prontosocorso(Personaggio):
+    def aiuta(self, bersaglio): # Metodo
+        if random.randint(1, 0) == 1:
+            aiuto = 0.5 * random.randint(self.attacco_min, self.attacco_max)
+            bersaglio.riceve_aiuto(aiuto)
+            print(f"{self.nome} riceve {bersaglio.nome} per {aiuto} punti.")
+
+    def recive_aiuto(self, aiuto):
+        aiuto = 0.5 * random.randint(self.attacco_min, self.attacco_max)
+        self.salute += aiuto
+        self.storico_aiuto_ricevuto.append(aiuto)
+        print(f"Salute di {self.nome}: {self.salute}")
+
+
+
+def gioca_torneo(): 
+    giocatore = Personaggio("Personaggio Pincipale")
+    soccorso = Prontosocorso("Pronto Soccorso")
+    num_nemici = 5 
+    nemici = [Personaggio(f"nemico{n}") for n in range(1, num_nemici + 1)]
+    random.shuffle(nemici)
+
+    for nemico in nemici:  
+        print(nemico.nome)
+
+    for nemico in nemici:
+        while True:
+            print("--------------------")
+            giocatore.attacca(nemico)
+            if nemico.sconfitto:
+                print(f"{nemico.nome} sconfitto. Next step.")
+                break
+            soccorso.aiuta(nemico)
+            nemico.attacca(giocatore)
+            if giocatore.sconfitto:
+                print("Sei stato sconfitto. Fine della partita.")
+                return
+
+    print(f"Hai sconfitto tutti i nemici.")
+
+def main():
+    gioca_torneo()
+
+if __name__ == "__main__":
+    main()
+```
+# V 12.0
+## Obiettivi del programma
+- personalizzare la salute iniziale in base alla classe 
+- cioè ridefinire init() in ogni sottoclasse
+
+## Suggerimenti
+- Usare super che è una funzione che ti permette di accedere ai metodi della superclasse(cioè la classe madre), direttamente da una classe figlia
+- Serve per non riscrivere codice già esistente nella classe base, ma estenderlo o modificarlo i modo chiaro
+##
+Esempio
+```python 
+# Hai questa classe base:
+class Personaggio:
+    def __init__(self, nome):
+        self.nome = nome
+        self.salute = salute 
+# Questa classe figlia usa il metodo super in modo a spovrascrivere 
+class Guerriero(Personaggio):
+    def __init__(self, nome):
+        super().__init__(nome)
+        self.salute = 120
+```
+### super.init(nome)
+- Chiama il costrutore della superclasse personaggio
+- Passa nome come parametro, perché Personaggio.init() si aspetta nome
+- inizializza self.nome come come nella clase base
+
+## Implementazione
+```python
+import random
+
+class Personaggio:
+    def __init__(self, nome):  # Costruttore
+        self.nome = nome  # Attributo
+        self.salute = 100
+        self.attacco_min = 5
+        self.attacco_max = 20
+        self.MAX_SALUTE = 100
+        self.storico_dani_subiti = []
+        self.storico_aiuto_ricevuto = []
+
+    def attacca(self, bersaglio): # Metodo
+        danno = random.randint(self.attacco_min, self.attacco_max)
+        bersaglio.subisci_danno(danno)
+        print(f"{self.nome} attacca {bersaglio.nome} per {danno} punti.")
+
+    def subisci_danno(self, danno):
+        self.salute -= danno
+        if self.salute < 0:
+            self.salute = 0
+        self.storico_dani_subiti.append(danno)
+        print(f"Salute di {self.nome}: {self.salute}")
+
+    def sconfitto(self):
+        return self.salute <= 0
+
+
+class Mago(Personaggio):
+    def attacca(self, bersaglio):
+        danno = random.randint(self.attacco_min + 15, self.attacco_max + 20)
+        bersaglio.salute -= danno
+        print(f"{self.nome} lancia un incatesimo su {bersaglio.nome} per {danno} danni.")
+
+class Guerriero(Personaggio):
+    def __init__(self, nome):
+        super().__init__(nome)
+        self.salute = 150
+
+    def attacca(self, bersaglio):
+        danno = random.randint(self.attacco_min + 15, self.attacco_max + 20)
+        bersaglio.salute -= danno
+        print(f"{self.nome} colpisce con una spada {bersaglio.nome} per {danno} danni.")
+
+class Prontosocorso(Personaggio):
+    def __init__(self, nome):
+        super().__init__(nome)
+        self.salute = 100000000
+
+    def aiuta(self, bersaglio): # Metodo
+        if random.randint(1, 0) == 1:
+            aiuto = 0.5 * random.randint(self.attacco_min, self.attacco_max)
+            bersaglio.riceve_aiuto(aiuto)
+            print(f"{self.nome} riceve {bersaglio.nome} per {aiuto} punti.")
+
+    def recive_aiuto(self, aiuto):
+        aiuto = 0.5 * random.randint(self.attacco_min, self.attacco_max)
+        self.salute += aiuto
+        self.storico_aiuto_ricevuto.append(aiuto)
+        print(f"Salute di {self.nome}: {self.salute}")
+
+
+
+def gioca_torneo():
+    giocatore = Personaggio("Personaggio Pincipale")
+    soccorso = Prontosocorso("Pronto Soccorso")
+    num_nemici = 5
+    nemici = [Personaggio(f"nemico{n}") for n in range(1, num_nemici + 1)]
+    random.shuffle(nemici)
+
+    for nemico in nemici:
+        print(nemico.nome)
+
+    for nemico in nemici:
+        while True:
+            print("--------------------")
+            giocatore.attacca(nemico)
+            if nemico.sconfitto:
+                print(f"{nemico.nome} sconfitto. Next step.")
+                break
+            soccorso.aiuta(nemico)
+            nemico.attacca(giocatore)
+            if giocatore.sconfitto:
+                print("Sei stato sconfitto. Fine della partita.")
+                return
+
+    print(f"Hai sconfitto tutti i nemici.")
+
+def main():
+    gioca_torneo()
+
+if __name__ == "__main__":
+    main()
+
+```
