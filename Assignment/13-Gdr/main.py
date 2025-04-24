@@ -108,8 +108,6 @@ class Oggetto:
             self.usato = True  # Indica che l'oggetto è stato usato
             print("-" * 80)
             print(f"Salute attuale: {personaggio.salute}\n")
-
-            # ricordarsi di implementare gli hp mx diversi a seconda del personaggio
         
 def mostra_benvenuto():
     print("Benvenuto nel gioco di combattimento!")
