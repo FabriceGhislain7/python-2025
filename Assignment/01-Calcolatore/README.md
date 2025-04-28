@@ -1,13 +1,14 @@
 # SEMPLICE CALCOLATORE (V 1.0)
-## Realizzare un semplice calcolatore che permettere di eseguire le seguente operazioni:
- - Addizione
- - Sottrazione
- - Moltiplicazione
- . Divisione 
+## Obiettivo
+Realizzare un semplice calcolatore che permetta di eseguire le seguenti operazioni:
+- Addizione
+- Sottrazione
+- Moltiplicazione
+- Divisione
 
-## Implementazione 
- - il programma deve chiedere all'utente di inserire due numeri poi cgiedere l'operazione
- - Successivamente deve stampare il risultato ottenuto
+## Implementazione
+- Il programma deve chiedere all'utente di inserire due numeri e l'operazione da eseguire.
+- Successivamente, deve stampare il risultato dell'operazione.
  
 ```python 
 
@@ -18,7 +19,6 @@ scelta_operazione = input("Inserisci il segno per l'operazione desiderata: +, -,
 operazioni = ["+", "-", "/", "*"]
 while not scelta_operazione in operazioni:
     scelta_operazione = input("Inserisci di nuovo il segno per l'operazione desiderata: +, -, *, / : ")
-
 
 while numero2 == 0 and scelta_operazione == "/":
     numero2 = float(input("il secondo valore deve essere diverso da zero. inserisci di nuovo il secondo numero: "))

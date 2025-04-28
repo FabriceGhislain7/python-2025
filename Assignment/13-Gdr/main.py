@@ -1,132 +1,203 @@
 import random
 
-# Definiamo la classe Personaggio ----------------------------------------------
 class Personaggio:
-    def __init__(self, nome):  # Costruttore
-        self.nome = nome  # Attributo
+    def __init__(self, nome):
+        self.nome = nome
         self.salute = 100
+        self.salute_max = 200
         self.attacco_min = 5
-        self.attacco_max = 20
-        self.MAX_SALUTE = 100
-        self.storico_dani_subiti = []
-        self.storico_aiuto_ricevuto = []
+        self.attacco_max = 80
+        self.storico_danni_subiti = []
         self.inventario = []
 
-    def attacca(self, bersaglio): # Metodo
+    def attacca(self, bersaglio):
         danno = random.randint(self.attacco_min, self.attacco_max)
         bersaglio.subisci_danno(danno)
-        print(f"{self.nome} attacca {bersaglio.nome} per {danno} punti.")
+        print(f"{self.nome} attacca {bersaglio.nome} per {danno} punti!")
 
     def subisci_danno(self, danno):
-        self.salute -= danno
-        if self.salute < 0:
-            self.salute = 0
-        self.storico_dani_subiti.append(danno)
-        print(f"Salute di {self.nome}: {self.salute}")
-    
-    def recupera_hp(self):
-        bonus = 30
-        self.salute += bonus
-        self.salute = min(self.salute, 100)
-        print(f"{self.nome} riceve {bonus} di salute in più.")
-    
+        self.salute = max(0, self.salute - danno)
+        self.storico_danni_subiti.append(danno)
+        print(f"Salute di {self.nome}: {self.salute}\n")
+
     def sconfitto(self):
         return self.salute <= 0
-    
-    # Aggiungiamo un attributo alla nostra classe Personaggio
-    def usa_oggetto(self, nome_oggetto):
-        for oggetto in self.inventario:
-            if oggetto.nome == oggetto:
-                oggetto.usa(self)
-                self.inventario.remove(oggetto)
-                return # per uscire dal ciclo
-        print(f"{self.nome} non ha un oggetto chiamato {nome_oggetto}")
 
-# Definiamo la classe Mago------------------------------------------------------
+    def recupera_hp(self):
+        if self.salute == 100:
+            print(f"{self.nome} ha già la salute piena.")
+            return
+        recupero = int(self.salute * 0.3)
+        nuova_salute = min(self.salute + recupero, 100)
+        effettivo = nuova_salute - self.salute
+        self.salute = nuova_salute
+        print(f"\n{self.nome} recupera {effettivo} HP. Salute attuale: {self.salute}")
+
+    def usa_oggetto(self, nome_oggetto, bersaglio=None):
+        for oggetto in self.inventario:
+            if oggetto.nome == nome_oggetto:
+                risultato = oggetto.usa(self, bersaglio)
+                self.inventario.remove(oggetto)
+                return risultato
+        print(f"{self.nome} non ha un oggetto chiamato {nome_oggetto}.")
+        
+    def prendi_inventario(self, altro_personaggio):
+        if altro_personaggio.inventario:
+            print(f"\n{self.nome} ottiene l'inventario di {altro_personaggio.nome}:")
+            for oggetto in altro_personaggio.inventario:
+                print(f" - {oggetto.nome}")
+                self.inventario.append(oggetto)
+            altro_personaggio.inventario.clear()  # svuota l'inventario del nemico
+        else:
+            print(f"{altro_personaggio.nome} non aveva oggetti nell'inventario.")
+
 class Mago(Personaggio):
     def __init__(self, nome):
         super().__init__(nome)
+        self.salute = 80
+
+    def attacca(self, bersaglio):
+        danno = random.randint(self.attacco_min - 5, self.attacco_max + 10)
+        bersaglio.subisci_danno(danno)
+        print(f"{self.nome} lancia un incantesimo su {bersaglio.nome} per {danno} danni!")
 
     def recupera_hp(self):
-        bonus = 0.3 * self.salute
-        self.salute += bonus
-        print(f"{self.nome} ha recuperato {bonus} si salute")
+        recupero = int(self.salute * 0.2)
+        self.salute = min(self.salute + recupero, 80)
+        print(f"\n{self.nome} medita e recupera {recupero} HP. Salute attuale: {self.salute}")
 
-    def attacca(self, bersaglio):
-        danno = random.randint(self.attacco_min + 15, self.attacco_max + 20)
-        bersaglio.salute -= danno
-        print(f"{self.nome} lancia un incatesimo su {bersaglio.nome} per {danno} danni.")
-
-
-# Definiamo la classe Guerriero ------------------------------------------------
 class Guerriero(Personaggio):
+    def __init__(self, nome):
+        super().__init__(nome)
+        self.salute = 120
+
     def attacca(self, bersaglio):
         danno = random.randint(self.attacco_min + 15, self.attacco_max + 20)
-        bersaglio.salute -= danno
-        print(f"{self.nome} colpisce con una spada {bersaglio.nome} per {danno} danni.")
+        bersaglio.subisci_danno(danno)
+        print(f"{self.nome} colpisce con la spada {bersaglio.nome} per {danno} danni!")
 
-# Definiamo la classe Prontosoccorso -------------------------------------------
-class Prontosoccorso(Personaggio):
-    def aiuta(self, bersaglio): # Metodo
-        if random.randint(1, 0) == 1:
-            aiuto = 0.5 * random.randint(self.attacco_min, self.attacco_max)
-            bersaglio.riceve_aiuto(aiuto)
-            print(f"{self.nome} riceve {bersaglio.nome} per {aiuto} punti.")
+    def recupera_hp(self):
+        recupero = 30
+        self.salute = min(self.salute + recupero, 120)
+        print(f"\n{self.nome} si fascia le ferite e recupera {recupero} HP. Salute attuale: {self.salute}")
 
-    def recive_aiuto(self, aiuto):
-        aiuto = 0.5 * random.randint(self.attacco_min, self.attacco_max)
-        self.salute += aiuto
-        self.storico_aiuto_ricevuto.append(aiuto)
-        print(f"Salute di {self.nome}: {self.salute}")
+class Ladro(Personaggio):
+    def __init__(self, nome):
+        super().__init__(nome)
+        self.salute = 140
 
-# Definiamo la classe oggetto
+    def attacca(self, bersaglio):
+        danno = random.randint(self.attacco_min + 5, self.attacco_max + 5)
+        bersaglio.subisci_danno(danno)
+        print(f"{self.nome} colpisce furtivamente {bersaglio.nome} per {danno} danni!")
+
+    def recupera_hp(self):
+        recupero = random.randint(10, 40)
+        self.salute = min(self.salute + recupero, 140)
+        print(f"\n{self.nome} si cura rapidamente e recupera {recupero} HP. Salute attuale: {self.salute}")
+        
 class Oggetto:
-    def __init__(self, nome, effetto, valore):
+    def __init__(self, nome):
         self.nome = nome
-        self.effetto = effetto
-        self.valore = valore
         self.usato = False
 
-    def usa(self, personaggio):
-        if  self.effetto == "cura":
-            personaggio.salute += self.valore
-            print(f"{personaggio.nome} usa {self.nome} e recupera {self.valore} salute.")
-            personaggio.salute = min(personaggio.salute, personaggio.salute_max)
-            self.usato = True
-            print(f"Salute attuale: {personaggio.salute}\n")
+    def usa(self, utilizzatore, bersaglio=None):
+        raise NotImplementedError("Questo oggetto non ha effetto definito.")
 
-            # ricordiamoci di implementare gli hp mx diversi a secondo del personaggio
+class PozioneCura(Oggetto):
+    def __init__(self, nome="Pozione Rossa", valore=30):
+        super().__init__(nome)
+        self.valore = valore
 
+    def usa(self, utilizzatore, bersaglio=None):
+        target = bersaglio if bersaglio else utilizzatore
+        target.salute = min(target.salute + self.valore, target.salute_max)
+        print(f"{target.nome} usa {self.nome} e recupera {self.valore} salute!")
+        self.usato = True
 
-# PARTENZA DEL TORNEO ==========================================================
+class BombaAcida(Oggetto):
+    def __init__(self, nome="Bomba Acida", danno=30):
+        super().__init__(nome)
+        self.danno = danno
+
+    def usa(self, utilizzatore, bersaglio=None):
+        if bersaglio is None:
+            print(f"{utilizzatore.nome} cerca di usare {self.nome}, ma non ha un bersaglio!")
+            return
+        bersaglio.subisci_danno(self.danno)
+        print(f"{utilizzatore.nome} lancia {self.nome} su {bersaglio.nome}, infliggendo {self.danno} danni!")
+        self.usato = True
+
+class Medaglione(Oggetto):
+    def __init__(self):
+        super().__init__("Medaglione")
+
+    def usa(self, utilizzatore, bersaglio=None):
+        target = bersaglio if bersaglio else utilizzatore
+        target.attacco_max += 10
+        print(f"{target.nome} indossa {self.nome}, aumentando il suo attacco massimo!")
+        self.usato = True
+
+def mostra_benvenuto():
+    print("Benvenuto nel gioco di combattimento!")
+
 def gioca_torneo():
-    giocatore = Personaggio("Personaggio Pincipale")
-    soccorso = Prontosoccorso("Pronto Soccorso")
-    pozione = Oggetto("Pozione gialla", "cura", 20)
-    num_nemici = 5
-    nemici = [Mago(f"nemico{n}") for n in range(1, num_nemici + 1)]
+    mostra_benvenuto()
+
+    classi_giocatore = [Mago("Tu (Mago)"), Guerriero("Tu (Guerriero)"), Ladro("Tu (Ladro)")]
+    giocatore = random.choice(classi_giocatore)
+    print(f"Hai ottenuto il personaggio: {giocatore.nome}\n")
+
+    nemici = [Mago("Nemico Mago"), Guerriero("Nemico Guerriero"), Ladro("Nemico Ladro")]
     random.shuffle(nemici)
+    
+    nemici_sconfitti = 0
 
     for nemico in nemici:
-        print(nemico.nome)
+        print(f"\nNuovo avversario: {nemico.nome}")
+        turno = 1
+        
+        # Inizializzazione dell inventario del nemico
+        nemico.inventario = [PozioneCura(), BombaAcida(), Medaglione()]
 
-    for nemico in nemici:
         while True:
-            print("-" * 40)
-            giocatore.attacca(nemico)
-            if nemico.sconfitto:
-                print(f"{nemico.nome} sconfitto. Next step.")
-                break
-            soccorso.aiuta(nemico)
-            nemico.attacca(giocatore)
-            if giocatore.sconfitto:
-                print("Sei stato sconfitto. Fine della partita.")
-                return
-            giocatore.recupera_hp()
-            nemico.recupera_hp()
-            giocatore.usa_oggetto()
+            print(f"Turno {turno}:")
 
-    print(f"Hai sconfitto tutti i nemici.")
+            # aggiunta oggetti ogni turno (esempio semplice)
+            giocatore.inventario.append(PozioneCura())
+            giocatore.inventario.append(BombaAcida())
+            giocatore.inventario.append(Medaglione())
+
+            # uso BombaAcida contro il nemico
+            giocatore.usa_oggetto("Bomba Acida", bersaglio=nemico)
+
+            giocatore.attacca(nemico)
+            print("Storico danni subiti dal nemico:", nemico.storico_danni_subiti)
+
+            if nemico.sconfitto():
+                print(f"Hai vinto il duello contro {nemico.nome}!")
+                giocatore.recupera_hp()
+                nemici_sconfitti += 1
+                
+                # prendi l'inventario del nemico
+                giocatore.prendi_inventario(nemico)
+
+                # usa la pozione per curarsi
+                giocatore.usa_oggetto("Pozione Rossa")
+                break
+
+            nemico.attacca(giocatore)
+            print("Storico danni subiti dal giocatore:", giocatore.storico_danni_subiti)
+
+            if giocatore.sconfitto():
+                print("Sei stato sconfitto!")
+                print(f"Hai sconfitto {nemici_sconfitti} nemico/i.")
+                return
+
+            turno += 1
+
+    print("\nHai vinto il torneo! Tutti i nemici sono stati sconfitti!")
+    print(f"Nemici sconfitti: {nemici_sconfitti}")
 
 def main():
     gioca_torneo()
