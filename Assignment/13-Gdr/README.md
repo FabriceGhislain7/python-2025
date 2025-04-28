@@ -1695,4 +1695,34 @@ if __name__ == "__main__":
 # V 16.0
 
 ## Obiettivi del programma
-- Implementare che, quando un nemico viene sconfitto, il giocatore ottenga tutto il suo inventario
+- Implementare la logica del torneo che quando un nemico perde il duello il personaggio vince il suo inventario
+```python
+nemico.inventario = [PozioneCura(), BombaAcida(), Medaglione()]
+```
+```python
+def prendi_inventario(self, altro_personaggio):
+    if altro_personaggio.inventario:
+        print(f"\n{self.nome} ottiene l'inventario di {altro_personaggio.nome}:")
+        for oggetto in altro_personaggio.inventario:
+            print(f" - {oggetto.nome}")
+            self.inventario.append(oggetto)
+        altro_personaggio.inventario.clear()  # svuota l'inventario del nemico
+    else:
+        print(f"{altro_personaggio.nome} non aveva oggetti nell'inventario.")
+```
+```python
+giocatore.prendi_inventario(nemico)
+```
+
+# V 17.0
+
+## Obiettivi del programma
+- passare a una struttura più modulare e pulita con classi dedicate a:
+
+Classe | Responsabilità
+---|---
+Personaggio | Gestire le proprietà e i metodi di un personaggio
+Oggetto | Gestire le proprietà e i metodi di un oggetto
+Inventario | Gestire oggetti di un personaggio (aggiunta, rimozione, uso)
+Turno | Gestire un singolo turno (azioni di attacco, uso oggetti)
+Torneo | Gestire tutto il ciclo dei combattimenti, gestione dei nemici, vincite/sconfitte

@@ -40,6 +40,16 @@ class Personaggio:
                 self.inventario.remove(oggetto)
                 return risultato
         print(f"{self.nome} non ha un oggetto chiamato {nome_oggetto}.")
+        
+    def prendi_inventario(self, altro_personaggio):
+        if altro_personaggio.inventario:
+            print(f"\n{self.nome} ottiene l'inventario di {altro_personaggio.nome}:")
+            for oggetto in altro_personaggio.inventario:
+                print(f" - {oggetto.nome}")
+                self.inventario.append(oggetto)
+            altro_personaggio.inventario.clear()  # svuota l'inventario del nemico
+        else:
+            print(f"{altro_personaggio.nome} non aveva oggetti nell'inventario.")
 
 class Mago(Personaggio):
     def __init__(self, nome):
@@ -146,6 +156,9 @@ def gioca_torneo():
     for nemico in nemici:
         print(f"\nNuovo avversario: {nemico.nome}")
         turno = 1
+        
+        # Inizializzazione dell inventario del nemico
+        nemico.inventario = [PozioneCura(), BombaAcida(), Medaglione()]
 
         while True:
             print(f"Turno {turno}:")
@@ -165,6 +178,9 @@ def gioca_torneo():
                 print(f"Hai vinto il duello contro {nemico.nome}!")
                 giocatore.recupera_hp()
                 nemici_sconfitti += 1
+                
+                # prendi l'inventario del nemico
+                giocatore.prendi_inventario(nemico)
 
                 # usa la pozione per curarsi
                 giocatore.usa_oggetto("Pozione Rossa")
