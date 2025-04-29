@@ -27,6 +27,51 @@ Difficile cambiare cose | Cambi solo quello che serve
 Difficile riutilizzare | Riusi facilmente
 Difficile testare | Testi facilmente
 
+## __init__.py
+In Python, il file `__init__.py` serve principalmente a due scopi:
+
+Indicare che una cartella è un "package":
+Quando Python vede un file `__init__.py` in una cartella, capisce che quella cartella può essere trattata come un modulo o package importabile.
+
+> Prima di Python 3.3 era obbligatorio avere `__init__.py` per far riconoscere una cartella come package.
+
+Da Python 3.3 in poi, grazie ai "namespace packages", non è più obbligatorio, ma è comunque consigliato metterlo, soprattutto in progetti ordinati o complessi.
+
+## Eseguire codice di inizializzazione:
+Dentro `__init__.py` puoi scrivere codice che vuoi venga eseguito automaticamente quando il package viene importato.
+
+Per esempio, puoi:
+- Importare automaticamente dei moduli
+- Definire variabili o funzioni di uso comune
+- Configurare impostazioni iniziali
+
+Esempio semplice:
+
+Supponiamo che hai questa struttura di cartelle:
+
+```bash
+mio_progetto/
+│
+├── modulo1.py
+├── modulo2.py
+└── __init__.py
+```
+Se dentro `__init__.py` scrivi:
+
+```python
+print("Inizializzazione del package mio_progetto")
+```
+Quando importi mio_progetto:
+
+```python
+import mio_progetto
+```
+Vedrai:
+
+```python
+Inizializzazione del package mio_progetto
+```
+## Importare moduli e pacchetti
 Import precisi e ordinati:
 ```python
 from prodotti.articolo import Articolo
