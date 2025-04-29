@@ -1745,6 +1745,16 @@ class Inventario:
                 return
         print(f"{utilizzatore.nome} non ha un oggetto chiamato {nome_oggetto}.")
 
+    def prendi_inventario(self, altro_inventario):
+        if altro_inventario.oggetti:
+            print(f"\n{self.nome} ottiene l'inventario di {altro_inventario.nome}:")
+            for oggetto in altro_inventario.oggetti:
+                print(f" - {oggetto.nome}")
+                self.aggiungi(oggetto)
+            altro_inventario.oggetti.clear()
+        else:
+            print(f"{altro_inventario.nome} non aveva oggetti nell'inventario.")
+
 class Turno:
     def __init__(self, giocatore, nemico):
         self.giocatore = giocatore
@@ -1769,6 +1779,10 @@ class Turno:
                 print(f"Hai vinto contro {self.nemico.nome}!")
                 self.giocatore.recupera_hp()
                 self.giocatore.inventario.usa_oggetto("Pozione Rossa", self.giocatore)
+
+                # Prendi l'inventario del nemico
+                self.giocatore.prendi_inventario(self.nemico)
+                
                 break
 
             # Azioni del nemico
@@ -1805,7 +1819,7 @@ class Torneo:
         self.setup()
 
         for nemico in self.nemici:
-            turno = Turno(self.giocatore, self.nemico)\
+            turno = Turno(self.giocatore, self.nemico)
             turno.esegui()
 
             if self.giocatore.sconfitto():
