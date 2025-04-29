@@ -1,3 +1,5 @@
 # pipenv
 /.venv
 /non-versionati
+__pycache__/
+*.pyc

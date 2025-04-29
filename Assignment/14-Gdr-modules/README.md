@@ -400,3 +400,19 @@ utils/utils.py | (nessuno) | Funzione di stampa
 - import tra moduli (from X import Y) -> ovunque servono
 - nessun import inutile
 - nessun import mancante
+
+# __pycache__
+
+ - `__pycache__` viene creata automaticamente da Python ogni volta che esegui dei file .py.
+ - Dentro `__pycache__` ci sono i file compilati: file .pyc (Python Compiled).
+ - Questi .pyc sono versioni ottimizzate dei tuoi .py, pronte per essere eseguite più velocemente
+
+# A cosa servono
+- La prossima volta che esegui il programma, Python carica direttamente il .pyc se non è cambiato.
+- Questo rende l'esecuzione molto più veloce (non deve rileggere e ricompilare il .py ogni volta).
+- Non cambia il comportamento del programma.
+- Serve solo a velocizzare
+- **Si possono cancellare quando si vuole tanto Python li crea alla prossima esecuzione**
+- **Non serve tenere i files .pyc nel repository (Github)**
+- Verificare che il `gitignore` contenga `__pycache__/`
+- Verificare che il `gitignore` contenga `*.pyc`
