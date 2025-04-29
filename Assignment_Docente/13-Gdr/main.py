@@ -1,5 +1,30 @@
 import random
 
+class Inventario:
+    def __init__(self):
+        self.oggetti = []
+    
+    def aggiungi(self, oggetto):
+        self.oggetti.append(oggetto)
+
+    def usa_oggetto(self, nome_oggetto, utilizzatore, bersaglio=None):
+        for oggetto in self.oggetti:
+            if oggetto.nome == nome_oggetto:
+                oggetto.usa(utilizzatore, bersaglio)
+                self.oggetti.remove(oggetto)
+                return
+        print(f"{utilizzatore.nome} non ha un oggetto chiamato {nome_oggetto}.")
+        
+    def prendi_inventario(self, altro_inventario):
+        if altro_inventario.oggetti:
+            print(f"\n{self.nome} ottiene l'inventario di {altro_inventario.nome}:")
+            for oggetto in altro_inventario.oggetti:
+                print(f" - {oggetto.nome}")
+                self.aggiungi(oggetto)
+            altro_inventario.oggetti.clear()
+        else:
+            print(f"{altro_inventario.nome} non aveva oggetti nell'inventario.")
+
 class Personaggio:
     def __init__(self, nome):
         self.nome = nome
@@ -8,25 +33,21 @@ class Personaggio:
         self.attacco_min = 5
         self.attacco_max = 80
         self.storico_danni_subiti = []
-        # aggiungo la proprieta inventario al costruttore
-        self.inventario = []  # Lista di oggetti
+        self.inventario = []
 
     def attacca(self, bersaglio):
         danno = random.randint(self.attacco_min, self.attacco_max)
         bersaglio.subisci_danno(danno)
         print(f"{self.nome} attacca {bersaglio.nome} per {danno} punti!")
-        # questo metodo esegue un azione o stampa quindi non deve dare un risultato da usare in un if quindi non serve il return
 
     def subisci_danno(self, danno):
         self.salute = max(0, self.salute - danno)
         self.storico_danni_subiti.append(danno)
         print(f"Salute di {self.nome}: {self.salute}\n")
-        # questo metodo modifica lo stato di un oggetto quindi non deve dare un risultato da usare in un if quindi non serve il return
 
     def sconfitto(self):
         return self.salute <= 0
-        # in questo caso abbiamo il return perchè chiediamo una risposta e deve darci True o False
-        
+
     def recupera_hp(self):
         if self.salute == 100:
             print(f"{self.nome} ha già la salute piena.")
@@ -37,13 +58,15 @@ class Personaggio:
         self.salute = nuova_salute
         print(f"\n{self.nome} recupera {effettivo} HP. Salute attuale: {self.salute}")
         
-    def usa_oggetto(self, nome_oggetto):
-        for oggetto in self.inventario:
-            if oggetto.nome == nome_oggetto:
-                oggetto.usa(self)  # applico l'effetto dell oggetto al personaggio
-                self.inventario.remove(oggetto)
-                return  # uso return per uscire dal ciclo for
-        print(f"{self.nome} non ha un oggetto chiamato {nome_oggetto}.")
+    def prendi_inventario(self, altro_personaggio):
+        if altro_personaggio.inventario:
+            print(f"\n{self.nome} ottiene l'inventario di {altro_personaggio.nome}:")
+            for oggetto in altro_personaggio.inventario:
+                print(f" - {oggetto.nome}")
+                self.inventario.append(oggetto)
+            altro_personaggio.inventario.clear()  # svuota l'inventario del nemico
+        else:
+            print(f"{altro_personaggio.nome} non aveva oggetti nell'inventario.")
 
 class Mago(Personaggio):
     def __init__(self, nome):
@@ -56,7 +79,6 @@ class Mago(Personaggio):
         print(f"{self.nome} lancia un incantesimo su {bersaglio.nome} per {danno} danni!")
 
     def recupera_hp(self):
-        # Recupero più lento (solo 20% della salute attuale)
         recupero = int(self.salute * 0.2)
         self.salute = min(self.salute + recupero, 80)
         print(f"\n{self.nome} medita e recupera {recupero} HP. Salute attuale: {self.salute}")
@@ -72,7 +94,6 @@ class Guerriero(Personaggio):
         print(f"{self.nome} colpisce con la spada {bersaglio.nome} per {danno} danni!")
 
     def recupera_hp(self):
-        # Recupero costante (30 HP fissi)
         recupero = 30
         self.salute = min(self.salute + recupero, 120)
         print(f"\n{self.nome} si fascia le ferite e recupera {recupero} HP. Salute attuale: {self.salute}")
@@ -88,85 +109,137 @@ class Ladro(Personaggio):
         print(f"{self.nome} colpisce furtivamente {bersaglio.nome} per {danno} danni!")
 
     def recupera_hp(self):
-        # Recupero veloce ma casuale (tra 10 e 40 HP)
         recupero = random.randint(10, 40)
         self.salute = min(self.salute + recupero, 140)
         print(f"\n{self.nome} si cura rapidamente e recupera {recupero} HP. Salute attuale: {self.salute}")
         
 class Oggetto:
-    def __init__(self, nome, effetto, valore):
-        self.nome = nome  # Es: "Pozione"
-        self.effetto = effetto  # Es: "cura"
-        self.valore = valore  # Es: 20
-        self.usato = False  # Es: torcia consumata
+    def __init__(self, nome):
+        self.nome = nome
+        self.usato = False
 
-    def usa(self, personaggio):
-        if self.effetto == "cura":
-            personaggio.salute += self.valore
-            print(f"{personaggio.nome} usa {self.nome} e recupera {self.valore} salute!")
-            personaggio.salute = min(personaggio.salute, personaggio.salute_max)  # Limita la salute al max del personaggio
-            self.usato = True  # Indica che l'oggetto è stato usato
-            print("-" * 80)
-            print(f"Salute attuale: {personaggio.salute}\n")
-        
-def mostra_benvenuto():
-    print("Benvenuto nel gioco di combattimento!")
-        
-def gioca_torneo():
-    mostra_benvenuto()
+    def usa(self, utilizzatore, bersaglio=None):
+        raise NotImplementedError("Questo oggetto non ha effetto definito.")
 
-    # Scelta casuale del giocatore tra le 3 classi
-    classi_giocatore = [Mago("Tu (Mago)"), Guerriero("Tu (Guerriero)"), Ladro("Tu (Ladro)")]
-    giocatore = random.choice(classi_giocatore)
-    print(f"Hai ottenuto il personaggio: {giocatore.nome}\n")
+class PozioneCura(Oggetto):
+    def __init__(self, nome="Pozione Rossa", valore=30):
+        super().__init__(nome)
+        self.valore = valore
 
-    # Nemici: uno per classe
-    nemici = [Mago("Nemico Mago"), Guerriero("Nemico Guerriero"), Ladro("Nemico Ladro")]
-    random.shuffle(nemici)
-    
-    # creazione di un oggetto
-    pozione = Oggetto("Pozione gialla", "cura", 20)
+    def usa(self, utilizzatore, bersaglio=None):
+        target = bersaglio if bersaglio else utilizzatore
+        target.salute = min(target.salute + self.valore, target.salute_max)
+        print(f"{target.nome} usa {self.nome} e recupera {self.valore} salute!")
+        self.usato = True
 
-    nemici_sconfitti = 0
+class BombaAcida(Oggetto):
+    def __init__(self, nome="Bomba Acida", danno=30):
+        super().__init__(nome)
+        self.danno = danno
 
-    for nemico in nemici:
-        print(f"\nNuovo avversario: {nemico.nome}")
-        turno = 1
+    def usa(self, utilizzatore, bersaglio=None):
+        if bersaglio is None:
+            print(f"{utilizzatore.nome} cerca di usare {self.nome}, ma non ha un bersaglio!")
+            return
+        bersaglio.subisci_danno(self.danno)
+        print(f"{utilizzatore.nome} lancia {self.nome} su {bersaglio.nome}, infliggendo {self.danno} danni!")
+        self.usato = True
 
+class Medaglione(Oggetto):
+    def __init__(self):
+        super().__init__("Medaglione")
+
+    def usa(self, utilizzatore, bersaglio=None):
+        target = bersaglio if bersaglio else utilizzatore
+        target.attacco_max += 10
+        print(f"{target.nome} indossa {self.nome}, aumentando il suo attacco massimo!")
+        self.usato = True
+
+class Turno:
+    def __init__(self, giocatore, nemico):
+        self.giocatore = giocatore
+        self.nemico = nemico
+        self.numero_turno = 1
+
+    def esegui(self):
         while True:
-            print(f"Turno {turno}:")
-            giocatore.attacca(nemico)
-            print("Storico danni subiti dal nemico:", nemico.storico_danni_subiti)
+            print(f"--- Turno {self.numero_turno} ---")
 
-            if nemico.sconfitto():
-                print(f"Hai vinto il duello contro {nemico.nome}!")
-                giocatore.recupera_hp()
-                nemici_sconfitti += 1
+            # Azioni del giocatore
+            self.giocatore.inventario.aggiungi(PozioneCura())
+            self.giocatore.inventario.aggiungi(BombaAcida())
+            self.giocatore.inventario.aggiungi(Medaglione())
+
+            # Usa bomba acida contro il nemico
+            self.giocatore.inventario.usa_oggetto("Bomba Acida", self.giocatore, self.nemico)
+            self.giocatore.attacca(self.nemico)
+            print("Storico danni subiti dal nemico:", self.nemico.storico_danni_subiti)
+
+            if self.nemico.sconfitto():
+                print(f"Hai vinto contro {self.nemico.nome}!")
+                self.giocatore.recupera_hp()
+                self.giocatore.inventario.usa_oggetto("Pozione Rossa", self.giocatore)
                 
-                # aggiunta all inventario
-                giocatore.inventario.append(pozione)
-                
-                # in gioca_duello il giocatore si cura usando la pozione
-                giocatore.usa_oggetto("Pozione gialla")
+                # Prendi l'inventario del nemico
+                self.giocatore.prendi_inventario(self.nemico)
                 
                 break
 
-            nemico.attacca(giocatore)
-            print("Storico danni subiti dal giocatore:", giocatore.storico_danni_subiti)
+            # Azioni del nemico
+            self.nemico.attacca(self.giocatore)
+            print("Storico danni subiti dal giocatore:", self.giocatore.storico_danni_subiti)
 
-            if giocatore.sconfitto():
-                print("Sei stato sconfitto!")
-                print(f"Hai sconfitto {nemici_sconfitti} nemico/i.")
-                
+            if self.giocatore.sconfitto():
+                print(f"Sei stato sconfitto da {self.nemico.nome}!")
+                break
+
+            self.numero_turno += 1
+            
+def mostra_benvenuto():
+    print("Benvenuto nel gioco di combattimento!")
+
+class Torneo:
+    def __init__(self):
+        self.giocatore = None
+        self.nemici = []
+        self.nemici_sconfitti = 0
+
+    def setup(self):
+        mostra_benvenuto()
+        # Configurazioni iniziali del torneo
+
+        # configurazioni personaggio principale
+        classi_giocatore = [Mago("Tu (Mago)"), Guerriero("Tu (Guerriero)"), Ladro("Tu (Ladro)")]
+        self.giocatore = random.choice(classi_giocatore)
+        self.giocatore.inventario = Inventario()  # assegna un inventario
+        print(f"Hai ricevuto il personaggio: {self.giocatore.nome}")
+
+        # configurazioni nemici
+        self.nemici = [Mago("Nemico Mago"), Guerriero("Nemico Guerriero"), Ladro("Nemico Ladro")]
+        random.shuffle(self.nemici)
+
+    def gioca(self):
+        self.setup()
+
+        for nemico in self.nemici:
+            turno = Turno(self.giocatore, nemico)
+            turno.esegui()
+
+            if self.giocatore.sconfitto():
+                print(f"Hai sconfitto {self.nemici_sconfitti} nemici")
                 return
 
-            turno += 1
+            # incremento il contatore dei nemici sconfitti
+            self.nemici_sconfitti +=1
 
-    print("\nHai vinto il torneo! Tutti i nemici sono stati sconfitti!")
-    print(f"Nemici sconfitti: {nemici_sconfitti}")
+        print("Hai vinto il torneo")
+        print(f"Hai sconfitto {self.nemici_sconfitti} nemici")
 
 def main():
-    gioca_torneo()
+    torneo = Torneo()
+    torneo.gioca()
 
+# Firma di avvio
 if __name__ == "__main__":
     main()
+    

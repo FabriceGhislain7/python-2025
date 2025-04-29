@@ -1,3 +1,15 @@
 # pipenv
-/.venv
-/non-versionati
+Pipfile.lock
+
+# Ambienti virtuali
+.venv/
+venv/
+
+# File generati da Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Cartella non versionata (modifica secondo il tuo uso)
+non-versionati/

@@ -1,0 +1,10 @@
+Metadata-Version: 2.4
+Name: gioco_torneo
+Version: 0.1.0
+Author: il Tuo Nome
+Classifier: Programmind Language :: 3
+Classifier: Operating Systems :: OS Independent
+Requires-Python: >=3.8
+Dynamic: author
+Dynamic: classifier
+Dynamic: requires-python

@@ -1713,7 +1713,6 @@ def prendi_inventario(self, altro_personaggio):
 ```python
 giocatore.prendi_inventario(nemico)
 ```
-
 # V 17.0
 
 ## Obiettivi del programma
@@ -1727,10 +1726,9 @@ Inventario | Gestire oggetti di un personaggio (aggiunta, rimozione, uso)
 Turno | Gestire un singolo turno (azioni di attacco, uso oggetti)
 Torneo | Gestire tutto il ciclo dei combattimenti, gestione dei nemici, vincite/sconfitte
 
-Creo la classe inventario in modo da:
-- allegerire il carico della classe Personaggio
-- delegare le funzionlità relativa agli array alla classe inventario 
-
+Creo la classe Inventario in modo da:
+- alleggerire il carico di lavoro della classe Personaggio
+- delegare le funzionalita relative agli array alla classe Inventario
 ```python
 class Inventario:
     def __init__(self):
@@ -1741,18 +1739,103 @@ class Inventario:
 
     def usa_oggetto(self, nome_oggetto, utilizzatore, bersaglio=None):
         for oggetto in self.oggetti:
-            if oggetto == nome_oggetto:
+            if oggetto.nome == nome_oggetto:
+                oggetto.usa(utilizzatore, bersaglio)
+                self.oggetti.remove(oggetto)
+                return
+        print(f"{utilizzatore.nome} non ha un oggetto chiamato {nome_oggetto}.")
+
+    def prendi_inventario(self, altro_inventario):
+        if altro_inventario.oggetti:
+            print(f"\n{self.nome} ottiene l'inventario di {altro_inventario.nome}:")
+            for oggetto in altro_inventario.oggetti:
+                print(f" - {oggetto.nome}")
+                self.aggiungi(oggetto)
+            altro_inventario.oggetti.clear()
+        else:
+            print(f"{altro_inventario.nome} non aveva oggetti nell'inventario.")
 
 class Turno:
-    def 
-
-
-
+    def __init__(self, giocatore, nemico):
+        self.giocatore = giocatore
+        self.nemico = nemico
+        self.numero_turno = 1
 
     def esegui(self):
         while True:
-            print(f"")
+            print(f"--- Turno {self.numero_turno} ---")
+
+            # Azioni del giocatore
+            self.giocatore.inventario.aggiungi(PozioneCura())
+            self.giocatore.inventario.aggiungi(BombaAcida())
+            self.giocatore.inventario.aggiungi(Medaglione())
+
+            # Usa bomba acida contro il nemico
+            self.giocatore.inventario.usa_oggetto("Bomba Acida", self.giocatore, self.nemico)
+            self.giocatore.attacca(self.nemico)
+            print("Storico danni subiti dal nemico:", self.nemico.storico_danni_subiti)
+
+            if self.nemico.sconfitto():
+                print(f"Hai vinto contro {self.nemico.nome}!")
+                self.giocatore.recupera_hp()
+                self.giocatore.inventario.usa_oggetto("Pozione Rossa", self.giocatore)
+
+                # Prendi l'inventario del nemico
+                self.giocatore.prendi_inventario(self.nemico)
+                
+                break
+
+            # Azioni del nemico
+            self.nemico.attacca(self.giocatore)
+            print("Storico danni subiti dal giocatore:", self.giocatore.storico_danni_subiti)
+
+            if self.giocatore.sconfitto():
+                print(f"Sei stato sconfitto da {self.nemico.nome}!")
+                break
+
+            self.numero_turno += 1
 
 class Torneo:
-    
-```
+    def __init__(self):
+        self.giocatore = None
+        self.nemici = []
+        self.nemici_sconfitti = 0
+
+    def setup(self):
+        mostra_benvenuto()
+        # Configurazioni iniziali del torneo
+
+        # configurazioni personaggio principale
+        classi_giocatore = [Mago("Tu (Mago)"), Guerriero("Tu (Guerriero)"), Ladro("Tu (Ladro)")]
+        self.giocatore = random.choice(classi_giocatore)
+        self.giocatore.inventario = Inventario()  # assegna un inventario
+        print(f"Hai ricevuto il personaggio: {self.giocatore.nome}")
+
+        # configurazioni nemici
+        self.nemici = [Mago("Nemico Mago"), Guerriero("Nemico Guerriero"), Ladro("Nemico Ladro")]
+        random.shuffle(self.nemici)
+
+    def gioca(self):
+        self.setup()
+
+        for nemico in self.nemici:
+            turno = Turno(self.giocatore, self.nemico)
+            turno.esegui()
+
+            if self.giocatore.sconfitto():
+                print(f"Hai sconfitto {self.nemici_sconfitti} nemici")
+                return
+
+            # incremento il contatore dei nemici sconfitti
+            self.nemici_sconfitti +=1
+
+        print("Hai vinto il torneo")
+        print(f"Hai sconfitto {self.nemici_sconfitti} nemici")
+
+def main():
+    torneo = Torneo()
+    toRneo.gioca()
+
+# Firma di avvio
+if __name__ == "__main__":
+    main()

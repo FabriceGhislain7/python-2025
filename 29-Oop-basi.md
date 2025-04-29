@@ -21,7 +21,7 @@ class Rettangolo:
         return self.larghezza * self.altezza
 ```
 ## 2. Concetto base: la Classe
-Una classe è uno stampo per creare oggetti (istanze), un po’ come una funzione factory in FP:
+Una classe è uno stampo per creare oggetti (istanze):
 
 ```python
 class Persona:

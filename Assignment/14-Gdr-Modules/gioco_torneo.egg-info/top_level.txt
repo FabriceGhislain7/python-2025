@@ -1,0 +1,5 @@
+inventario
+oggetti
+personaggi
+torneo
+utils
