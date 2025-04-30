@@ -15,12 +15,12 @@ class Inventario:
                 return
         print(f"{utilizzatore.nome} non ha un oggetto chiamato {nome_oggetto}.")
         
-    def prendi_inventario(self, altro_inventario):
-        if altro_inventario.oggetti:
-            print(f"\n{self.nome} ottiene l'inventario di {altro_inventario.nome}:")
-            for oggetto in altro_inventario.oggetti:
+    def prendi_inventario(self, altro_personaggio):
+        if altro_personaggio.inventario.oggetti:
+            print(f"\n{self.nome} ottiene l'inventario di {altro_personaggio.nome}:")
+            for oggetto in altro_personaggio.inventario.oggetti:
                 print(f" - {oggetto.nome}")
-                self.aggiungi(oggetto)
-            altro_inventario.oggetti.clear()
+                self.inventario.aggiungi(oggetto)
+            altro_personaggio.inventario.oggetti.clear()
         else:
-            print(f"{altro_inventario.nome} non aveva oggetti nell'inventario.")
+            print(f"{altro_personaggio.nome} non aveva oggetti nell'inventario.")
