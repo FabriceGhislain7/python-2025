@@ -1,7 +1,5 @@
 # gli oggetti vengono aggiunti all'inventario del giocatore nel turno
 from oggetti.oggetto import PozioneCura, BombaAcida, Medaglione
-# pur usando random negli attacchi dei personaggi non ho bisogno di importare random perche viene gia importato dai personaggi
-# import random
 
 class Turno:
     def __init__(self, giocatore, nemico):
