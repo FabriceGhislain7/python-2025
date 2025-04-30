@@ -1,6 +1,6 @@
 # VERSIONING (**Lavorare senza sovrascrivere il lavoro degli altri.**)
 
-Lavorare senza sovrascrivere il lavoro degli altri in un progetto collaborativo C# (come un’app console con pattern MVC) richiede l'adozione di best practices specifiche per la gestione del codice, in particolare per modelli, controller e viste.
+Lavorare senza sovrascrivere il lavoro degli altri in un progetto collaborativo richiede l'adozione di best practices specifiche per la gestione del codice, in particolare per modelli, controller e viste.
 
 ## Best Practices per evitare conflitti
 
@@ -22,17 +22,19 @@ Assegnare specifiche responsabilità ai membri del team.
 
 Ogni modello, controller o vista dovrebbe avere il proprio file.
 
-> Es.: Non creare un unico file App.cs che contenga tutto il codice. Usa invece:
+> Es.: Non creare un unico file main.py che contenga tutto il codice. Usa invece:
 
 ```bash
-Models/
-  User.cs
-  Product.cs
-Controllers/
-  UserController.cs
-  ProductController.cs
-Views/
-  ConsoleView.cs
+src/
+├── models/
+│   ├── user_model.py
+│   └── product_model.py
+├── controllers/
+│   ├── user_controller.py
+│   └── product_controller.py
+└── views/
+    ├── user_view.py
+    └── product_view.py
 ```
 
 ## 2. Lavorare su file diversi
@@ -42,8 +44,8 @@ Questo approccio riduce i conflitti e consente a ciascun membro di lavorare senz
 
 **Esempio:**
 
-- Dev A lavora su UserController.cs (gestione degli utenti).
-- Dev B lavora su ProductController.cs (gestione dei prodotti).
+- Dev A lavora su UserController.py (gestione degli utenti).
+- Dev B lavora su ProductController.py (gestione dei prodotti).
 
 **Vantaggi:**
 
@@ -62,6 +64,8 @@ Adottare un flusso basato sui branch:
 - develop (ultime funzionalità integrate).
 
 **Branch per funzionalità:**
+
+Creare un branch per ogni nuova funzionalità o bugfix.
 
 Ogni membro del team crea un branch dedicato per una funzionalità specifica.
 bash
@@ -135,18 +139,18 @@ Se due membri del team hanno lavorato sullo stesso file, Git potrebbe segnalare 
 
 **Esempio di conflitto:**
 
-File modificato da Dev A (UserController.cs):
+File modificato da Dev A (UserController.py):
 
 ```csharp
-public void AddUser() {
+def AddUser() {
     // Logica originale
 }
 ```
 
-File modificato da Dev B (UserController.cs):
+File modificato da Dev B (UserController.py):
 
 ```csharp
-public void AddUser() {
+def AddUser() {
     // Logica ottimizzata
 }
 ```
@@ -156,7 +160,8 @@ public void AddUser() {
 > Aprire il file in conflitto: Git indica i conflitti con segnaposti come <<<<<<< e =======.
 
 ```csharp
-public void AddUser() {
+def AddUser() {
+    // Logica originale
 <<<<<<< feature/user-management
     // Logica originale
 =======
@@ -168,8 +173,9 @@ public void AddUser() {
 **Unire manualmente le modifiche: Decidere quale logica mantenere o combinare entrambe.**
 
 ```csharp
-public void AddUser() {
-    // Logica ottimizzata con i miglioramenti di entrambi
+def AddUser() {
+    // Logica originale
+    // Logica ottimizzata
 }
 ```
 
