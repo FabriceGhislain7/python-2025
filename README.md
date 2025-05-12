@@ -128,3 +128,4 @@ Questa è una raccolta personale di link, tool e riferimenti che mi stanno aiuta
 - 🔷 Competenze già acquisite in precedenza (*)
 
 > 🔷* Alcuni moduli includono conoscenze che ho già maturato tramite altri percorsi formativi o esperienze personali. In questi casi ho segnato con un asterisco per indicare il riconoscimento delle competenze pregresse.
+
