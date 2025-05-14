@@ -10,6 +10,7 @@ ordini_prodotto = Table(
     Column('prodotto_id', Integer, ForeignKey('prodotti.id'), primary_key=True),
     Column('quantita', Integer, default=1)
 )
+
 class Cliente(Base):
     __tablename__ = 'clienti'
     id = Column(Integer, primary_key=True)
