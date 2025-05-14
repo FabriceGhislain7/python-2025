@@ -47,7 +47,6 @@ def aggiungi_prodotto_a_ordine(ordine_id: int, prodotto_id: int, qty: int = 1) -
         ordine_prodotto.c.prodotto_id == prodotto_id
     )
     existing = db.execute(prodotto_exists).first() # il metodo first() serve per recuperare solo la prima riga
-
     if existing:
         # Già presente aggiorna la quantita
         upd = (
@@ -119,8 +118,8 @@ def lista_ordini() -> list[dict]:
     # -> list[dict] indica che la funzione restituisce una lista di dizionari
     db = SessionLocal()
     # recupera tutti gli ordini con cliente e prodotti
-    stmt = select(Ordine)
-    ordini = db.execute(stmt).scalars().all() # scalars() serve per recuperare solo gli oggetti altrimenti recupererebbe una lista di tuple
+    all_ordini = select(Ordine)
+    ordini = db.execute(all_ordini).scalars().all() # scalars() serve per recuperare solo gli oggetti altrimenti recupererebbe una lista di tuple
     result = []
     for o in ordini:
         items = []
@@ -156,13 +155,13 @@ def crea_prodotto(nome: str, prezzo: float) -> Prodotto:
 def elimina_prodotto(prodotto_id: int) -> None:
     db = SessionLocal()
     prodotto = db.get(Prodotto, prodotto_id)
-    # prima di eliminare il prodotto, dobbiamo rimuovere le associazioni nella tabella di associazione
-    db.execute(
-        delete(ordine_prodotto)
-        .where(ordine_prodotto.c.prodotto_id == prodotto_id)
-    )
-    # ora possiamo eliminare il prodotto
     if prodotto:
+        # prima di eliminare il prodotto, dobbiamo rimuovere le associazioni nella tabella di associazione
+        db.execute(
+            delete(ordine_prodotto)
+            .where(ordine_prodotto.c.prodotto_id == prodotto_id)
+        )
+        # ora possiamo eliminare il prodotto
         db.delete(prodotto)
         db.commit()
     db.close()
