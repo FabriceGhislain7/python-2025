@@ -6,7 +6,9 @@ from crud import (
     aggiungi_prodotto_a_ordine,
     elimina_cliente,
     elimina_ordine,
-    lista_ordini
+    lista_ordini,
+    crea_prodotto,
+    elimina_prodotto,
 )
 
 # comandi
@@ -17,6 +19,8 @@ from crud import (
 # python app.py del_cliente 1
 # python app.py del_ordine 1
 # python app.py list_ordini
+# python app.py crea_prodotto "Prodotto 1" 10.0
+# python app.py del_prodotto 1
 
 def main():
     parser = argparse.ArgumentParser(description="App CRUD SQLAlchemy") # crea il parser cioè l'oggetto che gestisce gli argomenti della riga di comando
@@ -49,6 +53,15 @@ def main():
 
     # list_ordini
     sub.add_parser("list_ordini", help="Mostra tutti gli ordini")
+    
+    # crea_prodotto
+    p = sub.add_parser("crea_prodotto", help="Crea un nuovo prodotto")
+    p.add_argument("nome", help="Nome del prodotto")
+    p.add_argument("prezzo", type=float, help="Prezzo del prodotto")
+    
+    # del_prodotto
+    p = sub.add_parser("del_prodotto", help="Elimina un prodotto per ID")
+    p.add_argument("prodotto_id", type=int, help="ID del prodotto da eliminare")
 
     args = parser.parse_args() # analizza gli argomenti della riga di comando cioè li legge e li memorizza in args
 
@@ -92,6 +105,16 @@ def main():
                 for it in o["items"]:
                     print(f"  - Prodotto {it['id']}: {it['nome']} x{it['quantita']} @ {it['prezzo']}€")
                 print("-" * 40)
+                
+    elif args.cmd == "crea_prodotto":
+        prodotto = crea_prodotto(args.nome, args.prezzo)
+        print(f"Nuovo prodotto: {prodotto.id} – {prodotto.nome} ({prodotto.prezzo} €)")
+        
+    elif args.cmd == "del_prodotto":
+        elimina_prodotto(args.prodotto_id)
+        print(f"Prodotto eliminato: {args.prodotto_id}")
+    else:
+        print("Comando non riconosciuto.")
 
 if __name__ == "__main__":
     main()

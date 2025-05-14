@@ -143,3 +143,26 @@ def lista_ordini() -> list[dict]:
         })
     db.close()
     return result
+
+def crea_prodotto(nome: str, prezzo: float) -> Prodotto:
+    db = SessionLocal()
+    prodotto = Prodotto(nome=nome, prezzo=prezzo)
+    db.add(prodotto)
+    db.commit()
+    db.refresh(prodotto)
+    db.close()
+    return prodotto
+
+def elimina_prodotto(prodotto_id: int) -> None:
+    db = SessionLocal()
+    prodotto = db.get(Prodotto, prodotto_id)
+    # prima di eliminare il prodotto, dobbiamo rimuovere le associazioni nella tabella di associazione
+    db.execute(
+        delete(ordine_prodotto)
+        .where(ordine_prodotto.c.prodotto_id == prodotto_id)
+    )
+    # ora possiamo eliminare il prodotto
+    if prodotto:
+        db.delete(prodotto)
+        db.commit()
+    db.close()
