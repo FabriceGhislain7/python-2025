@@ -67,6 +67,8 @@ from personaggi.classi import Guerriero
 > Meglio installarlo dentro un virtual environment (env)
 - Se modifichi il progetto o sbagli qualcosa, basta cancellare la cartella dell'env
 
+Altrimenti senza venv il package viene installato in `site-packages` della installazione di Python
+
 # Crea l'ambiente virtuale
 ```bash
 python -m venv env  # Crea un ambiente virtuale chiamato "env"

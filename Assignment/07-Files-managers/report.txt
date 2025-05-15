@@ -1,0 +1,5 @@
+Nome File, Estensione, Dimensione (byte), Data Creazione, Path Assoluto
+01,.csv,0,2025-04-02 10:38:15,c:\Users\Allievo\Documents\python-2025\Assignment\07-Files-managers\dir\01.csv
+01,.txt,47,2025-04-02 10:38:09,c:\Users\Allievo\Documents\python-2025\Assignment\07-Files-managers\dir\01.txt
+01,.xlsx,0,2025-04-02 10:38:23,c:\Users\Allievo\Documents\python-2025\Assignment\07-Files-managers\dir\01.xlsx
+02,.txt,35,2025-04-02 11:00:40,c:\Users\Allievo\Documents\python-2025\Assignment\07-Files-managers\dir\02.txt
