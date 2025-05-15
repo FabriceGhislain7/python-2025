@@ -1,8 +1,0 @@
-computer
-python
-telefono
-pizza
-astronauta
-programmare
-giocattolo
-biblioteca
