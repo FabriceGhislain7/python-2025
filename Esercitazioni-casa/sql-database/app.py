@@ -1,18 +1,17 @@
 from db import engine
-from models import Eleve, professeurs
-from crud import ajouter_eleve, ajouter_professeur
+from models import Studente, docenti
+from crud import aggiungere_studente, aggiungere_docente
 
-def peupler_base():
-    """Fonction pour insérer des données comme en cours"""
-    # Insertion via ORM
-    ajouter_eleve("Marie Dupont", "CM2")
-    ajouter_eleve("Jean Martin", "6ème")
+def popolare_base():
+    # Inserimento via ORM
+    aggiungere_studente("Marie Dupont", "CM2")
+    aggiungere_studente("Jean Martin", "6ème")
     
-    # Insertion via Table (commande comme en cours)
-    ajouter_professeur("M. Legrand", "Maths")
-    ajouter_professeur("Mme Leroi", "Français")
+    # Inserimento usando il metodo Table
+    aggiungere_docente("M. Legrand", "Maths")
+    aggiungere_docente("Mme Leroi", "Français")
 
     print("Peuplement terminé !")
 
 if __name__ == "__main__":
-    peupler_base()
+    popolare_base()

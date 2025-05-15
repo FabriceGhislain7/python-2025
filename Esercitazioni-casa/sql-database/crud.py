@@ -1,21 +1,19 @@
-from sqlalchemy import insert, select
+from sqlalchemy import insert
 from db import SessionLocal, engine
-from models import Eleve, professeurs
+from models import Studente, docenti
 
-def ajouter_eleve(nom: str, classe: str):
-    """Version ORM comme en cours"""
+def aggiungere_studente(nome: str, classe: str):
     db = SessionLocal()
     try:
-        nouvel_eleve = Eleve(nom=nom, classe=classe)
+        nouvel_eleve = Studente(nom=nome, classe=classe)
         db.add(nouvel_eleve)
         db.commit()
-        print(f"Élève {nom} ajouté en {classe}")
+        print(f"Élève {nome} ajouté en {classe}")
     finally:
         db.close()
 
-def ajouter_professeur(nom: str, matiere: str):
-    """Version Table pure comme vous l'avez fait"""
+def aggiungere_docente(nome: str, materie: str):
     with engine.connect() as conn:
-        conn.execute(insert(professeurs).values(nom=nom, matiere=matiere))
+        conn.execute(insert(docenti).values(nome=nome, materie=materie))
         conn.commit()
-    print(f"Professeur {nom} ({matiere}) ajouté")
+    print(f"Docente {nome} ({materie}) aggiunto")
