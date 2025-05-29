@@ -19,7 +19,10 @@ ssh pi@<IP_ADDRESS>
 ssh pi@<HOSTNAME>
 ssh allievo@rasp0-a.local
 ```
-
+In modo da verificare che la connessione SSH funzioni correttamente.
+```bash
+ssh -v nomedispositivo
+```
 Il comando ssh pi@<IP_ADDRESS> consente di accedere al Raspberry Pi tramite SSH.
 oppure utilizzare il comando ssh pi@<HOSTNAME> se si è configurato un nome host.
 
