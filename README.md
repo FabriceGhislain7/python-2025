@@ -131,15 +131,18 @@ Questa è una raccolta personale di link, tool e riferimenti che mi stanno aiuta
 * **Markdown YAML Preamble** (`bierner.markdown-yaml-preamble`) – riconosce preamboli YAML nei file Markdown.
 * **Ruff** (`charliermarsh.ruff`) – linter moderno, veloce e configurabile per Python.
 * **GitLens — Git supercharged** (`eamodio.gitlens`) – aggiunge funzionalità avanzate di visualizzazione e gestione Git.
+* **2077 Theme** (`endormi.2077-theme`) – tema VS Code ispirato a Cyberpunk 2077.
 * **Prettier - Code formatter** (`esbenp.prettier-vscode`) – formatter per JavaScript, TypeScript, HTML, CSS e altro.
 * **GitHub Copilot** (`github.copilot`) – AI autocompletamento per il codice, assistente intelligente mentre scrivi.
 * **GitHub Copilot Chat** (`github.copilot-chat`) – interfaccia chat per chiedere spiegazioni, refactor e suggerimenti al codice.
 * **Excel Viewer** (`grapecity.gc-excelviewer`) – visualizza file `.xlsx` direttamente in VS Code.
 * **Python Indent** (`kevinrose.vsc-python-indent`) – migliora e corregge automaticamente l'indentazione del codice Python.
+* **Genshin Theme** (`kinstar.genshin`) – tema ispirato a Genshin Impact per VS Code.
 * **Start Git Bash** (`mccarter.start-git-bash`) – aggiunge una scorciatoia per avviare Git Bash come terminale.
 * **Git Graph** (`mhutchie.git-graph`) – mostra la cronologia Git in una vista ad albero grafica.
 * **Black Formatter** (`ms-python.black-formatter`) – formatter automatico per Python secondo lo stile Black.
 * **Debugpy** (`ms-python.debugpy`) – backend per il debugger Python in VS Code.
+* **Flake8** (`ms-python.flake8`) – linter tradizionale per Python.
 * **isort** (`ms-python.isort`) – ordina automaticamente gli import in file Python.
 * **Python** (`ms-python.python`) – estensione ufficiale Microsoft per Python (debug, linting, notebook, ecc.).
 * **Pylance** (`ms-python.vscode-pylance`) – language server veloce per Python con completamento, analisi statica e type checking.
@@ -149,8 +152,13 @@ Questa è una raccolta personale di link, tool e riferimenti che mi stanno aiuta
 * **Jupyter Renderers** (`ms-toolsai.jupyter-renderers`) – migliora la visualizzazione dei risultati nei notebook.
 * **Jupyter Cell Tags** (`ms-toolsai.vscode-jupyter-cell-tags`) – consente di assegnare tag alle celle per filtrare o esportare.
 * **Jupyter Slide Show** (`ms-toolsai.vscode-jupyter-slideshow`) – abilita la visualizzazione dei notebook come presentazioni.
+* **Remote - SSH** (`ms-vscode-remote.remote-ssh`) – permette di connettersi e lavorare su server remoti via SSH.
+* **Remote - SSH: Editing Configuration** (`ms-vscode-remote.remote-ssh-edit`) – gestisce la configurazione dei target remoti.
+* **Makefile Tools** (`ms-vscode.makefile-tools`) – assistenza per editing e build di progetti con Makefile.
+* **Remote Explorer** (`ms-vscode.remote-explorer`) – interfaccia per esplorare i target remoti.
 * **autoDocstring - Python Docstring Generator** (`njpwerner.autodocstring`) – genera automaticamente docstring in formato Google, NumPy o Sphinx.
 * **SQLite Viewer** (`qwtel.sqlite-viewer`) – esplora e interroga database SQLite in modo visivo.
+* **Live Server** (`ritwickdey.liveserver`) – apre un server locale per testare progetti HTML/CSS/JS in tempo reale.
 * **Trailing Spaces** (`shardulm94.trailing-spaces`) – evidenzia e rimuove spazi bianchi finali nelle righe di codice.
 * **TensorFlow Snippets** (`vahidk.tensorflow-snippets`) – snippet pronti per TensorFlow in Python.
 ---
