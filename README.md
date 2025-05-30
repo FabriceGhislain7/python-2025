@@ -118,8 +118,44 @@ Questa è una raccolta personale di link, tool e riferimenti che mi stanno aiuta
 - [Alt-Codes – Caratteri speciali da tastiera](https://www.alt-codes.net/) – Comodo per simboli strani
 - [Il mio GitHub](https://github.com/FabriceGhislain7) – Dove pubblico il codice e aggiorno i progetti
 
-> Se trovo nuove risorse interessanti o strumenti pratici, aggiornerò questa sezione man mano!
+---
+## Estensioni consigliate per VS Code (con uso)
 
+* **AREPL for Python** (`almenon.arepl`) – esegue automaticamente il codice Python mentre scrivi, mostrando variabili in tempo reale.
+* **GitHub Markdown Preview** (`bierner.github-markdown-preview`) – visualizza i file Markdown con lo stile di GitHub.
+* **Markdown Checkbox** (`bierner.markdown-checkbox`) – supporta checkbox `[ ]` e `[x]` in Markdown.
+* **Markdown Emoji** (`bierner.markdown-emoji`) – visualizza emoji come `:smile:` nei file Markdown.
+* **Markdown Footnotes** (`bierner.markdown-footnotes`) – aggiunge supporto per le note a piè di pagina `[^1]`.
+* **Markdown Mermaid** (`bierner.markdown-mermaid`) – abilita i diagrammi Mermaid all’interno dei file Markdown.
+* **Markdown Preview GitHub Styles** (`bierner.markdown-preview-github-styles`) – applica lo stile CSS GitHub all’anteprima Markdown.
+* **Markdown YAML Preamble** (`bierner.markdown-yaml-preamble`) – riconosce preamboli YAML nei file Markdown.
+* **Ruff** (`charliermarsh.ruff`) – linter moderno, veloce e configurabile per Python.
+* **GitLens — Git supercharged** (`eamodio.gitlens`) – aggiunge funzionalità avanzate di visualizzazione e gestione Git.
+* **Prettier - Code formatter** (`esbenp.prettier-vscode`) – formatter per JavaScript, TypeScript, HTML, CSS e altro.
+* **GitHub Copilot** (`github.copilot`) – AI autocompletamento per il codice, assistente intelligente mentre scrivi.
+* **GitHub Copilot Chat** (`github.copilot-chat`) – interfaccia chat per chiedere spiegazioni, refactor e suggerimenti al codice.
+* **Excel Viewer** (`grapecity.gc-excelviewer`) – visualizza file `.xlsx` direttamente in VS Code.
+* **Python Indent** (`kevinrose.vsc-python-indent`) – migliora e corregge automaticamente l'indentazione del codice Python.
+* **Start Git Bash** (`mccarter.start-git-bash`) – aggiunge una scorciatoia per avviare Git Bash come terminale.
+* **Git Graph** (`mhutchie.git-graph`) – mostra la cronologia Git in una vista ad albero grafica.
+* **Black Formatter** (`ms-python.black-formatter`) – formatter automatico per Python secondo lo stile Black.
+* **Debugpy** (`ms-python.debugpy`) – backend per il debugger Python in VS Code.
+* **isort** (`ms-python.isort`) – ordina automaticamente gli import in file Python.
+* **Python** (`ms-python.python`) – estensione ufficiale Microsoft per Python (debug, linting, notebook, ecc.).
+* **Pylance** (`ms-python.vscode-pylance`) – language server veloce per Python con completamento, analisi statica e type checking.
+* **Data Wrangler** (`ms-toolsai.datawrangler`) – strumento visivo per manipolare dati in formato tabellare (simile a Excel).
+* **Jupyter** (`ms-toolsai.jupyter`) – supporto completo per file `.ipynb`, notebook Python e kernel Jupyter.
+* **Jupyter Keymap** (`ms-toolsai.jupyter-keymap`) – mappa i tasti con le stesse scorciatoie di Jupyter Notebook.
+* **Jupyter Renderers** (`ms-toolsai.jupyter-renderers`) – migliora la visualizzazione dei risultati nei notebook.
+* **Jupyter Cell Tags** (`ms-toolsai.vscode-jupyter-cell-tags`) – consente di assegnare tag alle celle per filtrare o esportare.
+* **Jupyter Slide Show** (`ms-toolsai.vscode-jupyter-slideshow`) – abilita la visualizzazione dei notebook come presentazioni.
+* **autoDocstring - Python Docstring Generator** (`njpwerner.autodocstring`) – genera automaticamente docstring in formato Google, NumPy o Sphinx.
+* **SQLite Viewer** (`qwtel.sqlite-viewer`) – esplora e interroga database SQLite in modo visivo.
+* **Trailing Spaces** (`shardulm94.trailing-spaces`) – evidenzia e rimuove spazi bianchi finali nelle righe di codice.
+* **TensorFlow Snippets** (`vahidk.tensorflow-snippets`) – snippet pronti per TensorFlow in Python.
+---
+
+> Se trovo nuove risorse interessanti o strumenti pratici, aggiornerò questa sezione man mano!
 
 ### Legenda dei simboli
 
